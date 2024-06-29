@@ -4,7 +4,8 @@ export default {
   theme: {
     extend: {
       fontFamily: {
-        chakra: ['var(--font-family)', 'sans-serif'],
+        lato: ['var(--font-family)', 'sans-serif'],
+        chakra: ['chakra', 'sans-serif'],
       },
       colors: {
         blackgb: "var(--blackgb)",
@@ -13,8 +14,10 @@ export default {
         white: "var(--white)",
         redprimary: "var(--redprimary)",
         redsecondary: "var(--redsecondary)",
-        oranjeprimary: "var(--oranjeprimary)",
-        oranjesecondary: "var(--oranjesecondary)",
+        redapproval: "var(--redapproval)",
+        orangeprimary: "var(--orangeprimary)",
+        orangesecondary: "var(--orangesecondary)",
+        bghours:"var(--bg-status-square)", 
       },
     },
   },
