@@ -9,12 +9,52 @@
   --white: #f8f8f8;
   --redprimary: #ff3131;
   --redsecondary: #ff8888;
-  --oranjeprimary: #ff914d;
-  --oranjesecondary: #fdb78c;
-  --font-family: "Chakra UI", "sans-serif";
+  --redapproval: #c53030;
+  --orangeprimary: #ff914d;
+  --orangesecondary: #fdb78c;
+  --bg-status-square: #847c7b;
+  --font-family: "Lato", "Chakra UI", "sans-serif";
 }
 
 body {
   font-family: var(--font-family);
-  background-color: var(--gray100);
+  background-color: var(--white);
+}
+
+.gradient-red {
+  background-image: linear-gradient(
+    to right,
+    var(--redprimary),
+    var(--orangeprimary)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-gradient-red {
+  background-image: linear-gradient(
+    to right,
+    var(--redprimary),
+    var(--orangeprimary)
+  );
+}
+
+.gradient-orange {
+  background-image: linear-gradient(
+    to right,
+    var(--orangeprimary),
+    var(--orangesecondary)
+  );
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.bg-gradient-orange {
+  background-image: linear-gradient(
+    to right,
+    var(--orangeprimary),
+    var(--orangesecondary)
+  );
 }
