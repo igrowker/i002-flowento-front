@@ -1,17 +1,31 @@
+import { InputForm } from "./InputForm.jsx"
+import inputInfo from '../../assets/js/resgister.js';
+import { Options } from "./Options.jsx";
+import { DateForm } from "./DateForm.jsx";
+
+
 export const Form = () => {
+    const registrarse = (e)=>{
+        e.preventDefault();
+        console.log("hola");
+    }
+
     return (
-        <form className=" mt-36 font-lato flex flex-col">
-            <div className="my-2.5 flex justify-center items-center flex-col">
-                <label htmlFor="nombre" className="w-full mb-2.5 leading-3 font-normal text-gray300">Nombre <span className="text-redprimary">*</span></label>
-                <input type="text" className="w-full px-3 h-8 border-solid rounded border-2 border-orangeprimary" id="nombre" name="nombre" placeholder="Nombre"/>
+        <form className=" mt-36 font-lato flex flex-col" onSubmit={(e)=>registrarse(e)}>
+            {inputInfo.map((value, index) => <InputForm key={index} name={value.name} type={value.type} required={value.required} description={value.description} />
+            )}
+            <div className="flex gap-x-2">
+                <DateForm />
+                <Options />
             </div>
-            <div className="my-2.5 flex justify-center items-center flex-col">
-                <label htmlFor="apellido" className="w-full mb-2.5 leading-3 font-normal text-gray300">Apellido <span className="text-redprimary">*</span></label>
-                <input type="text" className="w-full px-3 h-8 border-solid rounded border-2 border-orangeprimary" id="apellido" name="apellido" placeholder="Apellido"/>
+            <div>
+                <InputForm name={"Telefono"} type={"tel"} required={false} description={""}/>
             </div>
-            <div className="my-2.5 flex justify-center items-center flex-col">
-                <label htmlFor="email" className="w-full mb-2.5 leading-3 font-normal text-gray300">Email <span className="text-redprimary">*</span></label>
-                <input type="text" className="w-full px-3 h-8 border-solid rounded border-2 border-orangeprimary" id="email" name="email" placeholder="example@gmeil.com"/>
+            <div>
+                <InputForm name={"Pais"} type={"text"} required={false} description={""}/>
+            </div>
+            <div>
+                <input type="submit" value="Registrarse" className="flex w-full justify-center rounded-md bg-orangeprimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orangesecondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"/>
             </div>
         </form>
     )
