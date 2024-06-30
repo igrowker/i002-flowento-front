@@ -19,6 +19,13 @@ export default {
         orangesecondary: "var(--orangesecondary)",
         bghours:"var(--bg-status-square)", 
       },
+      minHeight: {
+        gradiantRedToOrangeModal : "5.25rem",
+        orangeModal : '6.5rem',
+      },
+      maxHeight:{
+        orangeModal : '6.5rem',
+      }
     },
   },
   plugins: [],
