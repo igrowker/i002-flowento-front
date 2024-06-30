@@ -1,6 +1,7 @@
 import 'tailwindcss/tailwind.css';
 import logow from "../../assets/logow.png"
 import Navbar from '../Navbar/Navbar';
+import {Link} from 'react-router-dom';
 
 function Login() {
     return (
@@ -27,6 +28,7 @@ function Login() {
                             <div className="flex items-center justify-between">
                                 <label htmlFor="password" className="block text-sm font-medium leading-6 text-gray-900">Contraseña</label>
                                 <div className="text-sm">
+                                    {/* <Link to={"/recoverPassword"} /> link provicinal todavia falta definir el enpoint y la vista para recuperar contraseña (cuando eso este sacar la etiquea link de html osea "a") */}
                                     <a href="#" className="font-semibold text-orangeprimary hover:text-orangesecondary">He olvidado mi Contraseña</a>
                                 </div>
                             </div>
@@ -42,7 +44,8 @@ function Login() {
 
                     <p className="mt-10 text-center text-sm text-gray-500">
                         No tienes Cuenta?
-                        <a href="#" className="font-semibold leading-6 text-orangeprimary hover:text-orangesecondary">Registrate</a>
+                        <Link to={"/register"}><span className='className="font-semibold leading-6 text-orangeprimary hover:text-orangesecondary"'>Registrate</span></Link>
+                        {/* <a href="#" className="font-semibold leading-6 text-orangeprimary hover:text-orangesecondary">Registrate</a> */}
                     </p>
                 </div>
             </div>
