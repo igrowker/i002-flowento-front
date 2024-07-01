@@ -5,16 +5,18 @@ import Footer from "./components/Footer";
 import EventApproval from "./components/Events/EventApproval";
 import { Register } from "./components/Auth/Register";
 import Login from "./components/Auth/Login";
+import Navbar from "./components/Navbar/Navbar";
 
 function App() {
   return (
     <Router>
       <>
+        <Navbar />
         <Routes>
           <Route path="/" element={<Login />} />
           <Route path="/register" element={<Register />} />
           <Route path="/event-list" element={<EventList />} />
-          <Route path="/event-approval" element={<EventApproval />} /> 
+          <Route path="/event-approval" element={<EventApproval />} />
         </Routes>
         <Footer />
       </>

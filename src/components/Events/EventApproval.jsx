@@ -1,12 +1,17 @@
+import { Link } from "react-router-dom";
 import { useState } from "react";
+import { Swiper, SwiperSlide } from "swiper/react";
 import { BsCalendarCheck, BsClock } from "react-icons/bs";
 import { GoLocation } from "react-icons/go";
+import { BiDollar } from "react-icons/bi";
+import "swiper/swiper-bundle.css";
 import Imagen1 from "../../assets/imagen1.webp";
 import Imagen2 from "../../assets/imagen2.webp";
 import Imagen3 from "../../assets/imagen3.webp";
 import Imagen4 from "../../assets/imagen4.webp";
 import Imagen5 from "../../assets/imagen5.webp";
-import { Link } from "react-router-dom";
+import Imagen6 from "../../assets/imagen6.webp";
+import { FaPlus } from "react-icons/fa";
 
 const EventApproval = () => {
   const [activeButton, setActiveButton] = useState("todos");
@@ -21,6 +26,7 @@ const EventApproval = () => {
       ubicacion: "Inno",
       estado: "pendientes",
       imagen: Imagen1,
+      precio: "gratuito",
     },
     {
       id: 8,
@@ -30,6 +36,7 @@ const EventApproval = () => {
       ubicacion: "ScaleUp",
       estado: "organizado",
       imagen: Imagen2,
+      precio: "50",
     },
     {
       id: 9,
@@ -39,6 +46,7 @@ const EventApproval = () => {
       ubicacion: "Inno/Online",
       estado: "inscrito",
       imagen: Imagen3,
+      precio: "gratuito",
     },
     {
       id: 10,
@@ -49,6 +57,7 @@ const EventApproval = () => {
       ubicacion: "Online",
       estado: "finalizado",
       imagen: Imagen4,
+      precio: "100",
     },
     {
       id: 11,
@@ -58,6 +67,18 @@ const EventApproval = () => {
       ubicacion: "Online",
       estado: "pendientes",
       imagen: Imagen5,
+      precio: "100",
+    },
+
+    {
+      id: 12,
+      titulo: "Hackaton Desafía tus límites con Nike",
+      fecha: "01/07/2024",
+      hora: "09:00",
+      ubicacion: "Salón de universitarios - 370",
+      estado: "pendientes",
+      imagen: Imagen6,
+      precio: "200",
     },
   ];
 
@@ -114,63 +135,82 @@ const EventApproval = () => {
                 : "Todos los eventos"}
             </h1>
           </div>
-          <div className="flex gap-4 px-4 py-2 lg:justify-end lg:w-1/2">
+          <div className="flex flex-wrap gap-4 px-4 py-2 lg:justify-end lg:w-1/2">
             <button
-              className={`py-1 px-4 rounded-3xl ${
+              className={`py-1 px-4 rounded-3xl transition-colors ${
                 activeButton === "pendientes"
-                  ? "bg-orangeprimary text-white"
-                  : "bg-transparent text-orangeprimary"
-              }`}
+                  ? "bg-orangeprimary text-white hover:bg-orange-600"
+                  : "bg-bgbutton text-orangeprimary hover:bg-orangeprimary hover:text-white"
+              } transition-all duration-400`}
               onClick={() => setActiveButton("pendientes")}
             >
-              Pendiente de Aprobación
+              Pendientes
             </button>
             <button
-              className={`py-1 px-4 rounded-3xl ${
+              className={`py-1 px-4 rounded-3xl transition-colors ${
                 activeButton === "organizado"
-                  ? "bg-orangeprimary text-white"
-                  : "bg-transparent text-orangeprimary"
-              }`}
+                  ? "bg-orangeprimary text-white hover:bg-orange-600"
+                  : "bg-bgbutton text-orangeprimary hover:bg-orangeprimary hover:text-white"
+              } transition-all duration-400`}
               onClick={() => setActiveButton("organizado")}
             >
               Organizado
             </button>
             <button
-              className={`py-1 px-4 rounded-3xl ${
+              className={`py-1 px-4 rounded-3xl transition-colors ${
                 activeButton === "inscrito"
-                  ? "bg-orangeprimary text-white"
-                  : "bg-transparent text-orangeprimary"
-              }`}
+                  ? "bg-orangeprimary text-white hover:bg-orange-600"
+                  : "bg-bgbutton text-orangeprimary hover:bg-orangeprimary hover:text-white"
+              } transition-all duration-400`}
               onClick={() => setActiveButton("inscrito")}
             >
               Inscrito
             </button>
             <button
-              className={`py-1 px-4 rounded-3xl ${
+              className={`py-1 px-4 rounded-3xl transition-colors ${
                 activeButton === "finalizado"
-                  ? "bg-orangeprimary text-white"
-                  : "bg-transparent text-orangeprimary"
-              }`}
+                  ? "bg-orangeprimary text-white hover:bg-orange-600"
+                  : "bg-bgbutton text-orangeprimary hover:bg-orangeprimary hover:text-white"
+              } transition-all duration-400`}
               onClick={() => setActiveButton("finalizado")}
             >
               Finalizados
             </button>
             <button
-              className={`py-1 px-4 rounded-3xl ${
+              className={`py-1 px-4 rounded-3xl transition-colors ${
                 activeButton === "todos"
-                  ? "bg-orangeprimary text-white"
-                  : "bg-transparent text-orangeprimary"
-              }`}
+                  ? "bg-orangeprimary text-white hover:bg-orange-600"
+                  : "bg-bgbutton text-orangeprimary hover:bg-orangeprimary hover:text-white"
+              } transition-all duration-400`}
               onClick={() => setActiveButton("todos")}
             >
               Todos
             </button>
           </div>
         </div>
-        <div className="flex flex-wrap -m-4">
+
+        <Swiper
+          className="mySwiper"
+          slidesPerView={1}
+          spaceBetween={1}
+          centeredSlides={true}
+          navigation={false}
+          loop={true}
+          breakpoints={{
+            768: {
+              slidesPerView: 2,
+            },
+            1024: {
+              slidesPerView: 4,
+            },
+          }}
+        >
           {getEventosFiltradosYOrdenados().map((evento) => (
-            <div key={evento.id} className="w-full xl:w-1/4 md:w-1/2 px-8 pb-4">
-              <div className="bg-gray100 p-3 rounded-lg relative">
+            <SwiperSlide key={evento.id} className="w-full px-8 pb-4">
+              <div
+                className="bg-gray-50 rounded-3xl p-3 relative"
+                style={{ boxShadow: "0px 5px 10px 2px #00000040" }}
+              >
                 {evento.estado === "pendientes" && (
                   <div
                     className="absolute top-5 left-5 bg-redapproval text-white rounded-lg uppercase font-bold"
@@ -208,14 +248,16 @@ const EventApproval = () => {
                 )}
 
                 <img
-                  className="rounded-lg w-full h-auto object-cover object-center mb-3"
+                  className="rounded-2xl w-full max-h-40 object-cover object-center mb-3"
                   src={evento.imagen}
                   alt="content"
                 />
+
                 <h2 className="text-sm md:text-base gradient-red font-bold mb-4 text-justify">
                   <Link to={`/eventDetail/${evento.id}`}>{evento.titulo}</Link>
                 </h2>
-                <div className="text-gray-500 flex justify-between">
+
+                <div className="font-lato text-gray-500 pb-3 flex justify-between">
                   <div className="flex gap-1">
                     <BsCalendarCheck className="text-orangeprimary" />
                     <p className="flex text-xs">{evento.fecha}</p>
@@ -224,16 +266,31 @@ const EventApproval = () => {
                     <BsClock className="text-orangeprimary" />
                     <p className="flex text-xs">{evento.hora} h</p>
                   </div>
+                </div>
+                <div className="font-lato text-gray-500 flex justify-between">
                   <div className="flex gap-1">
                     <GoLocation className="text-orangeprimary" />
                     <p className="flex text-xs">{evento.ubicacion}</p>
                   </div>
+                  <div className="flex gap-1">
+                    <BiDollar className="text-orangeprimary" />
+                    <p className="flex text-xs">
+                      {evento.precio === "gratuito"
+                        ? "Gratuito"
+                        : `${evento.precio} $`}
+                    </p>
+                  </div>
                 </div>
-                
               </div>
-            </div>
+            </SwiperSlide>
           ))}
-        </div>
+        </Swiper>
+        <button
+          className="fixed bottom-8 right-8 bg-orangeprimary text-white rounded-full p-4 border-4 border-white shadow-lg hover:bg-orange-600 transition duration-300"
+          style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
+        >
+          <FaPlus className="text-2xl" />
+        </button>
       </div>
     </>
   );

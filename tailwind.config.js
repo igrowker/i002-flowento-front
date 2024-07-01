@@ -1,6 +1,6 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  content: ["./index.html", "./src/**/*.{js,jsx}"],
+  content: ["./index.html", "./src/**/*.{js,jsx,ts,tsx}"],
   theme: {
     extend: {
       fontFamily: {
@@ -17,15 +17,16 @@ export default {
         redapproval: "var(--redapproval)",
         orangeprimary: "var(--orangeprimary)",
         orangesecondary: "var(--orangesecondary)",
-        bghours:"var(--bg-status-square)", 
+        bghours: "var(--bg-status-square)",
+        bgbutton: "var(--bg-button)",
       },
       minHeight: {
-        gradiantRedToOrangeModal : "5.25rem",
-        orangeModal : '6.5rem',
+        gradiantRedToOrangeModal: "5.25rem",
+        orangeModal: '6.5rem',
       },
-      maxHeight:{
-        orangeModal : '6.5rem',
-      }
+      maxHeight: {
+        orangeModal: '6.5rem',
+      },
     },
   },
   plugins: [],

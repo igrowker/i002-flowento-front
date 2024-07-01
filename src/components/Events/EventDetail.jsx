@@ -1,7 +1,3 @@
-import React from 'react'
-
 export const EventDetail = () => {
-    return (
-        <div>EventDetail</div>
-    )
-}
+  return <div>EventDetail</div>;
+};
