@@ -18,6 +18,7 @@ export const Register = () => {
             </Link>
           </div>
         </div>
+
         <div className="bg-orangesecondary  max-h-orangeModal">
           <div className="flex justify-center items-center flex-col">
             <div>
@@ -27,6 +28,7 @@ export const Register = () => {
                 className="relative top-8"
               />
             </div>
+            
             <div>
               <img
                 src={btnEditImg}

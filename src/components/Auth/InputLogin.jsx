@@ -1,9 +1,10 @@
 import "tailwindcss/tailwind.css";
 import logow from "../../assets/logow.png";
+import google from "../../assets/google.png"
 import { Link } from "react-router-dom";
 import { FaFacebook } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-import { TiSocialGooglePlusCircular } from "react-icons/ti";
+
 
 const InputLogin = () => {
   return (
@@ -45,7 +46,8 @@ const InputLogin = () => {
               type="submit"
               className="flex w-full justify-center rounded-md bg-gray-300 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
             >
-              <TiSocialGooglePlusCircular className="text-red-600 w-8 h-8 mr-9"/>  
+                <img className="w-8 h-8 mr-9" src={google} alt="google" />
+                
              Ingrese con Google
             </button>
           </div>
