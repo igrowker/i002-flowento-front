@@ -8,9 +8,9 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-gradient-red">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
+    <nav className="bg-gradient-red  " >
+      <div className=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex   h-16">
           
           <div className="flex items-center">
             
@@ -55,16 +55,14 @@ export default function Navbar() {
 
             <div className="hidden md:block">
              
-              <div className="ml-10 flex space-x-4">
+              <div className="ml-10  flex space-x-4">
               
                 <a href="#" className="text-gray-300 hover:text-orangeprimary px-3 py-2 rounded-md text-sm font-medium">Perfil</a>
                 <a href="#" className="text-gray-300 hover:text-orangeprimary px-3 py-2 rounded-md text-sm font-medium">Calendario</a>
                 <a href="#" className="text-gray-300 hover:text-orangeprimary px-3 py-2 rounded-md text-sm font-medium">Entradas</a>
                 <a href="#" className="text-gray-300 hover:text-orangeprimary px-3 py-2 rounded-md text-sm font-medium">Inicio</a>
                 <a href="#" className="text-gray-300 hover:text-orangeprimary px-3 py-2 rounded-md text-sm font-medium">Settings</a>
-                
-                
-
+              
 
                 <div className=" flex sm:static sm:inset-auto sm:ml-6 sm:pr-0">
 
@@ -95,11 +93,7 @@ export default function Navbar() {
                               </button>
                             </div>
                            </div>
-                      </div>
-              </div>
-
-              <div>
-                
+                   </div>
               </div>
             </div>
           </div>

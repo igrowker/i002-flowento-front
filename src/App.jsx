@@ -7,6 +7,7 @@ import { Register } from "./components/Auth/Register";
 import Login from "./components/Auth/Login";
 import Navbar from "./components/Navbar/Navbar";
 import InputLogin from "./components/Auth/InputLogin";
+import Error from "./components/Error";
 
 function App() {
   return (
@@ -17,6 +18,7 @@ function App() {
             <Route path="/" element={<InputLogin />} />
             <Route path="/Login" element={<Login />} />
             <Route path="/register" element={<Register />} />
+            <Route path="/Error" element={<Error />} />
             <Route path="/event-list" element={<EventList />} />
             <Route path="/event-approval" element={<EventApproval />} />
           </Routes>
