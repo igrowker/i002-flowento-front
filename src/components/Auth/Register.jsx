@@ -10,7 +10,7 @@ export const Register = () => {
   return (
     <>
       {/* este margin provicional xq como no esta completa la vista del register en figma nose si el footer se tiene q ver o no */}
-      <div className="mb-56">
+      <div className="mb-56 ">
         <div className="bg-gradient-red">
           <div className="ml-5 min-h-11 inset-y-10 flex items-center">
             <Link to={"/"}>

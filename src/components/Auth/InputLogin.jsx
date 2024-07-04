@@ -9,11 +9,11 @@ import { MdEmail } from "react-icons/md";
 const InputLogin = () => {
   return (
     <>
-    <div className="flex min-h-full flex-col font-sans  justify-center px-6 py-12 lg:px-8">
+    <div className="flex min-h-full flex-col font-sans  justify-center px-6 py-12  lg:px-8">
 
-    <div className="sm:mx-auto sm:w-full sm:max-w-sm bg-gradient-to-tl from-white to-orangeprimary">
-        <img className="mx-auto h-60 border w-auto rounded-full shadow-2xl" src={logow} alt="Flowento" />
-    </div> 
+        <div className="bg-gradient-red sm:mx-auto sm:w-full sm:max-w-sm ">
+            <img className="mx-auto h-60 border w-auto rounded-full shadow-2xl" src={logow} alt="Flowento" />
+         </div> 
 
     <div className="sm:mx-auto sm:w-full sm:max-w-sm">
         
@@ -46,7 +46,7 @@ const InputLogin = () => {
               type="submit"
               className="flex w-full justify-center rounded-md bg-gray-300 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
             >
-                <img className="w-8 h-8 mr-9" src={google} alt="google" />
+                <img className="w-8 h-7 mr-9" src={google} alt="google" />
                 
              Ingrese con Google
             </button>
