@@ -33,7 +33,13 @@ export const Form = () => {
                 console.log(response);
                 console.log(data);
 
-                alert("Te registraste con exito");
+                if (data.status === "success") {
+                    alert("Te registraste con exito");
+                }
+                else{
+                    alert("alguno de los datos es incorrecto"); //en la data el mensaje puede ser mas perzonalizado
+                }
+
 
                 setData(true)
 

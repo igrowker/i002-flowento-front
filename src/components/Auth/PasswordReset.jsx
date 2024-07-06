@@ -1,7 +1,3 @@
-import React from 'react'
-
 export const PasswordReset = () => {
-    return (
-        <div>PasswordReset</div>
-    )
-}
+  return <div>PasswordReset</div>;
+};

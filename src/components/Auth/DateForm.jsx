@@ -1,7 +1,6 @@
 import React, { useState } from 'react';
 import btnCalendario from "../../assets/BsCalendarCheck.png";
 
-
 export const DateForm = () => {
     const [fecha, setFecha] = useState("2024-01-01");
 
