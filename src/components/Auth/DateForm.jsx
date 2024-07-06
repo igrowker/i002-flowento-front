@@ -1,8 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import btnCalendario from "../../assets/BsCalendarCheck.png";
 
 
 export const DateForm = () => {
+    const [fecha, setFecha] = useState("2024-01-01");
+
     return (
         <div className="text-gray300 flex-1 w-1/2">
             <label htmlFor="fecha" >Fecha de nacimiento</label>
