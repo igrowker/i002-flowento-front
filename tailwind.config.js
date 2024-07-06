@@ -27,9 +27,6 @@ export default {
       maxHeight: {
         orangeModal: '6.5rem',
       },
-      rotate :{
-        '64' : '-64deg'
-      },
     },
   },
   plugins: [],

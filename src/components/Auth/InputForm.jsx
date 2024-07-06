@@ -1,7 +1,6 @@
 /* eslint-disable react/prop-types */
 import { InputPassword } from './InputPassword';
 
-
 export const InputForm = ({ name, type, required, description }) => {
 
   return (

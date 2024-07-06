@@ -127,7 +127,6 @@ function Login() {
                 Registrate
               </span>
             </Link>
-            {/* <a href="#" className="font-semibold leading-6 text-orangeprimary hover:text-orangesecondary">Registrate</a> */}
           </p>
         </div>
       </div>

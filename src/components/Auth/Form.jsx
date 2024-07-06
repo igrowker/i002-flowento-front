@@ -19,6 +19,7 @@ export const Form = () => {
 
         data.forEach((value, key) => obj[key] = value);
         
+        console.log(obj);
 
         axios.post("http://localhost:8080/auth/register", {
             first_name: obj["nombre"],
