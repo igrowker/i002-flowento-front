@@ -4,7 +4,7 @@ export const DateForm = () => {
   return (
     <div className="text-gray300 flex-1 w-1/2">
       <label htmlFor="fecha">Fecha de nacimiento</label>
-      <div className="w-full flex items-center border-solid rounded border-2 border-orangeprimary">
+      <div className="w-full flex items-center border-solid rounded border-2 border-gray-300">
         <div className="flex items-center px-3 w-full">
           <img
             src={btnCalendario}

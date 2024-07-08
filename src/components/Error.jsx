@@ -1,5 +1,5 @@
 import React from 'react'
-import Error404 from "../assets/Error404.png";
+import Error404 from "../assets/Error404.webp";
 import "tailwindcss/tailwind.css";
 import { Link } from "react-router-dom";
 
@@ -14,17 +14,17 @@ const Error = () => {
             ¡Ooops!
             </h1>
 
-            <h5 className="mt-1 text-center   leading-9 tracking-tight text-gray-300">¡Algo ha ocurrido!</h5>
-            <h5 className="mt-1 text-center   leading-9 tracking-tight text-gray-300">No sabemos que ha podido pasar, pero lo arreglaremos...</h5>
+            <h5 className="mt-1 text-center   leading-9 tracking-tight text-gray-500">¡Algo ha ocurrido!</h5>
+            <h5 className="mt-1 text-center   leading-9 tracking-tight text-gray-500">No sabemos que ha podido pasar, pero lo arreglaremos...</h5>
             
         </div>
 
         <div className="sm:mx-auto sm:w-full sm:max-w-sm  from-white to-orangeprimary">
-            <img className="mx-auto h-60 border w-auto rounded-full shadow-2xl" src={Error404} alt="Flowento" />
+            <img className="mx-auto h-60  w-auto rounded-lg " src={Error404} alt="Flowento" />
         </div> 
 
         <div>
-             <h5 className="mt-1 text-center   leading-9 tracking-tight text-gray-300">No pasa nada, te volvemos a indicar el camino a casa...</h5>
+             <h5 className="mt-1 text-center   leading-9 tracking-tight text-gray-500">No pasa nada, te volvemos a indicar el camino a casa...</h5>
         </div>
 
         <div className='flex justify-center'>

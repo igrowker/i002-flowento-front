@@ -17,7 +17,7 @@ export const InputForm = ({ name, type, required, description }) => {
         <div className="h-9 w-full">
           <input
             type={type}
-            className="w-full px-3 h-full border-solid rounded border-2 border-orangeprimary"
+            className="w-full px-3 h-full border-solid rounded border-2 border-gray500"
             id={name.toLowerCase()}
             name={name.toLowerCase()}
             placeholder={name}
