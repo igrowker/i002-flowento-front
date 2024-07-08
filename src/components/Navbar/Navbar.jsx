@@ -8,11 +8,11 @@ export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
 
   return (
-    <nav className="bg-gradient-red  " >
-      <div className=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex   h-16">
+    <nav className="bg-gradient-red  rounded-b-full " >
+      <div className=" max-w-7xl mx-auto px-4 sm:px-6 lg:px-8  ">
+        <div className="flex   h-16 ">
           
-          <div className="flex items-center">
+          <div className="flex items-center ">
             
                 <div className="-mr-2 flex md:hidden">
                   <button
@@ -50,8 +50,9 @@ export default function Navbar() {
                         />
                       </svg>
                     )}
-                  </button>
-                </div>
+                    </button>
+                  </div>
+
 
             <div className="hidden md:block">
              
@@ -60,7 +61,7 @@ export default function Navbar() {
                 <a href="#" className="text-gray-300 hover:text-orangeprimary px-3 py-2 rounded-md text-sm font-medium">Perfil</a>
                 <a href="#" className="text-gray-300 hover:text-orangeprimary px-3 py-2 rounded-md text-sm font-medium">Calendario</a>
                 <a href="#" className="text-gray-300 hover:text-orangeprimary px-3 py-2 rounded-md text-sm font-medium">Entradas</a>
-                <a href="#" className="text-gray-300 hover:text-orangeprimary px-3 py-2 rounded-md text-sm font-medium">Inicio</a>
+                <a href="./" className="text-gray-300 hover:text-orangeprimary px-3 py-2 rounded-md text-sm font-medium">Inicio</a>
                 <a href="#" className="text-gray-300 hover:text-orangeprimary px-3 py-2 rounded-md text-sm font-medium">Settings</a>
               
 
@@ -101,8 +102,8 @@ export default function Navbar() {
         </div>
       </div>
       {isOpen && (
-        <div className="md:30">
-          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3">
+        <div className=" bg-white ">
+          <div className="px-2 pt-2 pb-3 space-y-1 sm:px-3 ">
           <div className="relative ml-3">
                   <button
                      type="button"
@@ -121,13 +122,13 @@ export default function Navbar() {
                    </button>
                  </div>
             <a href="#" className="text-gray-300 hover:text-orangeprimary block px-3 py-2 rounded-md text-base font-medium">Perfil</a>
-            <a href="#" className="text-gray-300 hover:text-orangeprimary block px-3 py-2 rounded-md text-base font-medium">Inicio</a>
+            <a href="./" className="text-gray-300 hover:text-orangeprimary block px-3 py-2 rounded-md text-base font-medium">Inicio</a>
             <a href="#" className="text-gray-300 hover:text-orangeprimary block px-3 py-2 rounded-md text-base font-medium">Calendario</a>
             <a href="#" className="text-gray-300 hover:text-orangeprimary block px-3 py-2 rounded-md text-base font-medium">Entradas</a>
             <a href="#" className="text-gray-300 hover:text-orangeprimary block px-3 py-2 rounded-md text-base font-medium">Settings</a>
           </div>
           <div>
-          <a href="#" className="text-gray-300 mt-20 hover:text-orangeprimary block px-3 py-2 rounded-md text-base font-medium">Cerrar Sesión</a>
+          <a href="./" className="text-gray-300 mt-20 hover:text-orangeprimary block px-3 py-2 rounded-md text-base font-medium">Cerrar Sesión</a>
           <img className="ml-5 h-10 border w-auto rounded-full shadow-2xl" src={logow} alt="Flowento" />
           </div>
         </div>
