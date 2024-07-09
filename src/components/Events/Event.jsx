@@ -6,74 +6,85 @@ import Imagen5 from "../../assets/imagen5.webp";
 import Imagen6 from "../../assets/imagen6.webp";
 
 const eventos = [
-  
   {
     id: 1,
     titulo: "Hackaton Desafía tus límites con Nike",
-    fecha: "2024-07-05",
+    fecha: "2024-07-08",
     hora: "23:00",
     ubicacion: "Salón de universitarios - 370",
     imagen: Imagen6,
     precio: 200,
     entradasDisponibles: 1,
-    estado:"",
+    estado: "",
+    informacion:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed, quidem quod veniam aut explicabo a aliquid! Officiis at pariatur non debitis optio numquam distinctio ex doloribus ratione veniam nulla quod placeat, dignissimos nam ut quae enim minima vel. Obcaecati placeat distinctio tenetur assumenda a, numquam non iste reiciendis voluptas ipsam?",
   },
   {
     id: 2,
     titulo: "Desayuno RRHH: más de 90 medidas RRHH para una mediana empresa",
-    fecha: "2024-07-07",
+    fecha: "2024-07-09",
     hora: "09:00",
     ubicacion: "ScaleUp",
     imagen: Imagen2,
     precio: 50,
     entradasDisponibles: 100,
-    estado:"",
+    estado: "",
+    informacion:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed, quidem quod veniam aut explicabo a aliquid! Officiis at pariatur non debitis optio numquam distinctio ex doloribus ratione veniam nulla quod placeat, dignissimos nam ut quae enim minima vel. Obcaecati placeat distinctio tenetur assumenda a, numquam non iste reiciendis voluptas ipsam?",
   },
   {
     id: 3,
     titulo: "Open Day Master",
-    fecha: "2024-07-08",
+    fecha: "2024-07-10",
     hora: "09:30",
     ubicacion: "Inno/Online",
     imagen: Imagen3,
     precio: "gratuito",
     entradasDisponibles: 100,
-    estado:"",
+    estado: "",
+    informacion:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed, quidem quod veniam aut explicabo a aliquid! Officiis at pariatur non debitis optio numquam distinctio ex doloribus ratione veniam nulla quod placeat, dignissimos nam ut quae enim minima vel. Obcaecati placeat distinctio tenetur assumenda a, numquam non iste reiciendis voluptas ipsam?",
   },
   {
     id: 4,
     titulo:
       "Webinar online: ¿Cómo aplicar la agilidad para crear más valor en tu...",
-    fecha: "2024-07-09",
+    fecha: "2024-07-11",
     hora: "10:00",
     ubicacion: "Online",
     imagen: Imagen4,
     precio: 100,
     entradasDisponibles: 0,
-    estado:"",
+    estado: "",
+    informacion:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed, quidem quod veniam aut explicabo a aliquid! Officiis at pariatur non debitis optio numquam distinctio ex doloribus ratione veniam nulla quod placeat, dignissimos nam ut quae enim minima vel. Obcaecati placeat distinctio tenetur assumenda a, numquam non iste reiciendis voluptas ipsam?",
   },
   {
     id: 5,
     titulo: "Cómo convertir los datos en información útil",
-    fecha: "2024-07-04",
+    fecha: "2024-07-12",
     hora: "10:30",
     ubicacion: "Online",
     imagen: Imagen5,
     precio: 200,
     entradasDisponibles: 5,
-    estado:"",
+    estado: "",
+    informacion:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed, quidem quod veniam aut explicabo a aliquid! Officiis at pariatur non debitis optio numquam distinctio ex doloribus ratione veniam nulla quod placeat, dignissimos nam ut quae enim minima vel. Obcaecati placeat distinctio tenetur assumenda a, numquam non iste reiciendis voluptas ipsam?",
   },
   {
     id: 6,
     titulo:
       "Desayuno sostenibilidad: 'cuando el propósito tiene más bla-bla-bla que...'",
-    fecha: "2024-07-06",
+    fecha: "2024-07-13",
     hora: "08:00",
     ubicacion: "Inno",
     imagen: Imagen1,
     precio: "gratuito",
     entradasDisponibles: 100,
-    estado:"",
+    estado: "",
+    informacion:
+      "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed, quidem quod veniam aut explicabo a aliquid! Officiis at pariatur non debitis optio numquam distinctio ex doloribus ratione veniam nulla quod placeat, dignissimos nam ut quae enim minima vel. Obcaecati placeat distinctio tenetur assumenda a, numquam non iste reiciendis voluptas ipsam?",
   },
 ];
 
@@ -89,7 +100,10 @@ eventos.forEach((evento) => {
     evento.estado = "proximos";
     if (evento.entradasDisponibles === 0) {
       evento.etiquetaEntradas = "PLAZAS AGOTADAS";
-    } else if (evento.entradasDisponibles <= 15 && evento.entradasDisponibles >= 1) {
+    } else if (
+      evento.entradasDisponibles <= 15 &&
+      evento.entradasDisponibles >= 1
+    ) {
       evento.etiquetaEntradas = "ÚLTIMAS PLAZAS";
     }
     if (
