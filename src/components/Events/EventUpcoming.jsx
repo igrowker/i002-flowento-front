@@ -29,7 +29,7 @@ export const EvenUpComming = () => {
       <div className="">
         {getEventosDelDiaActual().length > 0 && (
           <>
-            <h2 className="font-bold text-xl md:text-3xl title-font gradient-red px-4 mb-2 md:mb-4">
+            <h2 className="px-4 mb-2 text-xl font-bold md:text-3xl title-font gradient-red md:mb-4">
               Último día, no te lo pierdas
             </h2>
             <Swiper
@@ -58,44 +58,43 @@ export const EvenUpComming = () => {
                 <SwiperSlide key={evento.id}>
                   <div className="w-full px-8 pb-4">
                     <div
-                      className="bg-gray-50 rounded-3xl p-3 relative"
+                      className="relative p-3 bg-gray-50 rounded-3xl"
                       style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
                     >
                       {evento.estado === "proximos" && (
                         <>
-                        {evento.etiquetaHora === "ÚLTIMAS HORAS" && (
-                          <div
-                            className="absolute top-5 left-5 bg-orangeprimary text-white rounded-lg uppercase font-bold"
-                            style={{ padding: "1px 10px", fontSize: "9px" }}
-                          >
-                            <p>Últimas horas</p>
-                          </div>
-                        )}
-                        {(evento.etiquetaEntradas === "ÚLTIMAS PLAZAS" ||
-                          evento.etiquetaEntradas === "PLAZAS AGOTADAS") && (
-                          <div
-                            className="absolute top-5 right-5 bg-bghours text-white rounded-lg uppercase font-bold"
-                            style={{ padding: "1px 10px", fontSize: "9px" }}
-                          >
-                            {evento.etiquetaEntradas === "ÚLTIMAS PLAZAS" && (
-                              <p>Últimas plazas</p>
-                            )}
-                            {evento.etiquetaEntradas === "PLAZAS AGOTADAS" && (
-                              <p>Plazas Agotadas</p>
-                            )}
-                          </div>
-                        )}
-                      </>
+                          {evento.etiquetaHora === "ÚLTIMAS HORAS" && (
+                            <div
+                              className="absolute font-bold text-white uppercase rounded-lg top-5 left-5 bg-orangeprimary"
+                              style={{ padding: "1px 10px", fontSize: "9px" }}
+                            >
+                              <p>Últimas horas</p>
+                            </div>
+                          )}
+                          {(evento.etiquetaEntradas === "ÚLTIMAS PLAZAS" ||
+                            evento.etiquetaEntradas === "PLAZAS AGOTADAS") && (
+                            <div
+                              className="absolute font-bold text-white uppercase rounded-lg top-5 right-5 bg-bghours"
+                              style={{ padding: "1px 10px", fontSize: "9px" }}
+                            >
+                              {evento.etiquetaEntradas === "ÚLTIMAS PLAZAS" && (
+                                <p>Últimas plazas</p>
+                              )}
+                              {evento.etiquetaEntradas ===
+                                "PLAZAS AGOTADAS" && <p>Plazas Agotadas</p>}
+                            </div>
+                          )}
+                        </>
                       )}
                       <img
-                        className="rounded-2xl w-full max-h-40 object-cover object-center mb-3"
+                        className="object-cover object-center w-full mb-3 rounded-2xl max-h-40"
                         src={evento.imagen}
                         alt="content"
                       />
-                      <h2 className="text-sm md:text-base gradient-red font-bold mb-4 text-justify">
+                      <h2 className="mb-4 text-sm font-bold text-justify md:text-base gradient-red">
                         <Link to="/">{evento.titulo}</Link>
                       </h2>
-                      <div className="font-lato text-gray-500 pb-3 flex justify-between">
+                      <div className="flex justify-between pb-3 text-gray-500 font-lato">
                         <div className="flex gap-1">
                           <BsCalendarCheck className="text-orangeprimary" />
                           <p className="flex text-xs">{evento.fecha}</p>
@@ -105,7 +104,7 @@ export const EvenUpComming = () => {
                           <p className="flex text-xs">{evento.hora} h</p>
                         </div>
                       </div>
-                      <div className="font-lato text-gray-500 flex justify-between">
+                      <div className="flex justify-between text-gray-500 font-lato">
                         <div className="flex gap-1">
                           <GoLocation className="text-orangeprimary" />
                           <p className="flex text-xs">{evento.ubicacion}</p>
