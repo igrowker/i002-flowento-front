@@ -11,9 +11,9 @@ import Imagen3 from "../../assets/imagen3.webp";
 import Imagen4 from "../../assets/imagen4.webp";
 import Imagen5 from "../../assets/imagen5.webp";
 import Imagen6 from "../../assets/imagen6.webp";
+import FloatingButton from "./FloatingButton";
 import { Navigation } from "swiper/modules";
 import SwiperNavigation from "./SwiperNavigation";
-import EventForm from "./EventForm";
 
 
 const EventApproval = () => {
@@ -303,7 +303,7 @@ const EventApproval = () => {
           ))}
           {getEventosFiltradosYOrdenados() && <SwiperNavigation />}
         </Swiper>
-        <EventForm/>
+        <FloatingButton/>
       </div>
     </>
   );
