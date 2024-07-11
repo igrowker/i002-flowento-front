@@ -13,11 +13,9 @@ import Login from "./components/Auth/Login";
 import Navbar from "./components/Navbar/Navbar";
 import InputLogin from "./components/Auth/InputLogin";
 import Error from "./components/Error";
-import PasswordReset from "./components/Auth/PasswordReset"
+import PasswordReset from "./components/Auth/PasswordReset";
 import InputPerfil from "./components/Auth/InputPerfil";
 import PerfilEdit from "./components/Auth/PerfilEdit";
-
-
 
 function App() {
   const location = useLocation();
@@ -31,10 +29,10 @@ function App() {
       <Routes>
         <Route path="/" element={<InputLogin />} />
         <Route path="/login" element={<Login />} />
-        <Route path="/PasswordReset" element={<PasswordReset/>}/>
+        <Route path="/password-reset" element={<PasswordReset />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/InputPerfil" element={<InputPerfil/>}/>
-        <Route path="/PerfilEdit" element={<PerfilEdit/>}/>
+        <Route path="/input-perfil" element={<InputPerfil />} />
+        <Route path="/perfil-edit" element={<PerfilEdit />} />
         <Route path="/error" element={<Error />} />
         <Route path="/event-list" element={<EventList />} />
         <Route path="/event-approval" element={<EventApproval />} />
