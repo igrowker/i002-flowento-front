@@ -5,7 +5,6 @@ import axios from "axios";
 import { useRef } from "react";
 
 function Login() {
-
   const form = useRef(null);
 
   const login = (e) => {
@@ -15,17 +14,18 @@ function Login() {
 
     const obj = {};
 
-    data.forEach((value, key) => obj[key] = value);
+    data.forEach((value, key) => (obj[key] = value));
 
     //en el front no olvidar esta parte
     axios.defaults.withCredentials = true;
 
     //cuando lo montemos en vercel o render estas url hay q cambiarlas
-    axios.post("http://localhost:8080/auth/login", {
-      email: obj["email"],
-      password: obj["password"]
-    })
-      .then(response => {
+    axios
+      .post("http://localhost:8080/auth/login", {
+        email: obj["email"],
+        password: obj["password"],
+      })
+      .then((response) => {
         const { data } = response;
 
         //deje algunos console log para q vean q les llega desde el back
@@ -34,12 +34,11 @@ function Login() {
 
         if (data.status === "success") {
           alert("Te logueaste con exito");
-        }
-        else {
+        } else {
           alert("alguno de los datos es incorrecto"); //en la data el mensaje puede ser mas perzonalizado
         }
-      })
-  }
+      });
+  };
 
   return (
     <>
@@ -52,7 +51,9 @@ function Login() {
           <h2 className="mt-1 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Plataforma de eventos de
           </h2>
-          <h1 className="text-orangeprimary text-center text-7xl font-bold ">HdE</h1>
+          <h1 className="text-orangeprimary text-center text-7xl font-bold ">
+            HdE
+          </h1>
         </div>
 
         <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
@@ -76,7 +77,6 @@ function Login() {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
                 />
               </div>
-
             </div>
 
             <div>

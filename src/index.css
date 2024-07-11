@@ -59,3 +59,15 @@ body {
     var(--orangesecondary)
   );
 }
+
+.swiper-button-prev,
+.swiper-button-next {
+  color: var(--redprimary); 
+  position: absolute;
+  z-index: 10;
+  user-select: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  cursor: pointer;
+}

@@ -1,32 +1,34 @@
+import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
+import { Navigation } from "swiper/modules";
+import SwiperNavigation from "./SwiperNavigation";
 import { BsCalendarCheck, BsClock } from "react-icons/bs";
 import { GoLocation } from "react-icons/go";
 import { BiDollar } from "react-icons/bi";
 import "swiper/swiper-bundle.css";
 import EventButton from "./EventButton";
 import eventos from "./Event";
-import { useState } from "react";
 
 export const EventCard = () => {
   const [activeButton, setActiveButton] = useState("todos");
-  const [eventosFiltrados, setEventosFiltrados] = useState(eventos);
 
-  const handleFilterChange = (buttonName) => {
+  const eventosFiltrados = useMemo(() => {
     let filteredEvents = [];
-    if (buttonName === "proximos") {
+    if (activeButton === "proximos") {
       filteredEvents = eventos.filter((evento) => evento.estado === "proximos");
-    } else if (buttonName === "gratuitos") {
+    } else if (activeButton === "gratuitos") {
       filteredEvents = eventos.filter((evento) => evento.precio === "gratuito");
-    } else if (buttonName === "de_pago") {
+    } else if (activeButton === "de_pago") {
       filteredEvents = eventos.filter((evento) => evento.precio !== "gratuito");
-    } else if (buttonName === "finalizado") {
+    } else if (activeButton === "finalizado") {
       filteredEvents = eventos.filter(
         (evento) => evento.estado === "finalizado"
       );
     } else {
       filteredEvents = eventos;
     }
+
     filteredEvents.sort((a, b) => {
       const fechaA = new Date(a.fecha.split("/").reverse().join("-"));
       const fechaB = new Date(b.fecha.split("/").reverse().join("-"));
@@ -37,8 +39,15 @@ export const EventCard = () => {
       }
     });
 
-    setEventosFiltrados(filteredEvents);
+    return filteredEvents;
+  }, [activeButton]);
+
+  const handleFilterChange = (buttonName) => {
     setActiveButton(buttonName);
+  };
+
+  const showNavigation = (slidesPerView) => {
+    return eventosFiltrados.length > slidesPerView;
   };
 
   return (
@@ -54,7 +63,7 @@ export const EventCard = () => {
               ? "Eventos Gratuitos"
               : activeButton === "de_pago"
               ? "Eventos de Pago"
-              : "Todos los eventos"}
+              : "Todos los Eventos"}
           </h1>
         </div>
         <EventButton eventos={eventos} onFilterChange={handleFilterChange} />
@@ -64,22 +73,29 @@ export const EventCard = () => {
         slidesPerView={1}
         spaceBetween={1}
         centeredSlides={false}
-        navigation={false}
-        loop={true}
+        navigation={{
+          nextEl: ".swiper-button-next",
+          prevEl: ".swiper-button-prev",
+        }}
+        loop={eventosFiltrados.length > 4}
         speed={200}
         effect="fade"
         fadeEffect={{ crossFade: true }}
         breakpoints={{
           768: {
             slidesPerView: 2,
+            loop: eventosFiltrados.length > 2,
           },
           1024: {
             slidesPerView: 3,
+            loop: eventosFiltrados.length > 3,
           },
           1920: {
             slidesPerView: 4,
+            loop: true,
           },
         }}
+        modules={[Navigation]}
       >
         {eventosFiltrados.map((evento) => (
           <SwiperSlide key={evento.id} className="w-full px-8 pb-4">
@@ -122,9 +138,10 @@ export const EventCard = () => {
                 </div>
               )}
               <img
-                className="object-cover object-center w-full h-auto mb-3 rounded-2xl"
+                className="object-cover object-center w-full max-h-72 mb-3 rounded-2xl"
                 src={evento.imagen}
                 alt="content"
+                loading="lazy"
               />
               <h2 className="mb-4 text-sm font-bold text-justify md:text-base gradient-red">
                 <Link to="/">{evento.titulo}</Link>
@@ -156,6 +173,7 @@ export const EventCard = () => {
             </div>
           </SwiperSlide>
         ))}
+        {showNavigation(1) && <SwiperNavigation />}
       </Swiper>
     </>
   );

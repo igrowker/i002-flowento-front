@@ -11,7 +11,10 @@ import Imagen3 from "../../assets/imagen3.webp";
 import Imagen4 from "../../assets/imagen4.webp";
 import Imagen5 from "../../assets/imagen5.webp";
 import Imagen6 from "../../assets/imagen6.webp";
-import { FaPlus } from "react-icons/fa";
+import FloatingButton from "./FloatingButton";
+import { Navigation } from "swiper/modules";
+import SwiperNavigation from "./SwiperNavigation";
+
 
 const EventApproval = () => {
   const [activeButton, setActiveButton] = useState("todos");
@@ -194,22 +197,29 @@ const EventApproval = () => {
           slidesPerView={1}
           spaceBetween={1}
           centeredSlides={false}
-          navigation={false}
-          loop={true}
+          navigation={{
+            nextEl: ".swiper-button-next",
+            prevEl: ".swiper-button-prev",
+          }}
+          loop={getEventosFiltradosYOrdenados.length > 4}
           speed={200}
           effect="fade"
           fadeEffect={{ crossFade: true }}
           breakpoints={{
             768: {
               slidesPerView: 2,
+              loop: getEventosFiltradosYOrdenados.length > 2,
             },
             1024: {
               slidesPerView: 3,
+              loop: getEventosFiltradosYOrdenados.length > 3,
             },
             1920: {
               slidesPerView: 4,
+              loop: true,
             },
           }}
+          modules={[Navigation]}
         >
           {getEventosFiltradosYOrdenados().map((evento) => (
             <SwiperSlide key={evento.id} className="w-full px-8 pb-4">
@@ -220,43 +230,44 @@ const EventApproval = () => {
                 {evento.estado === "pendientes" && (
                   <div
                     className="absolute font-bold text-white uppercase rounded-lg top-5 left-5 bg-redapproval"
-                    style={{ padding: "1px 8px", fontSize: "8px" }}
+                    style={{ padding: "1px 10px", fontSize: "9px" }}
                   >
-                    <p className="md:text-xs">Pendiente de Aprobación</p>
+                    <p>Pendiente de Aprobación</p>
                   </div>
                 )}
 
                 {evento.estado === "organizado" && (
                   <div
                     className="absolute font-bold text-white uppercase rounded-lg top-5 left-5 bg-orangeprimary"
-                    style={{ padding: "1px 8px", fontSize: "8px" }}
+                    style={{ padding: "1px 10px", fontSize: "9px" }}
                   >
-                    <p className="md:text-xs">Organizado</p>
+                    <p>Organizado</p>
                   </div>
                 )}
 
                 {evento.estado === "inscrito" && (
                   <div
                     className="absolute font-bold text-white uppercase bg-green-500 rounded-lg top-5 left-5"
-                    style={{ padding: "1px 8px", fontSize: "8px" }}
+                    style={{ padding: "1px 10px", fontSize: "9px" }}
                   >
-                    <p className="md:text-xs">Inscrito</p>
+                    <p>Inscrito</p>
                   </div>
                 )}
 
                 {evento.estado === "finalizado" && (
                   <div
                     className="absolute font-bold text-white uppercase rounded-lg top-5 left-5 bg-gradient-red"
-                    style={{ padding: "1px 8px", fontSize: "8px" }}
+                    style={{ padding: "1px 10px", fontSize: "9px" }}
                   >
-                    <p className="md:text-xs">Finalizado</p>
+                    <p>Finalizado</p>
                   </div>
                 )}
 
                 <img
-                  className="object-cover object-center w-full mb-3 rounded-2xl max-h-40"
+                  className="object-cover object-center w-full max-h-72 mb-3 rounded-2xl"
                   src={evento.imagen}
                   alt="content"
+                  loading="lazy"
                 />
 
                 <h2 className="mb-4 text-sm font-bold text-justify md:text-base gradient-red">
@@ -290,13 +301,9 @@ const EventApproval = () => {
               </div>
             </SwiperSlide>
           ))}
+          {getEventosFiltradosYOrdenados() && <SwiperNavigation />}
         </Swiper>
-        <button
-          className="fixed p-4 text-white transition duration-300 border-4 border-white rounded-full shadow-lg bottom-8 right-8 bg-orangeprimary hover:bg-orange-600"
-          style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
-        >
-          <FaPlus className="text-2xl" />
-        </button>
+        <FloatingButton/>
       </div>
     </>
   );
