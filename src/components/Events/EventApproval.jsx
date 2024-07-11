@@ -121,9 +121,9 @@ const EventApproval = () => {
   return (
     <>
       <div className="container px-5 py-10 mx-auto font-lato">
-        <div className="w-full mb-6 lg:mb-4 flex flex-col lg:flex-row justify-between">
-          <div className="lg:w-1/2 w-full">
-            <h1 className="font-bold text-xl md:text-3xl title-font gradient-red gap-4 px-4">
+        <div className="flex flex-col justify-between w-full mb-6 lg:mb-4 lg:flex-row">
+          <div className="w-full lg:w-1/2">
+            <h1 className="gap-4 px-4 text-xl font-bold md:text-3xl title-font gradient-red">
               {activeButton === "pendientes"
                 ? "Eventos Pendientes de Aprobación"
                 : activeButton === "organizado"
@@ -193,14 +193,20 @@ const EventApproval = () => {
           className="mySwiper"
           slidesPerView={1}
           spaceBetween={1}
-          centeredSlides={true}
+          centeredSlides={false}
           navigation={false}
           loop={true}
+          speed={200}
+          effect="fade"
+          fadeEffect={{ crossFade: true }}
           breakpoints={{
             768: {
               slidesPerView: 2,
             },
             1024: {
+              slidesPerView: 3,
+            },
+            1920: {
               slidesPerView: 4,
             },
           }}
@@ -208,12 +214,12 @@ const EventApproval = () => {
           {getEventosFiltradosYOrdenados().map((evento) => (
             <SwiperSlide key={evento.id} className="w-full px-8 pb-4">
               <div
-                className="bg-gray-50 rounded-3xl p-3 relative"
-                style={{ boxShadow: "0px 5px 10px 2px #00000040" }}
+                className="relative p-3 bg-gray-50 rounded-3xl"
+                style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
               >
                 {evento.estado === "pendientes" && (
                   <div
-                    className="absolute top-5 left-5 bg-redapproval text-white rounded-lg uppercase font-bold"
+                    className="absolute font-bold text-white uppercase rounded-lg top-5 left-5 bg-redapproval"
                     style={{ padding: "1px 8px", fontSize: "8px" }}
                   >
                     <p className="md:text-xs">Pendiente de Aprobación</p>
@@ -222,7 +228,7 @@ const EventApproval = () => {
 
                 {evento.estado === "organizado" && (
                   <div
-                    className="absolute top-5 left-5 bg-orangeprimary text-white rounded-lg uppercase font-bold"
+                    className="absolute font-bold text-white uppercase rounded-lg top-5 left-5 bg-orangeprimary"
                     style={{ padding: "1px 8px", fontSize: "8px" }}
                   >
                     <p className="md:text-xs">Organizado</p>
@@ -231,7 +237,7 @@ const EventApproval = () => {
 
                 {evento.estado === "inscrito" && (
                   <div
-                    className="absolute top-5 left-5 bg-green-500 text-white rounded-lg uppercase font-bold"
+                    className="absolute font-bold text-white uppercase bg-green-500 rounded-lg top-5 left-5"
                     style={{ padding: "1px 8px", fontSize: "8px" }}
                   >
                     <p className="md:text-xs">Inscrito</p>
@@ -240,7 +246,7 @@ const EventApproval = () => {
 
                 {evento.estado === "finalizado" && (
                   <div
-                    className="absolute top-5 left-5 bg-gradient-red text-white rounded-lg uppercase font-bold"
+                    className="absolute font-bold text-white uppercase rounded-lg top-5 left-5 bg-gradient-red"
                     style={{ padding: "1px 8px", fontSize: "8px" }}
                   >
                     <p className="md:text-xs">Finalizado</p>
@@ -248,16 +254,16 @@ const EventApproval = () => {
                 )}
 
                 <img
-                  className="rounded-2xl w-full max-h-40 object-cover object-center mb-3"
+                  className="object-cover object-center w-full mb-3 rounded-2xl max-h-40"
                   src={evento.imagen}
                   alt="content"
                 />
 
-                <h2 className="text-sm md:text-base gradient-red font-bold mb-4 text-justify">
+                <h2 className="mb-4 text-sm font-bold text-justify md:text-base gradient-red">
                   <Link to={`/eventDetail/${evento.id}`}>{evento.titulo}</Link>
                 </h2>
 
-                <div className="font-lato text-gray-500 pb-3 flex justify-between">
+                <div className="flex justify-between pb-3 text-gray-500 font-lato">
                   <div className="flex gap-1">
                     <BsCalendarCheck className="text-orangeprimary" />
                     <p className="flex text-xs">{evento.fecha}</p>
@@ -267,7 +273,7 @@ const EventApproval = () => {
                     <p className="flex text-xs">{evento.hora} h</p>
                   </div>
                 </div>
-                <div className="font-lato text-gray-500 flex justify-between">
+                <div className="flex justify-between text-gray-500 font-lato">
                   <div className="flex gap-1">
                     <GoLocation className="text-orangeprimary" />
                     <p className="flex text-xs">{evento.ubicacion}</p>
@@ -286,7 +292,7 @@ const EventApproval = () => {
           ))}
         </Swiper>
         <button
-          className="fixed bottom-8 right-8 bg-orangeprimary text-white rounded-full p-4 border-4 border-white shadow-lg hover:bg-orange-600 transition duration-300"
+          className="fixed p-4 text-white transition duration-300 border-4 border-white rounded-full shadow-lg bottom-8 right-8 bg-orangeprimary hover:bg-orange-600"
           style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
         >
           <FaPlus className="text-2xl" />

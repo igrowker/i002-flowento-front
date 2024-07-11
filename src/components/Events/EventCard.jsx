@@ -43,9 +43,9 @@ export const EventCard = () => {
 
   return (
     <>
-      <div className="w-full mb-3 lg:mb-4 flex flex-col lg:flex-row justify-between items-center">
-        <div className="lg:w-1/2 w-full">
-          <h1 className="font-bold text-xl md:text-3xl title-font gradient-red gap-4 px-4">
+      <div className="flex flex-col items-center justify-between w-full mb-3 lg:mb-4 lg:flex-row">
+        <div className="w-full lg:w-1/2">
+          <h1 className="gap-4 px-4 text-xl font-bold md:text-3xl title-font gradient-red">
             {activeButton === "proximos"
               ? "Próximos Eventos"
               : activeButton === "finalizado"
@@ -84,14 +84,14 @@ export const EventCard = () => {
         {eventosFiltrados.map((evento) => (
           <SwiperSlide key={evento.id} className="w-full px-8 pb-4">
             <div
-              className="bg-gray-50 rounded-3xl p-3 relative"
+              className="relative p-3 bg-gray-50 rounded-3xl"
               style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
             >
               {evento.estado === "proximos" && (
                 <>
                   {evento.etiquetaHora === "ÚLTIMAS HORAS" && (
                     <div
-                      className="absolute top-5 left-5 bg-orangeprimary text-white rounded-lg uppercase font-bold"
+                      className="absolute font-bold text-white uppercase rounded-lg top-5 left-5 bg-orangeprimary"
                       style={{ padding: "1px 10px", fontSize: "9px" }}
                     >
                       <p>Últimas horas</p>
@@ -100,7 +100,7 @@ export const EventCard = () => {
                   {(evento.etiquetaEntradas === "ÚLTIMAS PLAZAS" ||
                     evento.etiquetaEntradas === "PLAZAS AGOTADAS") && (
                     <div
-                      className="absolute top-5 right-5 bg-bghours text-white rounded-lg uppercase font-bold"
+                      className="absolute font-bold text-white uppercase rounded-lg top-5 right-5 bg-bghours"
                       style={{ padding: "1px 10px", fontSize: "9px" }}
                     >
                       {evento.etiquetaEntradas === "ÚLTIMAS PLAZAS" && (
@@ -115,21 +115,21 @@ export const EventCard = () => {
               )}
               {evento.estado === "finalizado" && (
                 <div
-                  className="absolute top-5 left-5 bg-gradient-red text-white rounded-lg uppercase font-bold"
+                  className="absolute font-bold text-white uppercase rounded-lg top-5 left-5 bg-gradient-red"
                   style={{ padding: "1px 10px", fontSize: "9px" }}
                 >
                   <p>Finalizado</p>
                 </div>
               )}
               <img
-                className="rounded-2xl w-full h-auto object-cover object-center mb-3"
+                className="object-cover object-center w-full h-auto mb-3 rounded-2xl"
                 src={evento.imagen}
                 alt="content"
               />
-              <h2 className="text-sm md:text-base gradient-red font-bold mb-4 text-justify">
+              <h2 className="mb-4 text-sm font-bold text-justify md:text-base gradient-red">
                 <Link to="/">{evento.titulo}</Link>
               </h2>
-              <div className="font-lato text-gray-500 pb-3 flex justify-between">
+              <div className="flex justify-between pb-3 text-gray-500 font-lato">
                 <div className="flex gap-1">
                   <BsCalendarCheck className="text-orangeprimary" />
                   <p className="flex text-xs">{evento.fecha}</p>
@@ -139,7 +139,7 @@ export const EventCard = () => {
                   <p className="flex text-xs">{evento.hora} h</p>
                 </div>
               </div>
-              <div className="font-lato text-gray-500 flex justify-between">
+              <div className="flex justify-between text-gray-500 font-lato">
                 <div className="flex gap-1">
                   <GoLocation className="text-orangeprimary" />
                   <p className="flex text-xs">{evento.ubicacion}</p>
