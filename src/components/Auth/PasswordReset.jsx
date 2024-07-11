@@ -2,27 +2,32 @@ import "tailwindcss/tailwind.css";
 import logow from "../../assets/logow.png";
 import { Link } from "react-router-dom";
 
-
 const PasswordReset = () => {
   return (
     <>
-     <div className="flex min-h-full flex-col font-sans  justify-center px-6 py-12  lg:px-8">
+      <div className="flex min-h-full flex-col font-sans  justify-center px-6 py-12  lg:px-8">
         <div className="bg-gradient-red sm:mx-auto sm:w-full sm:max-w-sm ">
-                <img className="mx-auto h-60 border w-auto rounded-full shadow-2xl" src={logow} alt="Flowento" />
-        </div> 
+          <img
+            className="mx-auto h-60 border w-auto rounded-full shadow-2xl"
+            src={logow}
+            alt="Flowento"
+          />
+        </div>
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        
           <h1 className="mt-1 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
             Flowento
           </h1>
 
-          <h5 className="mt-1 text-center   leading-9 tracking-tight text-gray-300">Olvidaste tu contraseña?</h5>
-          <h5 className="mt-1 text-center   leading-9 tracking-tight text-gray-300">Te ayudamos a Recuperarla</h5>
+          <h5 className="mt-1 text-center   leading-9 tracking-tight text-gray-300">
+            Olvidaste tu contraseña?
+          </h5>
+          <h5 className="mt-1 text-center   leading-9 tracking-tight text-gray-300">
+            Te ayudamos a Recuperarla
+          </h5>
+        </div>
 
-       </div>
-
-       <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form  className="space-y-6" >
+        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+          <form className="space-y-6">
             <div>
               <label
                 htmlFor="email"
@@ -42,7 +47,6 @@ const PasswordReset = () => {
                   className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
                 />
               </div>
-
             </div>
 
             <div>
@@ -53,7 +57,6 @@ const PasswordReset = () => {
                 >
                   Contraseña
                 </label>
-                
               </div>
               <div className="mt-2">
                 <input
@@ -76,7 +79,6 @@ const PasswordReset = () => {
                 >
                   Repetir Contraseña
                 </label>
-                
               </div>
               <div className="mt-2">
                 <input
@@ -108,14 +110,10 @@ const PasswordReset = () => {
               </span>
             </Link>
           </p>
-
-         
         </div>
-     
-     </div>
-    
+      </div>
     </>
-  )
-}
+  );
+};
 
-export default PasswordReset
+export default PasswordReset;
