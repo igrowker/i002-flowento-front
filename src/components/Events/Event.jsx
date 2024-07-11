@@ -22,8 +22,8 @@ const eventos = [
   {
     id: 2,
     titulo: "Desayuno RRHH: más de 90 medidas RRHH para una mediana empresa",
-    fecha: "2024-07-09",
-    hora: "09:00",
+    fecha: "2024-07-11",
+    hora: "23:30",
     ubicacion: "ScaleUp",
     imagen: Imagen2,
     precio: 50,
@@ -35,8 +35,8 @@ const eventos = [
   {
     id: 3,
     titulo: "Open Day Master",
-    fecha: "2024-07-10",
-    hora: "09:30",
+    fecha: "2024-07-11",
+    hora: "23:30",
     ubicacion: "Inno/Online",
     imagen: Imagen3,
     precio: "gratuito",
