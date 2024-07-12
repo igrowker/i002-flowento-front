@@ -3,12 +3,13 @@ import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import SwiperNavigation from "./SwiperNavigation";
-import { BsCalendarCheck, BsClock } from "react-icons/bs";
+import { BsCalendarCheck } from "react-icons/bs";
 import { GoLocation } from "react-icons/go";
 import { BiDollar } from "react-icons/bi";
 import "swiper/swiper-bundle.css";
 import EventButton from "./EventButton";
 import eventos from "./Event";
+import { FaRegClock } from "react-icons/fa";
 
 export const EventCard = () => {
   const [activeButton, setActiveButton] = useState("todos");
@@ -138,7 +139,7 @@ export const EventCard = () => {
                 </div>
               )}
               <img
-                className="object-cover object-center w-full max-h-72 mb-3 rounded-2xl"
+                className="object-cover object-center w-full mb-3 max-h-72 rounded-2xl"
                 src={evento.imagen}
                 alt="content"
                 loading="lazy"
@@ -152,7 +153,7 @@ export const EventCard = () => {
                   <p className="flex text-xs">{evento.fecha}</p>
                 </div>
                 <div className="flex gap-1">
-                  <BsClock className="text-orangeprimary" />
+                  <FaRegClock className="text-orangeprimary" />
                   <p className="flex text-xs">{evento.hora} h</p>
                 </div>
               </div>
