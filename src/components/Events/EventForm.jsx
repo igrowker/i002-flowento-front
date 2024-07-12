@@ -1,7 +1,12 @@
 import { useState } from "react";
 import PropTypes from "prop-types";
-import { IoCalendarOutline } from "react-icons/io5";
 import EventMessageModal from "./EventMessageModal";
+import { IoInformation } from "react-icons/io5";
+import { FaRegClock, FaRegImage } from "react-icons/fa";
+import { BiDollar } from "react-icons/bi";
+import { MdOutlineTitle } from "react-icons/md";
+import { BsCalendarCheck } from "react-icons/bs";
+import { GoLocation } from "react-icons/go";
 
 const EventForm = ({ onClose, onSubmit }) => {
   const [evento, setEvento] = useState({
@@ -43,7 +48,7 @@ const EventForm = ({ onClose, onSubmit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await onSubmit(evento); // Lógica de envío al backend
+      await onSubmit(evento);
       setIsSuccess(true);
       setMessage("¡Evento creado con éxito!");
       setShowMessage(true);
@@ -64,13 +69,48 @@ const EventForm = ({ onClose, onSubmit }) => {
   };
 
   const formFields = [
-    { id: "titulo", label: "Título", type: "text" },
-    { id: "fecha", label: "Fecha", type: "date" },
-    { id: "hora", label: "Hora", type: "time" },
-    { id: "ubicacion", label: "Ubicación", type: "text" },
-    { id: "informacion", label: "Información", type: "text" },
-    { id: "imagen", label: "Imagen", type: "file" },
-    { id: "precio", label: "Precio", type: "number" },
+    {
+      id: "titulo",
+      label: "Título",
+      type: "text",
+      icon: <MdOutlineTitle className="text-orangeprimary" />,
+    },
+    {
+      id: "fecha",
+      label: "Fecha",
+      type: "date",
+      icon: <BsCalendarCheck className="text-orangeprimary" />,
+    },
+    {
+      id: "hora",
+      label: "Hora",
+      type: "time",
+      icon: <FaRegClock className="text-orangeprimary" />,
+    },
+    {
+      id: "ubicacion",
+      label: "Ubicación",
+      type: "text",
+      icon: <GoLocation className="text-orangeprimary" />,
+    },
+    {
+      id: "informacion",
+      label: "Información",
+      type: "text",
+      icon: <IoInformation className="text-orangeprimary" />,
+    },
+    {
+      id: "imagen",
+      label: "Imagen",
+      type: "file",
+      icon: <FaRegImage className="text-orangeprimary" />,
+    },
+    {
+      id: "precio",
+      label: "Precio",
+      type: "number",
+      icon: <BiDollar className="text-orangeprimary" />,
+    },
   ];
 
   return (
@@ -82,75 +122,68 @@ const EventForm = ({ onClose, onSubmit }) => {
           </h2>
           <form onSubmit={handleSubmit}>
             {formFields.map((field) => (
-              <div key={field.id} className="mb-4">
+              <div key={field.id} className="relative mb-4">
                 <label
                   htmlFor={field.id}
-                  className="block text-sm font-medium text-gray-700"
+                  className="block text-sm font-bold text-orangeprimary"
                 >
                   {field.label}
                 </label>
-                {field.type === "select" ? (
-                  <select
-                    id={field.id}
-                    name={field.id}
-                    value={evento[field.id]}
-                    onChange={handleChange}
-                    className="block w-full px-3 py-2 mt-1 border border-gray-300 shadow-sm rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm"
-                    required
-                  >
-                    {field.options.map((option, index) => (
-                      <option key={index} value={option}>
-                        {option}
-                      </option>
-                    ))}
-                  </select>
-                ) : field.type === "file" ? (
+                {field.type === "file" ? (
                   <>
-                    <input
-                      type="text"
-                      id={field.id}
-                      name={field.id}
-                      value={evento[field.id]}
-                      onChange={handleChange}
-                      className="block w-full px-3 py-2 mt-1 border border-gray-300 shadow-sm rounded-3xl focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
-                      required
-                    />
+                    <div className="relative">
+                      <input
+                        type="text"
+                        id={field.id}
+                        name={field.id}
+                        value={evento[field.id]}
+                        onChange={handleChange}
+                        className="block w-full py-2 pl-4 mt-1 border border-gray-300 shadow-sm pr-9 rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm"
+                        required
+                      />
+                      <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                        {field.icon}
+                      </span>
+                    </div>
                     <input
                       type="file"
                       id={`${field.id}-file`}
                       accept=".jpg, .jpeg, .png"
                       onChange={handleFileChange}
-                      className="block w-full px-3 py-2 mt-1 border-gray-300 shadow-sm focus:outline-none focus:ring-orange-500 focus:border-orange-500 sm:text-sm"
+                      className="block w-full py-2 pl-4 mt-1 border-gray-300 shadow-sm pr-9 focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm"
                     />
                   </>
                 ) : (
-                  <input
-                    type={field.type}
-                    id={field.id}
-                    name={field.id}
-                    value={evento[field.id]}
-                    onChange={handleChange}
-                    className="block w-full px-3 py-2 mt-1 border border-gray-300 shadow-sm rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm"
-                    required
-                  />
+                  <div className="relative">
+                    <input
+                      type={field.type}
+                      id={field.id}
+                      name={field.id}
+                      value={evento[field.id]}
+                      onChange={handleChange}
+                      className="block w-full py-2 pl-4 mt-1 border border-gray-300 shadow-sm pr-9 rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm"
+                      required
+                    />
+                    <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                      {field.icon}
+                    </span>
+                  </div>
                 )}
-
-                {field.id === "fecha" || field.id === "hora" ? (
-                  <IoCalendarOutline className="absolute transform -translate-y-1/2 right-3 top-1/2 text-orangeprimary" />
-                ) : null}
               </div>
             ))}
             <div className="flex justify-between">
               <button
                 type="button"
                 onClick={onClose}
-                className="px-4 py-2 mr-2 text-white transition-colors duration-300 bg-redprimary rounded-3xl hover:bg-red-800 hover:text-white"
+                className="px-4 py-2 mr-2 text-white transition-colors duration-300 border-2 border-white bg-redprimary rounded-3xl hover:bg-red-800 hover:text-white"
+                style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
               >
                 Cancelar
               </button>
               <button
                 type="submit"
-                className="px-4 py-2 text-white transition-colors duration-300 bg-orangeprimary rounded-3xl hover:bg-orange-600 hover:text-white"
+                className="px-4 py-2 text-white transition-colors duration-300 border-2 border-white bg-orangeprimary rounded-3xl hover:bg-orange-600 hover:text-white"
+                style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
               >
                 Crear Evento
               </button>
