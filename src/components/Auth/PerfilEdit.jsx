@@ -1,18 +1,21 @@
 import imgAvatar from "../../assets/Avatar.png";
 import "tailwindcss/tailwind.css";
+import { GoArrowLeft } from "react-icons/go";
 
 const PerfilEdit = () => {
   return (
     <>
-      <div className="mb-56">
-        <div className="bg-White h-80 static text-4xl font-lato">
-          <div className="flex flex-col items-center justify-center relative top-16">
+      <div className="mb-56 ">
+       
+        <div className="static text-4xl bg-White h-80 font-lato ">
+         <GoArrowLeft />
+          <div className="relative flex flex-col items-center justify-center top-16">
             <p>Juan Carlos</p>
             <img src={imgAvatar} alt="imagen Perfil" />
           </div>
         </div>
 
-        <div className="max-w-md mx-auto p-4 ">
+        <div className="max-w-md p-4 mx-auto ">
           <div>
             <p>Nombre:</p>
             <input
@@ -85,9 +88,11 @@ const PerfilEdit = () => {
             />
           </div>
 
-          <button className="bg-orangeprimary text-white px-4 py-2 rounded">
+          <div className="pl-10">
+          <button className="justify-center h-8 mr-8 text-white rounded-full w-80 bg-orangeprimary">
             Guardar
           </button>
+          </div>
         </div>
       </div>
     </>

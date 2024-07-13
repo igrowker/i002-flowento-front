@@ -42,21 +42,19 @@ function Login() {
 
   return (
     <>
-      <div className="flex min-h-full flex-col font-sans  justify-center px-6 py-12 lg:px-8">
+      <div className="flex flex-col justify-center min-h-full px-6 py-12 font-lato lg:px-8 bg-gradient-red">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-2xl font-bold  leading-9 tracking-tight text-gray-900">
-            Bienvenido
-          </h2>
-          <img className="mx-auto h-60 w-auto" src={logow} alt="Flowento" />
-          <h2 className="mt-1 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          <img className="w-auto mx-auto border rounded-full shadow-2xl h-60" src={logow} alt="Flowento" />
+          
+          <h2 className="mt-1 text-2xl font-bold leading-9 tracking-tight text-center text-gray-900">
             Plataforma de eventos de
           </h2>
-          <h1 className="text-orangeprimary text-center text-7xl font-bold ">
+          <h1 className="font-bold text-center text-orangeprimary text-7xl ">
             HdE
           </h1>
         </div>
 
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="mt-10 text-center sm:mx-auto sm:w-full sm:max-w-sm">
           <form ref={form} className="space-y-6" onSubmit={(e) => login(e)}>
             <div>
               <label
@@ -74,7 +72,7 @@ function Login() {
                   autoComplete="email"
                   placeholder=" Ingrese su email"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md pl-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -90,7 +88,7 @@ function Login() {
                 <div className="text-sm">
                   {/* <Link to={"/recoverPassword"} /> link provicinal todavia falta definir el enpoint y la vista para recuperar contraseña (cuando eso este sacar la etiquea link de html osea "a") */}
                   <a
-                    href="#"
+                    href="/password-reset"
                     className="font-semibold text-orangeprimary hover:text-orangesecondary"
                   >
                     He olvidado mi Contraseña
@@ -105,7 +103,7 @@ function Login() {
                   autoComplete="current-password"
                   placeholder=" Ingrese su contraseña"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md pl-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -113,17 +111,17 @@ function Login() {
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-orangeprimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orangesecondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="flex w-full justify-center rounded-3xl bg-orangeprimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orangesecondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
               >
                 Acceder
               </button>
             </div>
           </form>
 
-          <p className="mt-10 text-center text-sm text-gray-500">
+          <p className="mt-10 text-sm text-center text-gray-500">
             No tienes Cuenta?
             <Link to={"/register"}>
-              <span className="font-semibold leading-6 text-orangeprimary hover:text-orangesecondary">
+              <span className="pl-2 font-semibold leading-6 text-orangeprimary hover:text-orangesecondary">
                 Registrate
               </span>
             </Link>

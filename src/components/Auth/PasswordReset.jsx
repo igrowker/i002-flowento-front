@@ -5,23 +5,23 @@ import { Link } from "react-router-dom";
 const PasswordReset = () => {
   return (
     <>
-      <div className="flex min-h-full flex-col font-sans  justify-center px-6 py-12  lg:px-8">
-        <div className="bg-gradient-red sm:mx-auto sm:w-full sm:max-w-sm ">
+      <div className="flex flex-col justify-center min-h-full px-6 py-12 font-sans bg-gradient-red lg:px-8">
+        <div className=" sm:mx-auto sm:w-full sm:max-w-sm">
           <img
-            className="mx-auto h-60 border w-auto rounded-full shadow-2xl"
+            className="w-auto mx-auto border rounded-full shadow-2xl h-60"
             src={logow}
             alt="Flowento"
           />
         </div>
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h1 className="mt-1 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          <h1 className="mt-1 text-2xl font-bold leading-9 tracking-tight text-center text-gray-900">
             Flowento
           </h1>
 
-          <h5 className="mt-1 text-center   leading-9 tracking-tight text-gray-300">
+          <h5 className="mt-1 leading-9 tracking-tight text-center text-gray-300">
             Olvidaste tu contraseña?
           </h5>
-          <h5 className="mt-1 text-center   leading-9 tracking-tight text-gray-300">
+          <h5 className="mt-1 leading-9 tracking-tight text-center text-gray-300">
             Te ayudamos a Recuperarla
           </h5>
         </div>
@@ -44,7 +44,7 @@ const PasswordReset = () => {
                   autoComplete="email"
                   placeholder=" Ingrese su email"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md pl-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -66,7 +66,7 @@ const PasswordReset = () => {
                   autoComplete="current-password"
                   placeholder=" Ingrese su contraseña"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md pl-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -88,7 +88,7 @@ const PasswordReset = () => {
                   autoComplete="current-password"
                   placeholder=" Repetir Contraseña"
                   required
-                  className="block w-full rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
+                  className="block w-full rounded-md border-0 pl-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
                 />
               </div>
             </div>
@@ -96,14 +96,14 @@ const PasswordReset = () => {
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-orangeprimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orangesecondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="flex w-full rounded-3xl justify-center  bg-orangeprimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orangesecondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
               >
                 Recuperar
               </button>
             </div>
           </form>
 
-          <p className="mt-10 text-center text-sm text-gray-500">
+          <p className="mt-10 text-sm text-center text-gray-500">
             <Link to={"/Login"}>
               <span className="font-semibold leading-6 text-orangeprimary hover:text-orangesecondary">
                 Iniciar Sesión
