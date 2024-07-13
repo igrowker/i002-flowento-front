@@ -8,21 +8,21 @@ import { MdEmail } from "react-icons/md";
 const InputLogin = () => {
   return (
     <>
-      <div className="flex min-h-full flex-col font-sans  justify-center px-6 py-12  lg:px-8">
-        <div className="bg-gradient-red sm:mx-auto sm:w-full sm:max-w-sm ">
+      <div className="flex flex-col justify-center min-h-full px-6 py-12 font-sans bg-gradient-red lg:px-8">
+        <div className=" sm:mx-auto sm:w-full sm:max-w-sm">
           <img
-            className="mx-auto h-60 border w-auto rounded-full shadow-2xl"
+            className="w-auto mx-auto border rounded-full shadow-2xl h-60"
             src={logow}
             alt="Flowento"
           />
         </div>
 
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h1 className="mt-1 text-center text-2xl font-bold leading-9 tracking-tight text-gray-900">
+          <h1 className="mt-1 text-2xl leading-9 tracking-tight text-center text-gray-900 font-lato">
             Flowento
           </h1>
 
-          <h5 className="mt-1 text-center   leading-9 tracking-tight text-gray-300">
+          <h5 className="mt-1 leading-9 tracking-tight text-center text-gray-300">
             Registrate o inicia sesión para incribirte a un evento en HdE
           </h5>
         </div>
@@ -32,7 +32,7 @@ const InputLogin = () => {
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-gray-300 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 "
+                className="flex w-full justify-center rounded-3xl bg-gray-300 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 "
               >
                 <FaFacebook className="text-indigo-500 w-7 h-7 mr-7" />
                 Ingrese con Facebook
@@ -42,7 +42,7 @@ const InputLogin = () => {
             <div>
               <button
                 type="submit"
-                className="flex w-full justify-center rounded-md bg-gray-300 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="flex w-full justify-center rounded-3xl bg-gray-300 px-3 py-1.5 text-sm font-semibold leading-6 text-black shadow-sm hover:bg-gray-100 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
               >
                 <img className="w-8 h-7 mr-9" src={google} alt="google" />
                 Ingrese con Google
@@ -53,10 +53,10 @@ const InputLogin = () => {
               <Link to="/Login">
                 <button
                   type="button"
-                  className="flex w-full border justify-center rounded-md px-3 py-1.5 text-sm font-semibold leading-6 text-black  shadow-md hover:bg-orangesecondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                  className="flex w-full  bg-orangeprimary justify-center rounded-3xl px-3 py-1.5 text-sm font-semibold leading-6 text-black  shadow-md hover:bg-orange-600 hover:text-white"
                 >
-                  <div className=" bg-orangeprimary  rounded-full flex justify-center items-center w-8 h-8 mr-8">
-                    <MdEmail className="text-white object-cover w-5 h-5 " />
+                  <div className="flex items-center justify-center w-8 h-8 mr-8 rounded-full bg-orangeprimary">
+                    <MdEmail className="object-cover w-5 h-5 text-white " />
                   </div>
                   Ingrese con su email
                 </button>

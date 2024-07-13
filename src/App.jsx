@@ -5,7 +5,7 @@ import {
   Routes,
   useLocation,
 } from "react-router-dom";
-import { EventList } from "./components/Events/EventList";
+import {EventList} from "./components/Events/EventList";
 import Footer from "./components/Footer";
 import EventApproval from "./components/Events/EventApproval";
 // import { Register } from "./components/Auth/Register";
