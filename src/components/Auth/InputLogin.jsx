@@ -8,7 +8,7 @@ import { MdEmail } from "react-icons/md";
 const InputLogin = () => {
   return (
     <>
-      <div className="flex flex-col justify-center min-h-full px-6 py-12 font-sans bg-gradient-red lg:px-8">
+      <div className="flex flex-col justify-center h-screen px-6 py-12 font-sans bg-gradient-red lg:px-8">
         <div className=" sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             className="w-auto mx-auto border rounded-full shadow-2xl h-60"
@@ -53,10 +53,10 @@ const InputLogin = () => {
               <Link to="/Login">
                 <button
                   type="button"
-                  className="flex w-full  bg-orangeprimary justify-center rounded-3xl px-3 py-1.5 text-sm font-semibold leading-6 text-black  shadow-md hover:bg-orange-600 hover:text-white"
+                  className="flex w-full bg-orangeprimary justify-center rounded-3xl px-3 py-1.5 text-sm font-semibold leading-6 text-black  shadow-md hover:bg-orange-600 hover:text-white"
                 >
-                  <div className="flex items-center justify-center w-8 h-8 mr-8 rounded-full bg-orangeprimary">
-                    <MdEmail className="object-cover w-5 h-5 text-white " />
+                  <div className="flex items-center justify-center w-8 h-8 mr-8 rounded-full bg-orangesecondary">
+                    <MdEmail className="object-cover w-5 h-5 text-white" />
                   </div>
                   Ingrese con su email
                 </button>
