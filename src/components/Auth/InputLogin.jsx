@@ -5,10 +5,11 @@ import { Link } from "react-router-dom";
 import { FaFacebook } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
 
+
 const InputLogin = () => {
   return (
     <>
-      <div className="flex flex-col justify-center h-screen px-6 py-12 font-sans bg-gradient-red lg:px-8">
+      <div className="flex flex-col justify-center h-screen px-6 py-12 font-sans lg:px-8 bg-no-repeat bg-cover bg-[url('../src/assets/Rectangle1.png')]">
         <div className=" sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             className="w-auto mx-auto border rounded-full shadow-2xl h-60"

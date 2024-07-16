@@ -42,7 +42,7 @@ function Login() {
 
   return (
     <>
-      <div className="flex flex-col justify-center min-h-full px-6 py-12 font-lato lg:px-8 bg-gradient-red">
+      <div className="flex flex-col justify-center min-h-full px-6 py-12 font-lato lg:px-8 bg-no-repeat bg-cover bg-[url('../src/assets/Rectangle1.png')]">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img className="w-auto mx-auto border rounded-full shadow-2xl h-60" src={logow} alt="Flowento" />
           
