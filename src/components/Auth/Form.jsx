@@ -21,7 +21,7 @@ export const Form = () => {
     console.log(obj);
 
     axios
-      .post("http://localhost:8080/auth/register", {
+      .post("https://i002-flowento-back-1.onrender.com/auth/register", {
         first_name: obj["nombre"],
         last_name: obj["apellido"],
         email: obj["email"],
@@ -33,15 +33,24 @@ export const Form = () => {
 
         console.log(response);
         console.log(data);
+        console.log(data.status, data.payload);
 
         if (data.status === "success") {
           alert("Te registraste con exito");
         } else {
-          alert("alguno de los datos es incorrecto"); //en la data el mensaje puede ser mas perzonalizado
+          alert("alguno de los datos es incorrecto");
         }
 
         setData(true);
-      });
+      })
+      .catch(function (error) {
+        const { response } = error;
+        const { data } = response;
+
+        alert(data.payload);
+
+        setData(true);
+      })
   };
 
   return (

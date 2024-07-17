@@ -77,7 +77,7 @@ const PasswordReset = () => {
             <div>
               <div className="flex items-center justify-between">
                 <label
-                  htmlFor="password"
+                  htmlFor="resetPassword"
                   className="block text-sm font-medium leading-6 text-gray-900"
                 >
                   Repetir Contraseña
@@ -85,8 +85,8 @@ const PasswordReset = () => {
               </div>
               <div className="mt-2">
                 <input
-                  id="password"
-                  name="password"
+                  id="resetPassword"
+                  name="resetPassword"
                   type="password"
                   autoComplete="current-password"
                   placeholder=" Repetir Contraseña"
