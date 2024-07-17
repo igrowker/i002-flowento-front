@@ -19,7 +19,7 @@ import PerfilEdit from "./components/Auth/PerfilEdit";
 
 function App() {
   const location = useLocation();
-  const hideNavbarAndFooter = ["/", "/login", "/register", "/error"].includes(
+  const hideNavbarAndFooter = ["/", "/login", "/register", "/error", "/password-reset"].includes(
     location.pathname.toLowerCase()
   );
 
