@@ -8,7 +8,7 @@ import {
 import {EventList} from "./components/Events/EventList";
 import Footer from "./components/Footer";
 import EventApproval from "./components/Events/EventApproval";
-// import { Register } from "./components/Auth/Register";
+import { Register } from "./components/Auth/Register";
 import Login from "./components/Auth/Login";
 import Navbar from "./components/Navbar/Navbar";
 import InputLogin from "./components/Auth/InputLogin";
@@ -19,7 +19,7 @@ import PerfilEdit from "./components/Auth/PerfilEdit";
 
 function App() {
   const location = useLocation();
-  const hideNavbarAndFooter = ["/", "/login", "/register", "/error"].includes(
+  const hideNavbarAndFooter = ["/", "/login", "/register", "/error", "/password-reset"].includes(
     location.pathname.toLowerCase()
   );
 
@@ -30,7 +30,7 @@ function App() {
         <Route path="/" element={<InputLogin />} />
         <Route path="/login" element={<Login />} />
         <Route path="/password-reset" element={<PasswordReset />} />
-        {/* <Route path="/register" element={<Register />} /> */}
+        <Route path="/register" element={<Register />} /> 
         <Route path="/input-perfil" element={<InputPerfil />} />
         <Route path="/perfil-edit" element={<PerfilEdit />} />
         <Route path="/error" element={<Error />} />
