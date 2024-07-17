@@ -1,11 +1,12 @@
 import "tailwindcss/tailwind.css";
 import logow from "../../assets/logow.png";
 import { Link } from "react-router-dom";
+import flowento from "../../assets/flowento.png"
 
 const PasswordReset = () => {
   return (
     <>
-      <div className="flex flex-col justify-center min-h-full px-6 py-12 font-sans bg-gradient-red lg:px-8">
+      <div className="flex flex-col justify-center min-h-full px-6 py-12 font-sans bg-no-repeat bg-cover bg-[url('../src/assets/Rectangle1.png')] lg:px-8">
         <div className=" sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             className="w-auto mx-auto border rounded-full shadow-2xl h-60"
@@ -14,9 +15,11 @@ const PasswordReset = () => {
           />
         </div>
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h1 className="mt-1 text-2xl font-bold leading-9 tracking-tight text-center text-gray-900">
-            Flowento
-          </h1>
+        <img
+              className="w-auto mx-auto"
+              src={flowento}
+              alt="Flowento"
+            />
 
           <h5 className="mt-1 leading-9 tracking-tight text-center text-gray-300">
             Olvidaste tu contraseña?

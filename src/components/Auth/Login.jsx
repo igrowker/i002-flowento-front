@@ -3,6 +3,7 @@ import logow from "../../assets/logow.png";
 import { Link, useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useRef, useState } from "react";
+import flowento from "../../assets/flowento.png"
 
 function Login() {
   const navigate = useNavigate();
@@ -104,7 +105,7 @@ function Login() {
       <div className="flex flex-col justify-center min-h-full px-6 py-12 font-lato lg:px-8 bg-no-repeat bg-cover bg-[url('../src/assets/Rectangle1.png')]">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <img className="w-auto mx-auto border rounded-full shadow-2xl h-60" src={logow} alt="Flowento" />
-
+          <img className="w-auto mx-auto " src={flowento} alt="Flowento" />
           <h2 className="mt-1 text-2xl font-bold leading-9 tracking-tight text-center text-gray-900">
             Plataforma de eventos de
           </h2>
