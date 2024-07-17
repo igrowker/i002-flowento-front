@@ -4,24 +4,32 @@ import google from "../../assets/google.png";
 import { Link } from "react-router-dom";
 import { FaFacebook } from "react-icons/fa";
 import { MdEmail } from "react-icons/md";
-
+import flowento from "../../assets/flowento.png"
 
 const InputLogin = () => {
   return (
     <>
-      <div className="flex flex-col justify-center h-screen px-6 py-12 font-sans lg:px-8 bg-no-repeat bg-cover bg-[url('../src/assets/Rectangle1.png')]">
+      <div className=" flex flex-col justify-center h-screen px-6 py-12 font-sans lg:px-8 bg-no-repeat bg-cover bg-[url('../src/assets/Rectangle1.png')]">
         <div className=" sm:mx-auto sm:w-full sm:max-w-sm">
           <img
             className="w-auto mx-auto border rounded-full shadow-2xl h-60"
             src={logow}
             alt="Flowento"
           />
+          <img
+              className="w-auto mx-auto"
+              src={flowento}
+              alt="Flowento"
+            />
         </div>
 
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h1 className="mt-1 text-2xl leading-9 tracking-tight text-center text-gray-900 font-lato">
+          {/* <h1 className="mt-1 text-2xl leading-9 tracking-tight text-center text-gray-900 font-lato">
             Flowento
-          </h1>
+          </h1> */}
+
+
+          
 
           <h5 className="mt-1 leading-9 tracking-tight text-center text-gray-300">
             Registrate o inicia sesión para incribirte a un evento en HdE
