@@ -7,10 +7,36 @@ import { IoCalendarClearOutline } from "react-icons/io5";
 import { HiOutlineTicket } from "react-icons/hi";
 import { FiSettings } from "react-icons/fi";
 import { PiSignOutBold } from "react-icons/pi";
+import axios from 'axios';
+import { useNavigate } from 'react-router-dom';
 
 
 export default function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
+  const navigate = useNavigate();
+
+  const logout = ()=>{
+    axios({
+      method: "GET",
+      url: "http://localhost:8080/auth/logout",
+      // url : "https://i002-flowento-back-1.onrender.com/auth/logout",
+      withCredentials : true
+    })
+      .then((response) => {
+        alert(response.data.payload);
+
+        navigate('/');
+      })
+      .catch(function (error) {
+
+        console.log(error);
+        
+        const { response } = error;
+        const { data } = response;
+
+        alert(data.payload);
+      })
+  }
 
   return (
     <nav className="rounded-b-full bg-gradient-red font-lato" >
@@ -66,7 +92,11 @@ export default function Navbar() {
                 <a href="/Input-Perfil" className="px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:text-orangeprimary">Perfil</a>
                 <a href="#" className="px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:text-orangeprimary">Calendario</a>
                 <a href="#" className="px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:text-orangeprimary">Settings</a>
-                <a href="/" className="px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:text-orangeprimary">Salir</a>
+                {/* <a href="/" className="px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:text-orangeprimary">Salir</a> */}
+                
+                <button onClick={logout} className="px-3 py-2 text-sm font-medium text-gray-300 rounded-md hover:text-orangeprimary">
+                    Salir
+                </button>
               
 
                 <div >
