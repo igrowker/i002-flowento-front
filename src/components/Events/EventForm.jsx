@@ -7,11 +7,13 @@ import { BiDollar } from "react-icons/bi";
 import { MdOutlineTitle } from "react-icons/md";
 import { BsCalendarCheck } from "react-icons/bs";
 import { GoLocation } from "react-icons/go";
+import DatePicker from "react-datepicker";
+import "react-datepicker/dist/react-datepicker.css";
 
 const EventForm = ({ onClose, onSubmit }) => {
   const [evento, setEvento] = useState({
     titulo: "",
-    fecha: "",
+    fecha: new Date(),
     hora: "",
     ubicacion: "",
     estado: "",
@@ -23,11 +25,10 @@ const EventForm = ({ onClose, onSubmit }) => {
   const [isSuccess, setIsSuccess] = useState(false);
   const [message, setMessage] = useState("");
 
-  const handleChange = (e) => {
-    const { name, value } = e.target;
+  const handleChange = (field, value) => {
     setEvento((prevEvento) => ({
       ...prevEvento,
-      [name]: value,
+      [field]: value,
     }));
   };
 
@@ -115,7 +116,7 @@ const EventForm = ({ onClose, onSubmit }) => {
 
   return (
     <>
-      <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-50">
+      <div className="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-50">
         <div className="p-8 bg-white shadow-lg rounded-3xl">
           <h2 className="mb-4 text-2xl font-bold text-center text-redprimary">
             Crear Nuevo Evento
@@ -137,7 +138,7 @@ const EventForm = ({ onClose, onSubmit }) => {
                         id={field.id}
                         name={field.id}
                         value={evento[field.id]}
-                        onChange={handleChange}
+                        onChange={(e) => handleChange(field.id, e.target.value)}
                         className="block w-full py-2 pl-4 mt-1 border border-gray-300 shadow-sm pr-9 rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm"
                         required
                       />
@@ -153,6 +154,39 @@ const EventForm = ({ onClose, onSubmit }) => {
                       className="block w-full py-2 pl-4 mt-1 border-gray-300 shadow-sm pr-9 focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm"
                     />
                   </>
+                ) : field.id === "hora" ? (
+                  <div className="relative">
+                    <div className="relative">
+                      <DatePicker
+                        selected={evento.hora}
+                        onChange={(date) => handleChange("hora", date)}
+                        showTimeSelect
+                        showTimeSelectOnly
+                        timeIntervals={30}
+                        timeInputLabel="Hora:"
+                        dateFormat="HH:mm"
+                        use24Hour
+                        className="block py-2 pl-4 mt-1 border border-gray-300 shadow-sm w-83 pr-9 rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm md:w-86"
+                        required
+                      />
+                      <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                        {field.icon}
+                      </span>
+                    </div>
+                  </div>
+                ) : field.id === "fecha" ? (
+                  <div className="relative">
+                    <DatePicker
+                      selected={evento.fecha}
+                      onChange={(date) => handleChange("fecha", date)}
+                      dateFormat="yyyy/MM/dd"
+                      className="block py-2 pl-4 mt-1 border border-gray-300 shadow-sm w-83 pr-9 rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm md:w-86"
+                      required
+                    />
+                    <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
+                      {field.icon}
+                    </span>
+                  </div>
                 ) : (
                   <div className="relative">
                     <input
@@ -160,9 +194,9 @@ const EventForm = ({ onClose, onSubmit }) => {
                       id={field.id}
                       name={field.id}
                       value={evento[field.id]}
-                      onChange={handleChange}
+                      onChange={(e) => handleChange(field.id, e.target.value)}
                       className="block w-full py-2 pl-4 mt-1 border border-gray-300 shadow-sm pr-9 rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm"
-                      required
+                      required={field.type !== "text"}
                     />
                     <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
                       {field.icon}
