@@ -21,6 +21,9 @@ export const EventList = () => {
 
         console.log(data);
 
+        //hagarrar la data
+        //filtrar
+
         setEvents(payload);
 
       })

@@ -9,12 +9,12 @@ const eventos = [
   {
     id: 1,
     titulo: "Hackaton Desafía tus límites con Nike",
-    fecha: "2024-07-08",
+    fecha: "2024-07-18",
     hora: "23:00",
     ubicacion: "Salón de universitarios - 370",
     imagen: Imagen6,
     precio: 200,
-    entradasDisponibles: 1,
+    entradasDisponibles: 16,
     estado: "",
     informacion:
       "Lorem ipsum dolor, sit amet consectetur adipisicing elit. Sed, quidem quod veniam aut explicabo a aliquid! Officiis at pariatur non debitis optio numquam distinctio ex doloribus ratione veniam nulla quod placeat, dignissimos nam ut quae enim minima vel. Obcaecati placeat distinctio tenetur assumenda a, numquam non iste reiciendis voluptas ipsam?",
