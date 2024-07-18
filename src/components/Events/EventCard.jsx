@@ -30,6 +30,7 @@ export const EventCard = () => {
       filteredEvents = eventos;
     }
 
+    filteredEvents = filteredEvents.filter((evento) => evento.aprobado);
     filteredEvents.sort((a, b) => {
       const fechaA = new Date(a.fecha.split("/").reverse().join("-"));
       const fechaB = new Date(b.fecha.split("/").reverse().join("-"));
@@ -50,6 +51,35 @@ export const EventCard = () => {
   const showNavigation = (slidesPerView) => {
     return eventosFiltrados.length > slidesPerView;
   };
+
+  const now = new Date();
+
+  eventos.forEach((evento) => {
+    const eventoFecha = new Date(`${evento.fecha}T${evento.hora}:00`);
+
+    if (eventoFecha < now) {
+      evento.estado = "finalizado";
+      evento.etiquetaHora = "FINALIZADO";
+    } else {
+      evento.estado = "proximos";
+      if (evento.entradasDisponibles === 0) {
+        evento.etiquetaEntradas = "PLAZAS AGOTADAS";
+      } else if (
+        evento.entradasDisponibles <= 15 &&
+        evento.entradasDisponibles >= 1
+      ) {
+        evento.etiquetaEntradas = "ÚLTIMAS PLAZAS";
+      }
+      if (
+        eventoFecha.getDate() === now.getDate() &&
+        eventoFecha.getMonth() === now.getMonth() &&
+        eventoFecha.getFullYear() === now.getFullYear() &&
+        eventoFecha > now
+      ) {
+        evento.etiquetaHora = "ÚLTIMAS HORAS";
+      }
+    }
+  });
 
   return (
     <>
