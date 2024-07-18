@@ -37,12 +37,14 @@ function Login() {
     //FORMA AXIOS 1
     axios({
       method: "POST",
-      // url: "http://localhost:8080/auth/login",
-      url : "https://i002-flowento-back-1.onrender.com/auth/login",
+      //para probar si tenes el repo de back y front usa el localhost xq es mas rapido, sino usa el segundo url
+      url: "http://localhost:8080/auth/login",
+      // url : "https://i002-flowento-back-1.onrender.com/auth/login",
       data: {
         email: obj["email"],
         password: obj["password"],
-      }
+      },
+      withCredentials : true //esta parte es importante q nunca salga del login xq sino la cookie no se setea por tema de los cors y el tema de la cookie
     })
       .then((response) => {
         const { data } = response;
