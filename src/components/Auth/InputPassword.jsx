@@ -1,32 +1,43 @@
 /* eslint-disable react/prop-types */
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { useRef, useState } from "react";
-import btnMostrarContraseña from "../../assets/Boton-mostrar-contraseña.png";
 
-export const InputPassword = ({ name }) => {
+export const InputPassword = () => {
   const password = useRef(null);
   const [showPassword, setShowPassword] = useState(false);
 
+  const handleTogglePassword = () => {
+    setShowPassword(prev => !prev);
+  };
+
   return (
-    <div className="w-full flex items-center h-9 border-solid rounded border-2 border-gray300 ">
+    <div className="relative block w-full py-2 pl-4 mt-1 border border-gray-300 shadow-sm pr-9 rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm">
       <input
         ref={password}
-        type={showPassword ? "text" : "password"}
-        autoComplete="billing new-password"
-        className="w-full px-3 h-full"
         id={name.toLowerCase()}
         name={name.toLowerCase()}
-        placeholder={name}
+        type={showPassword ? "text" : "password"}
+        autoComplete="current-password"
+        required
       />
-      <div
-        className="cursor-pointer"
-        onClick={() => setShowPassword((prev) => !prev)}
+      <button
+        type="button"
+        onClick={handleTogglePassword}
+        className="absolute inset-y-0 right-0 items-center pr-3 flex-full"
       >
-        <img
-          src={btnMostrarContraseña}
-          alt="imagen mostrar contraseña"
-          className="h-5 w-5 mr-1"
-        />
-      </div>
+        {showPassword ? (
+          <EyeSlashIcon
+            className="w-5 h-5 text-gray-500 text-orangeprimary"
+            aria-hidden="true"
+          />
+        ) : (
+          <EyeIcon
+            className="w-5 h-5 text-gray-500 text-orangeprimary"
+            aria-hidden="true"
+          />
+        )}
+      </button>
     </div>
   );
 };
+

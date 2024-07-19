@@ -27,6 +27,10 @@ export default {
       maxHeight: {
         orangeModal: '6.5rem',
       },
+      width: {
+        '86': '22.8rem',
+        '83': '20.5rem',
+      },
     },
   },
   plugins: [],

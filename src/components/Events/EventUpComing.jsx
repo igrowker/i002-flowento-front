@@ -28,7 +28,7 @@ export const EventUpComing = () => {
   };
 
   return (
-    <div className="">
+    <>
       {getEventosDelDiaActual().length > 0 && (
         <>
           <h2 className="px-4 mb-2 text-xl font-bold md:text-3xl title-font gradient-red md:mb-4">
@@ -137,6 +137,6 @@ export const EventUpComing = () => {
           </Swiper>
         </>
       )}
-    </div>
+    </>
   );
 };
