@@ -1,7 +1,7 @@
 function Footer() {
   return (
-    <footer className="font-lato bg-gray300 py-4 text-xs md:text-base">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 flex justify-between">
+    <footer className="py-4 text-xs font-lato bg-gray300 md:text-base">
+      <div className="flex justify-between px-4 mx-auto max-w-7xl sm:px-6 lg:px-8">
         <ul className="flex">
           <li>
             <a
@@ -37,3 +37,4 @@ function Footer() {
   );
 }
 export default Footer;
+
