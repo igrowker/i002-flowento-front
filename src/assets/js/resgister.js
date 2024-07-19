@@ -21,10 +21,10 @@ const inputInfo = [
         name: "Contraseña",
         type: "password",
         required: true,
-        description: "La contraseña debe tener al menos 8 caracteres, una letra en mayúscula, una en minúscula, un numero."
+        description: ""
     },
     {
-        name: "Repita la contraseña",
+        name: "Repite la contraseña",
         type: "password",
         required: true,
         description: ""
