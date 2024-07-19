@@ -1,122 +1,166 @@
-import "tailwindcss/tailwind.css";
-import logow from "../../assets/logow.png";
-import { Link } from "react-router-dom";
-import flowento from "../../assets/flowento.png"
+import { useState } from "react";
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import PropTypes from "prop-types";
+import Captcha from "./Captcha";
 
-const PasswordReset = () => {
+const PasswordReset = ({ onNavigate }) => {
+  const [showPassword, setShowPassword] = useState({
+    password: false,
+    resetPassword: false,
+  });
+  const [captchaVerified, setCaptchaVerified] = useState(false);
+
+  const handleTogglePassword = (field) => {
+    setShowPassword((prev) => ({
+      ...prev,
+      [field]: !prev[field],
+    }));
+  };
+
+  const handleSubmit = (event) => {
+    event.preventDefault();
+    if (captchaVerified) {
+      onNavigate();
+    } else {
+      alert("Por favor, verifica que no eres un robot.");
+    }
+  };
+
+  const handleVerification = (value) => {
+    if (value) {
+      setCaptchaVerified(true);
+    }
+  };
+
   return (
-    <>
-      <div className="flex flex-col justify-center min-h-full px-6 py-12 font-sans bg-no-repeat bg-cover bg-[url('../src/assets/Rectangle1.png')] lg:px-8">
-        <div className=" sm:mx-auto sm:w-full sm:max-w-sm">
-          <img
-            className="w-auto mx-auto border rounded-full shadow-2xl h-60"
-            src={logow}
-            alt="Flowento"
-          />
-        </div>
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-        <img
-              className="w-auto mx-auto"
-              src={flowento}
-              alt="Flowento"
-            />
-
-          <h5 className="mt-1 leading-9 tracking-tight text-center text-gray-300">
-            Olvidaste tu contraseña?
-          </h5>
-          <h5 className="mt-1 leading-9 tracking-tight text-center text-gray-300">
-            Te ayudamos a Recuperarla
-          </h5>
-        </div>
-
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form className="space-y-6">
-            <div>
-              <label
-                htmlFor="email"
-                className="block text-sm font-medium leading-6 text-left text-gray-900"
-              >
-                Correo Electrónico
-              </label>
-
-              <div className="mt-2">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  placeholder=" Ingrese su email"
-                  required
-                  className="block w-full rounded-md pl-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Contraseña
-                </label>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  placeholder=" Ingrese su contraseña"
-                  required
-                  className="block w-full rounded-md pl-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="resetPassword"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Repetir Contraseña
-                </label>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="resetPassword"
-                  name="resetPassword"
-                  type="password"
-                  autoComplete="current-password"
-                  placeholder=" Repetir Contraseña"
-                  required
-                  className="block w-full rounded-md border-0 pl-2 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div>
-              <button
-                type="submit"
-                className="flex w-full rounded-3xl justify-center  bg-orangeprimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orangesecondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-              >
-                Recuperar
-              </button>
-            </div>
-          </form>
-
-          <p className="mt-10 text-sm text-center text-gray-500">
-            <Link to={"/Login"}>
-              <span className="font-semibold leading-6 text-orangeprimary hover:text-orangesecondary">
-                Iniciar Sesión
-              </span>
-            </Link>
-          </p>
-        </div>
+    <div className="flex flex-col justify-center px-6 py-10 font-sans lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <h2 className="mt-2 text-xs font-bold tracking-tight text-center md:text-sm lg:text-lg">
+          Recuperar contraseña
+        </h2>
       </div>
-    </>
+
+      <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form className="space-y-2" onSubmit={handleSubmit}>
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-bold text-gray-900"
+            >
+              Correo Electrónico
+            </label>
+            <div>
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                className="block w-full py-2 pl-4 mt-1 border border-gray-300 shadow-sm rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm"
+              />
+            </div>
+          </div>
+
+          <div className="relative">
+            <div className="flex items-center justify-between">
+              <label
+                htmlFor="password"
+                className="block text-sm font-bold text-gray-900"
+              >
+                Contraseña
+              </label>
+            </div>
+            <input
+              id="password"
+              name="password"
+              type={showPassword.password ? "text" : "password"}
+              autoComplete="current-password"
+              required
+              className="block w-full py-2 pl-4 mt-1 border border-gray-300 shadow-sm pr-9 rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm"
+            />
+            <button
+              type="button"
+              onClick={() => handleTogglePassword("password")}
+              className="absolute inset-y-0 right-0 flex items-center pr-3"
+            >
+              {showPassword.password ? (
+                <EyeSlashIcon
+                  className="w-5 h-5 mt-6 text-gray-500 text-orangeprimary"
+                  aria-hidden="true"
+                />
+              ) : (
+                <EyeIcon
+                  className="w-5 h-5 mt-6 text-gray-500 text-orangeprimary"
+                  aria-hidden="true"
+                />
+              )}
+            </button>
+          </div>
+
+          <div className="relative">
+            <div className="flex items-center justify-between">
+              <label
+                htmlFor="resetPassword"
+                className="block text-sm font-bold text-gray-900"
+              >
+                Repetir Contraseña
+              </label>
+            </div>
+            <input
+              id="resetPassword"
+              name="resetPassword"
+              type={showPassword.resetPassword ? "text" : "password"}
+              autoComplete="current-password"
+              required
+              className="block w-full py-2 pl-4 mt-1 border border-gray-300 shadow-sm pr-9 rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm"
+            />
+            <button
+              type="button"
+              onClick={() => handleTogglePassword("resetPassword")}
+              className="absolute inset-y-0 right-0 flex items-center pr-3"
+            >
+              {showPassword.resetPassword ? (
+                <EyeSlashIcon
+                  className="w-5 h-5 mt-6 text-gray-500 text-orangeprimary"
+                  aria-hidden="true"
+                />
+              ) : (
+                <EyeIcon
+                  className="w-5 h-5 mt-6 text-gray-500 text-orangeprimary"
+                  aria-hidden="true"
+                />
+              )}
+            </button>
+          </div>
+          <Captcha onVerify={handleVerification} />
+
+          <div className="flex">
+            <button
+              type="submit"
+              className="flex w-full rounded-3xl justify-center bg-orangeprimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 border-2 border-white"
+              style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
+            >
+              Recuperar
+            </button>
+          </div>
+
+          <p className="text-sm text-center text-gray-500">
+            <button
+              type="button"
+              onClick={() => onNavigate()}
+              className="font-semibold text-orangeprimary hover:text-orange-600"
+            >
+              Iniciar Sesión
+            </button>
+          </p>
+        </form>
+      </div>
+    </div>
   );
+};
+
+PasswordReset.propTypes = {
+  onNavigate: PropTypes.func.isRequired,
 };
 
 export default PasswordReset;

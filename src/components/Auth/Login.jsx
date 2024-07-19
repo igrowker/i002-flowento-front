@@ -1,25 +1,31 @@
-import "tailwindcss/tailwind.css";
-import logow from "../../assets/logow.png";
-import { Link, useNavigate } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { useRef, useState } from "react";
-import flowento from "../../assets/flowento.png"
+import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
+import PropTypes from "prop-types";
+import Captcha from "./Captcha";
 
-function Login() {
+function Login({ onNavigateToReset }) {
   const navigate = useNavigate();
   const [data, setData] = useState(true);
+  const [showPassword, setShowPassword] = useState(false);
   const form = useRef(null);
+  const [isVerified, setIsVerified] = useState(false);
+
+  const handleTogglePassword = () => {
+    setShowPassword(!showPassword);
+  };
+
+  const handleVerification = () => {
+    setIsVerified(true);
+  };
 
   const login = (e) => {
     e.preventDefault();
-
-    setData(false);
-
-    const data = new FormData(form.current);
-
-    const obj = {};
-
-    data.forEach((value, key) => (obj[key] = value));
+    if (isVerified) {
+      const formData = new FormData(form.current);
+      const obj = {};
+      formData.forEach((value, key) => (obj[key] = value));
 
     //FORMA CON FETCH
     // fetch("https://i002-flowento-back-1.onrender.com/auth/login", {
@@ -35,169 +41,163 @@ function Login() {
     // })
 
     //FORMA AXIOS 1
+
     axios({
-      method: "POST",
-      //para probar si tenes el repo de back y front usa el localhost xq es mas rapido, sino usa el segundo url
-      url: "http://localhost:8080/auth/login",
-      // url : "https://i002-flowento-back-1.onrender.com/auth/login",
+      method: 'POST',
+      url: 'http://localhost:8080/auth/login',
       data: {
-        email: obj["email"],
-        password: obj["password"],
+        email: obj['email'],
+        password: obj['password'],
       },
-      withCredentials : true //esta parte es importante q nunca salga del login xq sino la cookie no se setea por tema de los cors y el tema de la cookie
+      withCredentials: true,
     })
       .then((response) => {
         const { data } = response;
 
-        //deje algunos console log para q vean q les llega desde el back
-        console.log(response);
-        console.log(data);
-
-        if (data.status === "success") {
-          alert("Te logueaste con exito");
+        if (data.status === 'success') {
+          alert('Te logueaste con éxito');
+          navigate('/event-list');
         } else {
-          alert("alguno de los datos es incorrecto"); //en la data el mensaje puede ser mas perzonalizado
+          alert('Alguno de los datos es incorrecto');
         }
 
         setData(true);
-
-        navigate('/event-list');
       })
-      .catch(function (error) {
-        console.log(error);
+      .catch((error) => {
         const { response } = error;
         const { data } = response;
 
         alert(data.payload);
         setData(true);
-      })
+      });
+  } else {
+    alert('Por favor, completa la verificación anti-spam.');
+  }
+};
 
-    //FORMA AXIOS 2
-    // axios
-    //   .post("https://i002-flowento-back-1.onrender.com/auth/login", {
-    //     email: obj["email"],
-    //     password: obj["password"],
-    //   })
-    //   .then((response) => {
-    //     const { data } = response;
+  //FORMA AXIOS 2
+  // axios
+  //   .post("https://i002-flowento-back-1.onrender.com/auth/login", {
+  //     email: obj["email"],
+  //     password: obj["password"],
+  //   })
+  //   .then((response) => {
+  //     const { data } = response;
 
-    //     //deje algunos console log para q vean q les llega desde el back
-    //     console.log(response);
-    //     console.log(data);
+  //     //deje algunos console log para q vean q les llega desde el back
+  //     console.log(response);
+  //     console.log(data);
 
-    //     if (data.status === "success") {
-    //       alert("Te logueaste con exito");
-    //     } else {
-    //       alert("alguno de los datos es incorrecto"); //en la data el mensaje puede ser mas perzonalizado
-    //     }
-    // setData(true);
-    // navigate('/event-list');
-    //   })
-    //   .catch(function (error) {
-    //     console.log(error);
-    //     const { response } = error;
-    //     const { data } = response;
+  //     if (data.status === "success") {
+  //       alert("Te logueaste con exito");
+  //     } else {
+  //       alert("alguno de los datos es incorrecto"); //en la data el mensaje puede ser mas perzonalizado
+  //     }
+  // setData(true);
+  // navigate('/event-list');
+  //   })
+  //   .catch(function (error) {
+  //     console.log(error);
+  //     const { response } = error;
+  //     const { data } = response;
 
-    //     alert(data.payload);
-    //   })
-  };
+  //     alert(data.payload);
+  //   })
+  //};
 
   return (
-    <>
-      <div className="flex flex-col justify-center min-h-full px-6 py-12 font-lato lg:px-8 bg-no-repeat bg-cover bg-[url('../src/assets/Rectangle1.png')]">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <img className="w-auto mx-auto border rounded-full shadow-2xl h-60" src={logow} alt="Flowento" />
-          <img className="w-auto mx-auto " src={flowento} alt="Flowento" />
-          <h2 className="mt-1 text-2xl font-bold leading-9 tracking-tight text-center text-gray-900">
-            Plataforma de eventos de
-          </h2>
-          <h1 className="font-bold text-center text-orangeprimary text-7xl ">
-            HdE
-          </h1>
-        </div>
+    <div className="flex flex-col justify-center px-6 py-10 font-sans lg:px-8">
+      <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+        <h2 className="mt-2 text-xs font-bold tracking-tight text-center md:text-sm lg:text-lg">
+          Ingresa a tu cuenta
+        </h2>
+      </div>
 
-        <div className="mt-10 text-center sm:mx-auto sm:w-full sm:max-w-sm">
-          <form ref={form} className="space-y-6" onSubmit={(e) => login(e)}>
-            <div>
+      <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-sm">
+        <form ref={form} className="space-y-2" onSubmit={login}>
+          <div>
+            <label
+              htmlFor="email"
+              className="block text-sm font-bold text-gray-900"
+            >
+              Correo Electrónico
+            </label>
+            <div className="mt-2">
+              <input
+                id="email"
+                name="email"
+                type="email"
+                autoComplete="email"
+                required
+                className="block w-full py-2 pl-4 mt-1 border border-gray-300 shadow-sm pr-9 rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm"
+              />
+            </div>
+          </div>
+
+          <div>
+            <div className="flex items-center justify-between">
               <label
-                htmlFor="email"
-                className="block text-sm font-medium leading-6 text-left text-gray-900"
+                htmlFor="password"
+                className="block text-sm font-bold text-gray-900"
               >
-                Correo Electrónico
+                Contraseña
               </label>
-
-              <div className="mt-2">
-                <input
-                  id="email"
-                  name="email"
-                  type="email"
-                  autoComplete="email"
-                  placeholder=" Ingrese su email"
-                  required
-                  className="block w-full rounded-md pl-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
-                />
-              </div>
+            </div>
+            <div className="relative mt-2">
+              <input
+                id="password"
+                name="password"
+                type={showPassword ? "text" : "password"}
+                autoComplete="current-password"
+                required
+                className="block w-full py-2 pl-4 mt-1 border border-gray-300 shadow-sm pr-9 rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm"
+              />
+              <button
+                type="button"
+                onClick={handleTogglePassword}
+                className="absolute inset-y-0 right-0 flex items-center pr-3"
+              >
+                {showPassword ? (
+                  <EyeSlashIcon
+                    className="w-5 h-5 text-orangeprimary"
+                    aria-hidden="true"
+                  />
+                ) : (
+                  <EyeIcon
+                    className="w-5 h-5 text-orangeprimary"
+                    aria-hidden="true"
+                  />
+                )}
+              </button>
+            </div>
+            <div className="mt-2 text-sm text-end">
+              <button type="button" onClick={onNavigateToReset}>
+                <span className="font-semibold text-orangeprimary hover:text-orange-600">
+                  Olvidé mi contraseña
+                </span>
+              </button>
             </div>
 
-            <div>
-              <div className="flex items-center justify-between">
-                <label
-                  htmlFor="password"
-                  className="block text-sm font-medium leading-6 text-gray-900"
-                >
-                  Contraseña
-                </label>
-                <div className="text-sm">
-                  <Link to={"/password-reset"}>
-                    <span className="font-semibold text-orangeprimary hover:text-orangesecondary">He olvidado mi Contraseña</span>
-                  </Link>
-                  {/* <a
-                    href="/password-reset"
-                    className="font-semibold text-orangeprimary hover:text-orangesecondary"
-                  >
-                    He olvidado mi Contraseña
-                  </a> */}
-                </div>
-              </div>
-              <div className="mt-2">
-                <input
-                  id="password"
-                  name="password"
-                  type="password"
-                  autoComplete="current-password"
-                  placeholder=" Ingrese su contraseña"
-                  required
-                  className="block w-full rounded-md pl-2 border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-100 sm:text-sm sm:leading-6"
-                />
-              </div>
-            </div>
-
-            <div>
-              {data ? (
-                <button
-                  type="submit"
-                  className="flex w-full justify-center rounded-3xl bg-orangeprimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orangesecondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
-                >
-                  Acceder
-                </button>
-              ) : (
-                <div>...loading</div>
-              )}
-            </div>
-          </form>
-
-          <p className="mt-10 text-sm text-center text-gray-500">
-            No tienes Cuenta?
-            <Link to={"/register"}>
-              <span className="pl-2 font-semibold leading-6 text-orangeprimary hover:text-orangesecondary">
-                Registrate
-              </span>
-            </Link>
-          </p>
+            <Captcha onVerify={handleVerification} />
+          </div>
+        </form>
+        <div className="flex">
+          <button
+            type="submit"
+            disabled={!data}
+            className="flex w-full rounded-3xl mt-2 justify-center bg-orangeprimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 border-2 border-white"
+            style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
+          >
+            Iniciar Sesión
+          </button>
         </div>
       </div>
-    </>
+    </div>
   );
 }
+
+Login.propTypes = {
+  onNavigateToReset: PropTypes.func.isRequired,
+};
 
 export default Login;
