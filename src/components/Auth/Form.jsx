@@ -26,7 +26,7 @@ export const Form = () => {
         last_name: obj["apellido"],
         email: obj["email"],
         password: obj["contraseña"],
-        passwordRepeat: obj["repita la contraseña"],
+        passwordRepeat: obj["repite la contraseña"],
       })
       .then((response) => {
         const { data } = response;
@@ -56,7 +56,6 @@ export const Form = () => {
   return (
     <form
       ref={form}
-      className=" mt-36   flex flex-col"
       onSubmit={(e) => registrarse(e)}
     >
       {inputInfo.map((value, index) => (
@@ -65,16 +64,15 @@ export const Form = () => {
           name={value.name}
           type={value.type}
           required={value.required}
-          description={value.description}
         />
       ))}
       <div>
         {data ? (
           <input
             type="submit"
-            value="Registrarse"
-            className="flex w-full justify-center rounded-md bg-orangeprimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orangesecondary focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600"
-          />
+            value="Regístrate"
+            className="flex w-full rounded-3xl mt-4 justify-center bg-orangeprimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 border-2 border-white"
+            style={{ boxShadow: "0px 4px 10px 0px #00000040" }}          />
         ) : (
           <div>...loading</div>
         )}
