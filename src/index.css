@@ -20,6 +20,18 @@
 body {
   font-family: var(--font-family);
   background-color: var(--white);
+  height: 100%;
+  margin: 0;
+}
+
+#root {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+main {
+  flex: 1;
 }
 
 .gradient-red {
@@ -106,4 +118,103 @@ input[type="number"]::-webkit-outer-spin-button,
 input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
+}
+
+
+/*FONDO*/
+
+.diagonal-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  z-index: -1;
+}
+
+.diagonal-bg::before,
+.diagonal-bg::after {
+  content: '';
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  clip-path: polygon(0 0, 160% 0, 0 35%);
+}
+
+.diagonal-bg::before {
+  background: linear-gradient(
+    to bottom right,
+    var(--redprimary),
+    var(--orangeprimary),
+    var(--redprimary)
+  );
+}
+
+/*Index slider*/
+
+.slider-container {
+  position: relative;
+  overflow: hidden;
+  width: 100%;
+  max-width: 600px;
+  margin: auto;
+}
+
+.slides {
+  display: flex;
+  transition: transform 0.5s ease-in-out;
+}
+
+.slide {
+  min-width: 100%;
+  box-sizing: border-box;
+}
+
+.indicators {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.indicator {
+  background-color: #ccc;
+  border: none;
+  border-radius: 50%;
+  width: 12px;
+  height: 12px;
+  margin: 0 4px;
+  cursor: pointer;
+}
+
+.indicator.active {
+  background-color: #333;
+}
+
+.index-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  font-family: sans-serif;
+}
+
+/*Scrollbar*/
+
+::-webkit-scrollbar {
+  width: 8px;
+  height: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: var(--orangesecondary);
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--redprimary);
+  border-radius: 25px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--redapproval);
 }
