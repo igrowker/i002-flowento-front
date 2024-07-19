@@ -22,7 +22,7 @@ const FloatingButton = ({ onEventCreate }) => {
     <>
       <button
         onClick={openModal}
-        className="fixed z-10 p-4 text-white transition duration-300 border-4 border-white rounded-full shadow-lg bottom-8 right-8 bg-orangeprimary hover:bg-orange-600"
+        className="fixed z-10 p-4 text-white transition duration-300 border-4 border-white rounded-full shadow-lg bottom-16 right-8 bg-orangeprimary hover:bg-orange-600"
         style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
       >
         <FaPlus className="text-2xl" />
