@@ -13,14 +13,14 @@ export const Register = () => {
         </div>
 
       <div className="flex justify-between gap-16 mt-2">
-        <span className="text-orangeprimary">
+        <span className="text-orange-600">
           ¿Ya tienes una cuenta?
         </span>
 
         <Link to={"/"}>
           <button
             type="button"
-            className="font-semibold text-orangeprimary hover:text-orange-600"
+            className="font-semibold text-orange-600 hover:text-orangeprimary"
           >
             Inicia Sesión
           </button>
