@@ -1,4 +1,3 @@
-import "./App.css";
 import {
   BrowserRouter as Router,
   Route,
@@ -10,16 +9,16 @@ import Footer from "./components/Footer";
 import EventApproval from "./components/Events/EventApproval";
 import { Register } from "./components/Auth/Register";
 import Navbar from "./components/Navbar/Navbar";
-
 import Error from "./components/Error";
-
 import InputPerfil from "./components/Auth/InputPerfil";
 import PerfilEdit from "./components/Auth/PerfilEdit";
-import Index from "./components/Auth/Index";
+import Login from "./components/Auth/Login";
+import InputLogin from "./components/Auth/InputLogin";
+import PasswordReset from "./components/Auth/PasswordReset";
 
 function App() {
   const location = useLocation();
-  const hideNavbarAndFooter = ["/", "/register", "/error"].includes(
+  const hideNavbarAndFooter = ["/", "/register", "/login", "/error", "/password-reset", "*"].includes(
     location.pathname.toLowerCase()
   );
 
@@ -28,11 +27,12 @@ function App() {
       <main>
         {!hideNavbarAndFooter && <Navbar />}
         <Routes>
-          <Route path="/" element={<Index />} />
+          <Route path="/" element={<InputLogin />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/password-reset" element={<PasswordReset />} />
           <Route path="/register" element={<Register />} />
           <Route path="/input-perfil" element={<InputPerfil />} />
           <Route path="/perfil-edit" element={<PerfilEdit />} />
-          <Route path="/error" element={<Error />} />
           <Route path="/event-list" element={<EventList />} />
           <Route path="/event-approval" element={<EventApproval />} />
           <Route path="*" element={<Error />} />
