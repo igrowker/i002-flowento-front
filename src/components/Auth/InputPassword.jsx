@@ -7,11 +7,11 @@ export const InputPassword = () => {
   const [showPassword, setShowPassword] = useState(false);
 
   const handleTogglePassword = () => {
-    setShowPassword(prev => !prev);
+    setShowPassword((prev) => !prev);
   };
 
   return (
-    <div className="relative block w-full py-2 pl-4 mt-1 border border-gray-300 shadow-sm pr-9 rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm">
+    <div className="relative w-full">
       <input
         ref={password}
         id={name.toLowerCase()}
@@ -19,6 +19,7 @@ export const InputPassword = () => {
         type={showPassword ? "text" : "password"}
         autoComplete="current-password"
         required
+        className="relative block w-full py-2 pl-4 mt-1 border border-gray-300 shadow-sm pr-9 rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm"
       />
       <button
         type="button"
@@ -40,4 +41,3 @@ export const InputPassword = () => {
     </div>
   );
 };
-

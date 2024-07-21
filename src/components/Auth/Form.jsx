@@ -50,14 +50,11 @@ export const Form = () => {
         alert(data.payload);
 
         setData(true);
-      })
+      });
   };
 
   return (
-    <form
-      ref={form}
-      onSubmit={(e) => registrarse(e)}
-    >
+    <form ref={form} onSubmit={(e) => registrarse(e)}>
       {inputInfo.map((value, index) => (
         <InputForm
           key={index}
@@ -66,15 +63,21 @@ export const Form = () => {
           required={value.required}
         />
       ))}
-      <div>
+      <div className="flex justify-center">
         {data ? (
           <input
             type="submit"
             value="Regístrate"
-            className="flex w-full rounded-3xl mt-4 justify-center bg-orangeprimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 border-2 border-white"
-            style={{ boxShadow: "0px 4px 10px 0px #00000040" }}          />
+            className="rounded-3xl mt-2 bg-orangeprimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 border-2 border-white"
+            style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
+          />
         ) : (
-          <div>...loading</div>
+          <div
+            className="rounded-3xl mt-2 bg-orangeprimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 border-2 border-white"
+            style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
+          >
+            ..cargando
+          </div>
         )}
       </div>
     </form>

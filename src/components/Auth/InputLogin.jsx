@@ -21,7 +21,7 @@ const InputLogin = ({ onNavigateToLogin }) => {
             <form className="space-y-6" action="#" method="POST">
               <button
                 type="button"
-                className="flex w-full justify-center text-center rounded-3xl bg-gray-300 px-3 py-1.5 text-sm font-semibold border-2 border-white leading-6 text-black shadow-sm hover:bg-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
+                className="flex w-80 justify-center text-center rounded-3xl bg-gray-300 px-3 py-1.5 text-sm font-semibold border-2 border-white leading-6 text-black shadow-sm hover:bg-gray-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
                 style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
               >
                 <FaFacebook
