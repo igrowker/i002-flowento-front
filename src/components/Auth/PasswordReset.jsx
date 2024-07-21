@@ -32,8 +32,7 @@ const PasswordReset = () => {
             Recuperar contraseña
           </h2>
         </div>
-
-        <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="mt-4 w-80">
           <form className="space-y-2" onSubmit={handleSubmit}>
             <div>
               <label
@@ -53,7 +52,6 @@ const PasswordReset = () => {
                 />
               </div>
             </div>
-
             <div className="relative">
               <div className="flex items-center justify-between">
                 <label
@@ -89,7 +87,6 @@ const PasswordReset = () => {
                 )}
               </button>
             </div>
-
             <div className="relative">
               <div className="flex items-center justify-between">
                 <label
@@ -125,17 +122,15 @@ const PasswordReset = () => {
                 )}
               </button>
             </div>
-
-            <div className="flex">
+            <div className="flex justify-center">
               <button
                 type="submit"
-                className="flex w-full mt-3 rounded-3xl justify-center bg-orangeprimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 border-2 border-white"
+                className="flex mt-3 rounded-3xl justify-center bg-orangeprimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 border-2 border-white"
                 style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
               >
                 Recuperar
               </button>
             </div>
-
             <div className="flex justify-between">
               <p className="text-sm text-gray-500">
                 <button

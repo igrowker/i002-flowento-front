@@ -11,7 +11,6 @@ function Login({ onNavigateToReset }) {
   const [data, setData] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const form = useRef(null);
-  const [isVerified] = useState(false);
 
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
@@ -19,57 +18,54 @@ function Login({ onNavigateToReset }) {
 
   const login = (e) => {
     e.preventDefault();
-    if (isVerified) {
-      const formData = new FormData(form.current);
-      const obj = {};
-      formData.forEach((value, key) => (obj[key] = value));
+    setData(false);
+    const data = new FormData(form.current);
+    const obj = {};
+    data.forEach((value, key) => (obj[key] = value));
 
-      //FORMA CON FETCH
-      // fetch("https://i002-flowento-back-1.onrender.com/auth/login", {
-      //   method: "POST",
-      //   body: JSON.stringify(obj),
-      //   headers: {
-      //     "Content-Type": "application/json"
-      //   }
-      // })
-      // .then(result => result.json())
-      // .then(json => {
-      //     console.log(json);
-      // })
+    //FORMA CON FETCH
+    // fetch("https://i002-flowento-back-1.onrender.com/auth/login", {
+    //   method: "POST",
+    //   body: JSON.stringify(obj),
+    //   headers: {
+    //     "Content-Type": "application/json"
+    //   }
+    // })
+    // .then(result => result.json())
+    // .then(json => {
+    //     console.log(json);
+    // })
 
-      //FORMA AXIOS 1
+    //FORMA AXIOS 1
 
-      axios({
-        method: "POST",
-        url: "http://localhost:8080/auth/login",
-        data: {
-          email: obj["email"],
-          password: obj["password"],
-        },
-        withCredentials: true,
+    axios({
+      method: "POST",
+      url: "http://localhost:8080/auth/login",
+      data: {
+        email: obj["email"],
+        password: obj["password"],
+      },
+      withCredentials: true,
+    })
+      .then((response) => {
+        const { data } = response;
+
+        if (data.status === "success") {
+          alert("Te logueaste con éxito");
+          navigate("/event-list");
+        } else {
+          alert("Alguno de los datos es incorrecto");
+        }
+
+        setData(true);
       })
-        .then((response) => {
-          const { data } = response;
+      .catch((error) => {
+        const { response } = error;
+        const { data } = response;
 
-          if (data.status === "success") {
-            alert("Te logueaste con éxito");
-            navigate("/event-list");
-          } else {
-            alert("Alguno de los datos es incorrecto");
-          }
-
-          setData(true);
-        })
-        .catch((error) => {
-          const { response } = error;
-          const { data } = response;
-
-          alert(data.payload);
-          setData(true);
-        });
-    } else {
-      alert("Por favor, completa la verificación anti-spam.");
-    }
+        alert(data.payload);
+        setData(true);
+      });
   };
 
   //FORMA AXIOS 2
@@ -113,8 +109,8 @@ function Login({ onNavigateToReset }) {
           </h2>
         </div>
 
-        <div className="mt-4 sm:mx-auto sm:w-full sm:max-w-sm">
-          <form ref={form} className="space-y-2" onSubmit={login}>
+        <div className="mt-4 w-80">
+          <form ref={form} className="space-y-2" onSubmit={(e) => login(e)}>
             <div>
               <label
                 htmlFor="email"
@@ -179,11 +175,11 @@ function Login({ onNavigateToReset }) {
               </div>
             </div>
           </form>
-          <div className="flex">
+          <div className="flex justify-center">
             <button
               type="submit"
               disabled={!data}
-              className="flex w-full rounded-3xl mt-2 justify-center bg-orangeprimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 border-2 border-white"
+              className="flex rounded-3xl mt-2 justify-center bg-orangeprimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 border-2 border-white"
               style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
             >
               Iniciar Sesión
