@@ -19,7 +19,7 @@ export const InputPassword = ({name}) => {
         type={showPassword ? "text" : "password"}
         autoComplete="current-password"
         required
-        className="block w-full py-1.5 pl-4 border border-gray-300 shadow-sm pr-9 rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm"
+        className="block w-full py-2.5 pl-4 border border-gray-300 shadow-sm pr-9 rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary text-sm md:text-base "
       />
       <button
         type="button"
