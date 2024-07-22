@@ -6,18 +6,20 @@ import PropTypes from "prop-types";
 import DiagonalBackground from "./DiagonalBackground";
 import Header from "./Header";
 
-function Login({ onNavigateToReset }) {
+function Login() {
   const navigate = useNavigate();
   const [data, setData] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const form = useRef(null);
-
+  const [loading, setLoading] = useState(false); 
+  
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
 
   const login = (e) => {
     e.preventDefault();
+    setLoading(true);
     setData(false);
     const data = new FormData(form.current);
     const obj = {};
@@ -40,7 +42,7 @@ function Login({ onNavigateToReset }) {
 
     axios({
       method: "POST",
-      url: "http://localhost:8080/auth/login",
+      url: `${process.env.REACT_APP_API_URL}/auth/login`,
       data: {
         email: obj["email"],
         password: obj["password"],
@@ -65,8 +67,12 @@ function Login({ onNavigateToReset }) {
 
         alert(data.payload);
         setData(true);
+      })
+      .finally(() => {
+        setLoading(false);
       });
   };
+  
 
   //FORMA AXIOS 2
   // axios
@@ -166,33 +172,35 @@ function Login({ onNavigateToReset }) {
                   )}
                 </button>
               </div>
-              <div className="mt-2 text-sm text-end">
-                <button type="button" onClick={onNavigateToReset}>
+              <div className="mt-2 text-sm md:text-base text-end">
+                <button type="button">
                   <span className="font-semibold text-orange-600 hover:text-orangeprimary">
-                    <Link to="/password-reset">Olvidé mi contraseña</Link>
+                    <Link to="/password-reset">Cambiar contraseña</Link>
                   </span>
                 </button>
               </div>
             </div>
+            <div className="flex justify-center">
+              
+              
+              <button
+                type="submit"
+                disabled={!data}
+                className="flex rounded-3xl justify-center bg-orangeprimary px-3 py-1.5 text-sm md:text-base font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 border-2 border-white"
+                style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
+              >
+                {loading ? "Iniciando..." : "Iniciar Sesión"}
+              </button>
+            </div>
+            <p className="mt-2 text-sm text-center text-gray-500 md:text-base">
+              <button
+                type="button"
+                className="font-semibold text-orange-600 hover:text-orangeprimary"
+              >
+                <Link to="/">Volver al inicio</Link>
+              </button>
+            </p>
           </form>
-          <div className="flex justify-center">
-            <button
-              type="submit"
-              disabled={!data}
-              className="flex rounded-3xl mt-2 justify-center bg-orangeprimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 border-2 border-white"
-              style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
-            >
-              Iniciar Sesión
-            </button>
-          </div>
-          <p className="mt-2 text-sm text-center text-gray-500">
-            <button
-              type="button"
-              className="font-semibold text-orange-600 hover:text-orangeprimary"
-            >
-              <Link to="/">Volver al inicio</Link>
-            </button>
-          </p>
         </div>
       </div>
     </div>

@@ -12,7 +12,7 @@ export const Register = () => {
         <Form />
       </div>
 
-      <div className="flex justify-between gap-16 mt-3 text-sm">
+      <div className="flex justify-between gap-20 mt-3 text-sm">
         <span className="text-orange-600">¿Ya tienes una cuenta?</span>
 
         <Link to={"/"}>
