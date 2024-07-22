@@ -2,7 +2,7 @@
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import { useRef, useState } from "react";
 
-export const InputPassword = () => {
+export const InputPassword = ({name}) => {
   const password = useRef(null);
   const [showPassword, setShowPassword] = useState(false);
 
@@ -19,7 +19,7 @@ export const InputPassword = () => {
         type={showPassword ? "text" : "password"}
         autoComplete="current-password"
         required
-        className="relative block w-full py-2 pl-4 mt-1 border border-gray-300 shadow-sm pr-9 rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm"
+        className="block w-full py-1.5 pl-4 border border-gray-300 shadow-sm pr-9 rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm"
       />
       <button
         type="button"

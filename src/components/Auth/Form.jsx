@@ -13,15 +13,15 @@ export const Form = () => {
     setData(false);
 
     const data = new FormData(form.current);
-
     const obj = {};
 
     data.forEach((value, key) => (obj[key] = value));
 
     console.log(obj);
+    console.log("API URL:", process.env.REACT_APP_API_URL);
 
     axios
-      .post("https://i002-flowento-back-1.onrender.com/auth/register", {
+      .post(`${process.env.REACT_APP_API_URL}/auth/register`, {
         first_name: obj["nombre"],
         last_name: obj["apellido"],
         email: obj["email"],
@@ -68,15 +68,15 @@ export const Form = () => {
           <input
             type="submit"
             value="Regístrate"
-            className="rounded-3xl mt-2 bg-orangeprimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 border-2 border-white"
+            className="px-3 py-2 mt-3 text-sm font-semibold leading-6 text-white border-2 border-white shadow-sm md:text-base rounded-3xl bg-orangeprimary hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
             style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
           />
         ) : (
           <div
-            className="rounded-3xl mt-2 bg-orangeprimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 border-2 border-white"
+            className="px-3 py-2 mt-3 text-sm font-semibold leading-6 text-white border-2 border-white shadow-sm md:text-base rounded-3xl bg-orangeprimary hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2"
             style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
           >
-            ..cargando
+            ..Cargando
           </div>
         )}
       </div>
