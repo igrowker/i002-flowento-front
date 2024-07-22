@@ -11,26 +11,20 @@ export const EventList = () => {
   useEffect(() => {
     axios({
       method: "GET",
-      url: "http://localhost:8080/events/",
-      // url : "https://i002-flowento-back-1.onrender.com/events/",
+      // url: "http://localhost:8080/events/",
+      url : `${process.env.REACT_APP_API_URL}/auth/events-list/`,
       withCredentials : true
     })
       .then((response) => {
         const {data} = response;
         const {payload} = data
-
         console.log(data);
-
         setEvents(payload);
-
       })
       .catch(function (error) {
-
         console.log(error);
-        
         const { response } = error;
         const { data } = response;
-
         alert(data.payload);
       })
   }, [])
