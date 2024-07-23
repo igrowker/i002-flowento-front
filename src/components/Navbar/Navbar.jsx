@@ -68,21 +68,19 @@ const NavBar = () => {
         <FaBars className="text-white text-lg sm:text-xl md:text-2xl lg:text-3xl" />
       </div>
 
-      {/* Expandable menu */}
       <div className={`fixed top-0 left-0 h-full w-9/20 md:w-2/5 bg-white z-50 transition-transform duration-300 ease-in-out ${isMenuOpen ? 'translate-x-0' : '-translate-x-full'} rounded-r-lg shadow-lg`}>
+
         <div className="flex flex-col h-full p-8">
-          {/* Close button */}
+
           <div className="flex justify-end mb-4">
             <FaTimes className="text-xl text-black cursor-pointer" onClick={toggleMenu} />
           </div>
 
-          {/* User profile image */}
           <div className="flex flex-col items-center mt-8">
             <img src="/src/assets/Foto perfil.png" alt="User" className="w-20 h-20 rounded-full mb-4" />
             <h2 className="text-lg font-semibold">José Flores</h2>
           </div>
 
-          {/* Menu items */}
           <ul className="mt-8 space-y-4 font-lato">
             <li>
               <Link to="/input-perfil" className="flex items-center text-black">
@@ -92,10 +90,10 @@ const NavBar = () => {
             </li>
 
             <li>
-              <a href="#" className="flex items-center text-black">
+              <Link to="/event-list" className="flex items-center text-black">
                 <FaHome className="mr-2 text-orange-500" />
                 Inicio
-              </a>
+              </Link>
             </li>
             <li>
               <a href="#" className="flex items-center text-black">

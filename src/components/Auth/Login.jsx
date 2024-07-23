@@ -11,112 +11,58 @@ function Login() {
   const [data, setData] = useState(true);
   const [showPassword, setShowPassword] = useState(false);
   const form = useRef(null);
-  const [loading, setLoading] = useState(false); 
-  
+  const [loading, setLoading] = useState(false);
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
 
-  const login = (e) => {
+  const login = async (e) => {
     e.preventDefault();
     setLoading(true);
     setData(false);
-    const data = new FormData(form.current);
+    const formData = new FormData(form.current);
     const obj = {};
-    data.forEach((value, key) => (obj[key] = value));
-
-    //FORMA CON FETCH
-    // fetch("https://i002-flowento-back-1.onrender.com/auth/login", {
-    //   method: "POST",
-    //   body: JSON.stringify(obj),
-    //   headers: {
-    //     "Content-Type": "application/json"
-    //   }
-    // })
-    // .then(result => result.json())
-    // .then(json => {
-    //     console.log(json);
-    // })
-
-    //FORMA AXIOS 1
-
-    axios({
-      method: "POST",
-      url: `${process.env.REACT_APP_API_URL}/auth/login`,
-      data: {
-        email: obj["email"],
-        password: obj["password"],
-      },
-      withCredentials: true,
-    })
-      .then((response) => {
-        const { data } = response;
-
-        if (data.status === "success") {
-          alert("Te logueaste con éxito");
-          navigate("/event-list");
-        } else {
-          alert("Alguno de los datos es incorrecto");
-        }
-
-        setData(true);
-      })
-      .catch((error) => {
-        const { response } = error;
-        const { data } = response;
-
-        alert(data.payload);
-        setData(true);
-      })
-      .finally(() => {
-        setLoading(false);
-      });
+    formData.forEach((value, key) => (obj[key] = value));
+    try {
+      const response = await axios.post(
+        `${process.env.REACT_APP_API_URL}/auth/login`,
+        {
+          email: obj["email"],
+          password: obj["password"],
+        },
+        { withCredentials: true }
+      );
+      const { data } = response;
+      if (data.status === "success") {
+        alert("Te logueaste con éxito");
+        localStorage.setItem("authToken", data.token);
+        navigate("/event-list");
+      } else {
+        alert("Alguno de los datos es incorrecto");
+      }
+    } catch (error) {
+      const { response } = error;
+      const errorMessage =
+        response?.data?.payload || "Ocurrió un error al iniciar sesión";
+      alert(errorMessage);
+    } finally {
+      setLoading(false);
+      setData(true);
+    }
   };
-  
-
-  //FORMA AXIOS 2
-  // axios
-  //   .post("https://i002-flowento-back-1.onrender.com/auth/login", {
-  //     email: obj["email"],
-  //     password: obj["password"],
-  //   })
-  //   .then((response) => {
-  //     const { data } = response;
-
-  //     //deje algunos console log para q vean q les llega desde el back
-  //     console.log(response);
-  //     console.log(data);
-
-  //     if (data.status === "success") {
-  //       alert("Te logueaste con exito");
-  //     } else {
-  //       alert("alguno de los datos es incorrecto"); //en la data el mensaje puede ser mas perzonalizado
-  //     }
-  // setData(true);
-  // navigate('/event-list');
-  //   })
-  //   .catch(function (error) {
-  //     console.log(error);
-  //     const { response } = error;
-  //     const { data } = response;
-
-  //     alert(data.payload);
-  //   })
-  //};
 
   return (
     <div className="index-container">
       <DiagonalBackground />
       <Header />
-      <div className="flex flex-col font-sans justify-center6">
+      <div className="flex flex-col justify-center font-sans">
         <div className="sm:mx-auto sm:w-full sm:max-w-sm">
           <h2 className="mt-2 text-xs font-bold tracking-tight text-center md:text-sm lg:text-lg">
             Ingresa a tu cuenta
           </h2>
         </div>
-
         <div className="mt-4 w-80">
-          <form ref={form} className="space-y-2" onSubmit={(e) => login(e)}>
+          <form ref={form} className="space-y-2" onSubmit={login}>
             <div>
               <label
                 htmlFor="email"
@@ -135,7 +81,6 @@ function Login() {
                 />
               </div>
             </div>
-
             <div>
               <div className="flex items-center justify-between">
                 <label
@@ -181,8 +126,6 @@ function Login() {
               </div>
             </div>
             <div className="flex justify-center">
-              
-              
               <button
                 type="submit"
                 disabled={!data}
@@ -208,7 +151,7 @@ function Login() {
 }
 
 Login.propTypes = {
-  onNavigateToReset: PropTypes.func.isRequired,
+  onNavigateToReset: PropTypes.func,
 };
 
 export default Login;

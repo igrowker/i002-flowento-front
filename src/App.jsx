@@ -9,7 +9,6 @@ import {
 import { login, register, logout } from "./services/AuthService";
 import { EventList } from "./components/Events/EventList";
 import Footer from "./components/Footer";
-import EventApproval from "./components/Events/EventApproval";
 import { Register } from "./components/Auth/Register";
 import Navbar from "./components/Navbar/Navbar";
 import Error from "./components/Error";
@@ -18,8 +17,8 @@ import PerfilEdit from "./components/Auth/PerfilEdit";
 import Login from "./components/Auth/Login";
 import InputLogin from "./components/Auth/InputLogin";
 import PasswordReset from "./components/Auth/PasswordReset";
-import PrivateRoute from "./components/Routes/PrivateRoute";
-import AdminRoute from "./components/Routes/AdminRoute";
+import EventAdmin from "./components/Events/EventAdmin";
+import EventDetail from "./components/Events/EventDetail";
 
 function App() {
   const location = useLocation();
@@ -29,18 +28,13 @@ function App() {
     "/login",
     "/error",
     "/password-reset",
-    "*",
   ].includes(location.pathname.toLowerCase());
 
   const [user, setUser] = useState(null);
-  const [isAdmin, setIsAdmin] = useState(false);
   const navigate = useNavigate();
 
   useEffect(() => {
     const checkAuthStatus = async () => {
-      if (user) {
-        setIsAdmin(user.isAdmin);
-      }
     };
 
     checkAuthStatus();
@@ -49,6 +43,7 @@ function App() {
   const handleLogin = async (email, password) => {
     try {
       const userData = await login(email, password);
+      console.log("User data from login:", userData);
       setUser(userData);
       navigate("/event-list");
     } catch (error) {
@@ -69,7 +64,6 @@ function App() {
     try {
       await logout();
       setUser(null);
-      setIsAdmin(false);
     } catch (error) {
       console.error("Error al cerrar sesión:", error);
     }
@@ -80,56 +74,20 @@ function App() {
   const handleClose = () => {};
   const handleSubmit = () => {};
 
-  useEffect(() => {
-    console.log("User state:", user);
-  }, [user]);
-
   return (
     <div id="root">
       <main>
-        {!hideNavbarAndFooter && <Navbar user={user} onLogout={handleLogout} />}
+        {!hideNavbarAndFooter && <Navbar onLogout={handleLogout} />}
         <Routes>
           <Route path="/" element={<InputLogin onLogin={handleLogin} />} />
-          <Route
-            path="/login"
-            element={<Login onNavigateToReset={handleNavigateToReset} />}
-          />
-          <Route
-            path="/password-reset"
-            element={<PasswordReset onNavigate={handleNavigate} />}
-          />
-          <Route
-            path="/register"
-            element={<Register onRegister={handleRegister} />}
-          />
-          <Route
-            path="/input-perfil"
-            element={
-              <PrivateRoute component={InputPerfil} isAuthenticated={!!user} />
-            }
-          />
-          <Route
-            path="/perfil-edit"
-            element={
-              <PerfilEdit onClose={handleClose} onSubmit={handleSubmit} />
-            }
-          />
-          <Route
-            path="/event-list"
-            element={
-              <PrivateRoute component={EventList} isAuthenticated={!!user} />
-            }
-          />
-          <Route
-            path="/event-approval"
-            element={
-              <AdminRoute
-                component={EventApproval}
-                isAuthenticated={!!user}
-                isAdmin={isAdmin}
-              />
-            }
-          />
+          <Route path="/login" element={<Login onNavigateToReset={handleNavigateToReset} />} />
+          <Route path="/password-reset" element={<PasswordReset onNavigate={handleNavigate} />} />
+          <Route path="/register" element={<Register onRegister={handleRegister} />} />
+          <Route path="/input-perfil" element={<InputPerfil />} />
+          <Route path="/perfil-edit" element={<PerfilEdit onClose={handleClose} onSubmit={handleSubmit} />} />
+          <Route path="/event-list" element={<EventList />} />
+          <Route path="/event-detail/:id" element={<EventDetail />} />
+          <Route path="/event-admin" element={<EventAdmin />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </main>
