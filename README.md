@@ -68,7 +68,14 @@ Crear una aplicación web responsiva diseñada para gestionar y comunicar evento
    ```bash
    npm install
 
+## Seguridad
+La aplicación implementa prácticas de seguridad recomendadas, como la validación de formularios y la gestión de sesiones mediante JWT.
 
+## Contribuciones
+Las contribuciones son bienvenidas. Por favor, abre un issue o envía un pull request.
+
+## Licencia
+Este proyecto está bajo la Licencia [Nombre de la Licencia].
 
 
 
