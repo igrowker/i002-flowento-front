@@ -6,7 +6,7 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
-import { login, register, logout } from "./services/authService";
+import { login, register, logout } from "./services/AuthService";
 import { EventList } from "./components/Events/EventList";
 import Footer from "./components/Footer";
 import EventApproval from "./components/Events/EventApproval";
@@ -20,6 +20,9 @@ import InputLogin from "./components/Auth/InputLogin";
 import PasswordReset from "./components/Auth/PasswordReset";
 import PrivateRoute from "./components/Routes/PrivateRoute";
 import AdminRoute from "./components/Routes/AdminRoute";
+import EventDetail from "./components/Events/EventDetail";
+import QRDisplayView from "./components/QR/QRDisplayView";
+import QRScanner from "./components/QR/QRScanner";
 
 function App() {
   const location = useLocation();
@@ -75,10 +78,10 @@ function App() {
     }
   };
 
-  const handleNavigateToReset = () => {};
-  const handleNavigate = () => {};
-  const handleClose = () => {};
-  const handleSubmit = () => {};
+  const handleNavigateToReset = () => { };
+  const handleNavigate = () => { };
+  const handleClose = () => { };
+  const handleSubmit = () => { };
 
   useEffect(() => {
     console.log("User state:", user);
@@ -130,6 +133,9 @@ function App() {
               />
             }
           />
+          <Route path="/event-detail" element={<EventDetail />} />
+          <Route path="/qr" element={<QRScanner />} />
+          <Route path="/qr-display-view" element={<QRDisplayView />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </main>
