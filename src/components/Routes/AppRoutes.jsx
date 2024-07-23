@@ -1,4 +1,3 @@
-import { useState, useEffect } from "react";
 import { Route, Routes } from "react-router-dom";
 import InputPerfil from "../components/InputPerfil";
 import EventList from "../components/EventList";
@@ -6,6 +5,7 @@ import EventApproval from "../components/EventApproval";
 import Login from "../components/Login";
 import PrivateRoute from "./PrivateRoute";
 import AdminRoute from "./AdminRoute";
+import { useEffect, useState } from "react";
 
 const AppRoutes = () => {
   const [isAuthenticated, setIsAuthenticated] = useState(false);
@@ -13,11 +13,36 @@ const AppRoutes = () => {
 
   useEffect(() => {
     const checkAuthStatus = async () => {
-      const authenticated = true;
-      const admin = true;
+      try {
+        const token = localStorage.getItem("authToken");
 
-      setIsAuthenticated(authenticated);
-      setIsAdmin(admin);
+        if (token) {
+          const response = await fetch(
+            `${process.env.REACT_APP_API_URL}/users`,
+            {
+              headers: {
+                Authorization: `Bearer ${token}`,
+              },
+            }
+          );
+
+          if (response.ok) {
+            const user = await response.json();
+            setIsAuthenticated(true);
+            setIsAdmin(user.role === "admin");
+          } else {
+            setIsAuthenticated(false);
+            setIsAdmin(false);
+          }
+        } else {
+          setIsAuthenticated(false);
+          setIsAdmin(false);
+        }
+      } catch (error) {
+        console.error("Error checking auth status:", error);
+        setIsAuthenticated(false);
+        setIsAdmin(false);
+      }
     };
 
     checkAuthStatus();
@@ -26,29 +51,29 @@ const AppRoutes = () => {
   return (
     <Routes>
       <Route path="/login" element={<Login />} />
-
       <Route
         path="/input-perfil"
         element={
           <PrivateRoute
-            component={InputPerfil}
+            element={<InputPerfil />}
             isAuthenticated={isAuthenticated}
           />
         }
       />
-
       <Route
         path="/event-list"
         element={
-          <PrivateRoute element={EventList} isAuthenticated={isAuthenticated} />
+          <PrivateRoute 
+            element={<EventList />} 
+            isAuthenticated={isAuthenticated} 
+          />
         }
       />
-
       <Route
         path="/event-approval"
         element={
           <AdminRoute
-            element={EventApproval}
+            element={<EventApproval />}
             isAuthenticated={isAuthenticated}
             isAdmin={isAdmin}
           />
