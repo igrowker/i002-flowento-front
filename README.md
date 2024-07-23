@@ -1,4 +1,4 @@
-# Flowento
+## Frontend de Flowento
 
 ![image](https://github.com/user-attachments/assets/907f2260-fdad-44b0-bb89-156cc9e45ea7)
 
