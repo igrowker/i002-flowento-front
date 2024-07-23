@@ -6,7 +6,7 @@ import {
   useLocation,
   useNavigate,
 } from "react-router-dom";
-import { login, register, logout } from "./services/authService";
+import { login, register, logout } from "./services/AuthService";
 import { EventList } from "./components/Events/EventList";
 import Footer from "./components/Footer";
 import { Register } from "./components/Auth/Register";
