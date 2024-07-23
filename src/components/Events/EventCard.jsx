@@ -1,37 +1,77 @@
-import { useState, useMemo } from "react";
 import { Link } from "react-router-dom";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation } from "swiper/modules";
-import SwiperNavigation from "./SwiperNavigation";
 import { BsCalendarCheck } from "react-icons/bs";
+import { Navigation } from "swiper/modules";
 import { GoLocation } from "react-icons/go";
 import { BiDollar } from "react-icons/bi";
 import "swiper/swiper-bundle.css";
-import EventButton from "./EventButton";
-import eventos from "./Event";
+import SwiperNavigation from "./SwiperNavigation";
 import { FaRegClock } from "react-icons/fa";
+import axios from "axios";
+import { useState, useEffect } from "react";
+import EventButton from "./EventButton";
 
 export const EventCard = () => {
+  const [events, setEvents] = useState([]);
   const [activeButton, setActiveButton] = useState("todos");
 
-  const eventosFiltrados = useMemo(() => {
-    let filteredEvents = [];
+  useEffect(() => {
+    const fetchEvents = async () => {
+      try {
+        const url = `${process.env.REACT_APP_API_URL}/events/`;
+        const response = await axios.get(url, { withCredentials: true });
+        const { data } = response;
+        const { payload } = data;
+        const formattedEvents = payload
+          .filter((event) => event.state === "approve")
+          .map((event) => ({
+            id: event.id_event,
+            titulo: event.name,
+            fecha: new Date(event.start_date).toLocaleDateString(),
+            hora: new Date(event.start_date).toLocaleTimeString(),
+            ubicacion: event.type,
+            imagen: event.image,
+            precio: event.price > 0 ? `$${event.price}` : "Gratuito",
+            entradasDisponibles: event.current_capacity,
+            aprobado: event.state === "approve",
+            estado: event.state,
+            etiquetaEntradas: "",
+            etiquetaHora: "",
+          }));
+        setEvents(formattedEvents);
+      } catch (error) {
+        const { response } = error;
+        const { data } = response;
+        alert(data.payload);
+      }
+    };
+    fetchEvents();
+  }, []);
+
+  const getEventosFiltradosYOrdenados = () => {
+    let eventosFiltrados = [];
+
     if (activeButton === "proximos") {
-      filteredEvents = eventos.filter((evento) => evento.estado === "proximos");
+      eventosFiltrados = events.filter(
+        (evento) => evento.estado === "proximos"
+      );
     } else if (activeButton === "gratuitos") {
-      filteredEvents = eventos.filter((evento) => evento.precio === "gratuito");
+      eventosFiltrados = events.filter(
+        (evento) => evento.precio === "gratuito"
+      );
     } else if (activeButton === "de_pago") {
-      filteredEvents = eventos.filter((evento) => evento.precio !== "gratuito");
+      eventosFiltrados = events.filter(
+        (evento) => evento.precio !== "gratuito"
+      );
     } else if (activeButton === "finalizado") {
-      filteredEvents = eventos.filter(
+      eventosFiltrados = events.filter(
         (evento) => evento.estado === "finalizado"
       );
     } else {
-      filteredEvents = eventos;
+      eventosFiltrados = events;
     }
 
-    filteredEvents = filteredEvents.filter((evento) => evento.aprobado);
-    filteredEvents.sort((a, b) => {
+    eventosFiltrados.sort((a, b) => {
       const fechaA = new Date(a.fecha.split("/").reverse().join("-"));
       const fechaB = new Date(b.fecha.split("/").reverse().join("-"));
       if (fechaA.getTime() !== fechaB.getTime()) {
@@ -41,22 +81,22 @@ export const EventCard = () => {
       }
     });
 
-    return filteredEvents;
-  }, [activeButton]);
+    return eventosFiltrados;
+  };
+
+  const eventosFiltradosYOrdenados = getEventosFiltradosYOrdenados();
 
   const handleFilterChange = (buttonName) => {
     setActiveButton(buttonName);
   };
 
   const showNavigation = (slidesPerView) => {
-    return eventosFiltrados.length > slidesPerView;
+    return eventosFiltradosYOrdenados.length > slidesPerView;
   };
 
   const now = new Date();
-
-  eventos.forEach((evento) => {
-    const eventoFecha = new Date(`${evento.fecha}T${evento.hora}:00`);
-
+  events.forEach((evento) => {
+    const eventoFecha = new Date(`${evento.fecha}T${evento.hora}`);
     if (eventoFecha < now) {
       evento.estado = "finalizado";
       evento.etiquetaHora = "FINALIZADO";
@@ -81,6 +121,11 @@ export const EventCard = () => {
     }
   });
 
+  const formatTime = (timeString) => {
+    const [hours, minutes] = timeString.split(":");
+    return `${hours}:${minutes}`;
+  };
+
   return (
     <>
       <div className="flex flex-col items-center justify-between w-full mb-3 lg:mb-4 lg:flex-row">
@@ -97,7 +142,7 @@ export const EventCard = () => {
               : "Todos los Eventos"}
           </h1>
         </div>
-        <EventButton eventos={eventos} onFilterChange={handleFilterChange} />
+        <EventButton eventos={events} onFilterChange={handleFilterChange} />
       </div>
       <Swiper
         className="mySwiper"
@@ -108,27 +153,27 @@ export const EventCard = () => {
           nextEl: ".swiper-button-next",
           prevEl: ".swiper-button-prev",
         }}
-        loop={eventosFiltrados.length > 4}
+        loop={eventosFiltradosYOrdenados.length > 4}
         speed={200}
         effect="fade"
         fadeEffect={{ crossFade: true }}
         breakpoints={{
           768: {
             slidesPerView: 2,
-            loop: eventosFiltrados.length > 2,
+            loop: eventosFiltradosYOrdenados.length > 2,
           },
           1024: {
             slidesPerView: 3,
-            loop: eventosFiltrados.length > 3,
+            loop: eventosFiltradosYOrdenados.length > 3,
           },
           1920: {
             slidesPerView: 4,
-            loop: true,
+            loop: eventosFiltradosYOrdenados.length > 4,
           },
         }}
         modules={[Navigation]}
       >
-        {eventosFiltrados.map((evento) => (
+        {eventosFiltradosYOrdenados.map((evento) => (
           <SwiperSlide key={evento.id} className="w-full px-8 pb-4">
             <div
               className="relative p-3 bg-gray-50 rounded-3xl"
@@ -175,7 +220,7 @@ export const EventCard = () => {
                 loading="lazy"
               />
               <h2 className="mb-4 text-sm font-bold text-justify md:text-base gradient-red">
-                <Link to="/">{evento.titulo}</Link>
+                <Link to={`/event-detail/${evento.id}`}>{evento.titulo}</Link>
               </h2>
               <div className="flex justify-between pb-3 text-gray-500 font-lato">
                 <div className="flex gap-1">
@@ -184,7 +229,7 @@ export const EventCard = () => {
                 </div>
                 <div className="flex gap-1">
                   <FaRegClock className="text-orangeprimary" />
-                  <p className="flex text-xs">{evento.hora} h</p>
+                  <p className="flex text-xs">{formatTime(evento.hora)}</p>
                 </div>
               </div>
               <div className="flex justify-between text-gray-500 font-lato">
@@ -197,7 +242,7 @@ export const EventCard = () => {
                   <p className="flex text-xs">
                     {evento.precio === "gratuito"
                       ? "Gratuito"
-                      : `${evento.precio} $`}
+                      : `${evento.precio}`}
                   </p>
                 </div>
               </div>
