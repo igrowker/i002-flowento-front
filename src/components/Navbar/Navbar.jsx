@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { Link } from 'react-router-dom';
 import { FaBars, FaBell, FaTimes, FaUser, FaHome, FaCalendar, FaList, FaCog, FaSignOutAlt } from 'react-icons/fa';
 import footerLogo from '/src/assets/Isotipo.png';
 import logo from "/src/assets/logow.png";
@@ -53,7 +54,7 @@ const NavBar = () => {
 
       {/* Logo */}
       <div className="absolute left-1/2 transform -translate-x-1/2 top-1/3 sm:top-1/2 -translate-y-1/3 mt-6">
-      <img src={logo} alt="Logo" className="h-12 sm:h-16 md:h-20 lg:h-24 w-auto rounded-full border-4 border-red-500 shadow-lg" />
+        <img src={logo} alt="Logo" className="h-12 sm:h-16 md:h-20 lg:h-24 w-auto rounded-full border-4 border-red-500 shadow-lg" />
 
       </div>
 
@@ -84,11 +85,12 @@ const NavBar = () => {
           {/* Menu items */}
           <ul className="mt-8 space-y-4 font-lato">
             <li>
-              <a href="#" className="flex items-center text-black">
+              <Link to="/input-perfil" className="flex items-center text-black">
                 <FaUser className="mr-2 text-orange-500" />
                 Perfil
-              </a>
+              </Link>
             </li>
+
             <li>
               <a href="#" className="flex items-center text-black">
                 <FaHome className="mr-2 text-orange-500" />
