@@ -10,9 +10,10 @@ import { FaRegClock } from "react-icons/fa";
 import axios from "axios";
 import { useState, useEffect } from "react";
 import EventButton from "./EventButton";
+import { useEvents } from "../../context/EventContext";
 
-export const EventCard = () => {
-  const [events, setEvents] = useState([]);
+const EventCard = () => {
+  const { events, setEvents } = useEvents();
   const [activeButton, setActiveButton] = useState("todos");
 
   useEffect(() => {
@@ -22,46 +23,75 @@ export const EventCard = () => {
         const response = await axios.get(url, { withCredentials: true });
         const { data } = response;
         const { payload } = data;
-        const formattedEvents = payload
-          .filter((event) => event.state === "approve")
-          .map((event) => ({
+        const now = new Date();
+        const formattedEvents = payload.map((event) => {
+          const eventDate = new Date(event.start_date);
+          const endDate = new Date(event.end_date);
+          let estado = "aprobado";
+          let etiquetaHora = "";
+          let etiquetaEntradas = "";
+
+          if (eventDate <= now && now <= endDate) {
+            estado = "en curso";
+            etiquetaHora = "EN CURSO";
+          } else if (endDate < now) {
+            estado = "finalizado";
+            etiquetaHora = "FINALIZADO";
+          } else {
+            if (event.current_capacity === 0) {
+              etiquetaEntradas = "PLAZAS AGOTADAS";
+            } else if (
+              event.current_capacity <= 300 &&
+              event.current_capacity >= 1
+            ) {
+              etiquetaEntradas = "ÚLTIMAS PLAZAS";
+            }
+            if (
+              eventDate.toDateString() === now.toDateString() &&
+              new Date(event.start_date).getTime() > now.getTime()
+            ) {
+              etiquetaHora = "ÚLTIMAS HORAS";
+            }
+          }
+          return {
             id: event.id_event,
             titulo: event.name,
-            fecha: new Date(event.start_date).toLocaleDateString(),
+            fecha: eventDate.toLocaleDateString(),
             hora: new Date(event.start_date).toLocaleTimeString(),
             ubicacion: event.type,
             imagen: event.image,
             precio: event.price > 0 ? `$${event.price}` : "Gratuito",
             entradasDisponibles: event.current_capacity,
-            aprobado: event.state === "approve",
-            estado: event.state,
-            etiquetaEntradas: "",
-            etiquetaHora: "",
-          }));
+            estado,
+            etiquetaEntradas,
+            etiquetaHora,
+          };
+        });
         setEvents(formattedEvents);
       } catch (error) {
-        const { response } = error;
-        const { data } = response;
-        alert(data.payload);
+        console.error("Error al obtener eventos:", error);
+        alert(
+          "Hubo un problema al cargar los eventos. Inténtalo de nuevo más tarde."
+        );
       }
     };
     fetchEvents();
-  }, []);
+  }, [setEvents]);
 
   const getEventosFiltradosYOrdenados = () => {
     let eventosFiltrados = [];
 
     if (activeButton === "proximos") {
       eventosFiltrados = events.filter(
-        (evento) => evento.estado === "proximos"
+        (evento) => evento.estado === "aprobado"
       );
     } else if (activeButton === "gratuitos") {
       eventosFiltrados = events.filter(
-        (evento) => evento.precio === "gratuito"
+        (evento) => evento.precio === "Gratuito"
       );
     } else if (activeButton === "de_pago") {
       eventosFiltrados = events.filter(
-        (evento) => evento.precio !== "gratuito"
+        (evento) => evento.precio !== "Gratuito"
       );
     } else if (activeButton === "finalizado") {
       eventosFiltrados = events.filter(
@@ -80,7 +110,6 @@ export const EventCard = () => {
         return a.hora.localeCompare(b.hora);
       }
     });
-
     return eventosFiltrados;
   };
 
@@ -90,41 +119,14 @@ export const EventCard = () => {
     setActiveButton(buttonName);
   };
 
-  const showNavigation = (slidesPerView) => {
-    return eventosFiltradosYOrdenados.length > slidesPerView;
-  };
-
-  const now = new Date();
-  events.forEach((evento) => {
-    const eventoFecha = new Date(`${evento.fecha}T${evento.hora}`);
-    if (eventoFecha < now) {
-      evento.estado = "finalizado";
-      evento.etiquetaHora = "FINALIZADO";
-    } else {
-      evento.estado = "proximos";
-      if (evento.entradasDisponibles === 0) {
-        evento.etiquetaEntradas = "PLAZAS AGOTADAS";
-      } else if (
-        evento.entradasDisponibles <= 15 &&
-        evento.entradasDisponibles >= 1
-      ) {
-        evento.etiquetaEntradas = "ÚLTIMAS PLAZAS";
-      }
-      if (
-        eventoFecha.getDate() === now.getDate() &&
-        eventoFecha.getMonth() === now.getMonth() &&
-        eventoFecha.getFullYear() === now.getFullYear() &&
-        eventoFecha > now
-      ) {
-        evento.etiquetaHora = "ÚLTIMAS HORAS";
-      }
-    }
-  });
-
   const formatTime = (timeString) => {
     const [hours, minutes] = timeString.split(":");
     return `${hours}:${minutes}`;
   };
+
+  if (!events) {
+    return <div>Loading...</div>;
+  }
 
   return (
     <>
@@ -142,7 +144,7 @@ export const EventCard = () => {
               : "Todos los Eventos"}
           </h1>
         </div>
-        <EventButton eventos={events} onFilterChange={handleFilterChange} />
+        <EventButton onFilterChange={handleFilterChange} />
       </div>
       <Swiper
         className="mySwiper"
@@ -179,7 +181,7 @@ export const EventCard = () => {
               className="relative p-3 bg-gray-50 rounded-3xl"
               style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
             >
-              {evento.estado === "proximos" && (
+              {evento.estado === "aprobado" && (
                 <>
                   {evento.etiquetaHora === "ÚLTIMAS HORAS" && (
                     <div
@@ -187,6 +189,14 @@ export const EventCard = () => {
                       style={{ padding: "1px 10px", fontSize: "9px" }}
                     >
                       <p>Últimas horas</p>
+                    </div>
+                  )}
+                  {evento.etiquetaHora === "EN CURSO" && (
+                    <div
+                      className="absolute font-bold text-white uppercase bg-green-500 rounded-lg top-5 left-5"
+                      style={{ padding: "1px 10px", fontSize: "9px" }}
+                    >
+                      <p>En Curso</p>
                     </div>
                   )}
                   {(evento.etiquetaEntradas === "ÚLTIMAS PLAZAS" ||
@@ -239,18 +249,16 @@ export const EventCard = () => {
                 </div>
                 <div className="flex gap-1">
                   <BiDollar className="text-orangeprimary" />
-                  <p className="flex text-xs">
-                    {evento.precio === "gratuito"
-                      ? "Gratuito"
-                      : `${evento.precio}`}
-                  </p>
+                  <p className="flex text-xs">{evento.precio}</p>
                 </div>
               </div>
             </div>
           </SwiperSlide>
         ))}
-        {showNavigation(1) && <SwiperNavigation />}
+        <SwiperNavigation />
       </Swiper>
     </>
   );
 };
+
+export default EventCard;

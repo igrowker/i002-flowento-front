@@ -1,6 +1,6 @@
 import "swiper/swiper-bundle.css";
-import { EventCard } from "./EventCard";
-import { EventUpComing } from "./EventUpComing";
+import EventCard from "./EventCard";
+import EventUpComing from "./EventUpComing";
 
 export const EventList = () => {
   return (

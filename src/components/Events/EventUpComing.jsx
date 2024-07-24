@@ -10,7 +10,7 @@ import { FaRegClock } from "react-icons/fa";
 import axios from "axios";
 import { useEffect, useState } from "react";
 
-export const EventUpComing = () => {
+const EventUpComing = () => {
   const [events, setEvents] = useState([]);
 
   useEffect(() => {
@@ -41,13 +41,12 @@ export const EventUpComing = () => {
         alert(data.payload);
       }
     };
-
     fetchEvents();
   }, []);
 
   const getEventosDelDiaActual = () => {
     const now = new Date();
-    const today = now.toISOString().split("T")[0];
+    const today = now.toLocaleDateString();
     const currentTime = now.getHours() * 60 + now.getMinutes();
 
     return events.filter((evento) => {
@@ -63,7 +62,6 @@ export const EventUpComing = () => {
   };
 
   const eventosDelDiaActual = getEventosDelDiaActual();
-
   const formatTime = (timeString) => {
     const [hours, minutes] = timeString.split(":");
     return `${hours}:${minutes}`;
@@ -71,7 +69,7 @@ export const EventUpComing = () => {
 
   return (
     <>
-      {getEventosDelDiaActual().length > 0 && (
+      {eventosDelDiaActual.length > 0 && (
         <>
           <h2 className="px-4 mb-2 text-xl font-bold md:text-3xl title-font gradient-red md:mb-4">
             Último día... ¡No te los pierdas!
@@ -85,27 +83,27 @@ export const EventUpComing = () => {
               nextEl: ".swiper-button-next",
               prevEl: ".swiper-button-prev",
             }}
-            loop={getEventosDelDiaActual.length > 4}
+            loop={eventosDelDiaActual.length > 4}
             speed={200}
             effect="fade"
             fadeEffect={{ crossFade: true }}
             breakpoints={{
               768: {
                 slidesPerView: 2,
-                loop: getEventosDelDiaActual.length > 2,
+                loop: eventosDelDiaActual.length > 2,
               },
               1024: {
                 slidesPerView: 3,
-                loop: getEventosDelDiaActual.length > 3,
+                loop: eventosDelDiaActual.length > 3,
               },
               1920: {
                 slidesPerView: 4,
-                loop: getEventosDelDiaActual.length > 4,
+                loop: eventosDelDiaActual.length > 4,
               },
             }}
             modules={[Navigation]}
           >
-            {getEventosDelDiaActual().map((evento) => (
+            {eventosDelDiaActual.map((evento) => (
               <SwiperSlide key={evento.id}>
                 <div className="w-full px-8 pb-4">
                   <div
@@ -168,18 +166,13 @@ export const EventUpComing = () => {
                       </div>
                       <div className="flex gap-1">
                         <BiDollar className="text-orangeprimary" />
-                        <p className="flex text-xs">
-                          {evento.precio === "gratuito"
-                            ? "Gratuito"
-                            : `${evento.precio}`}
-                        </p>
+                        <p className="flex text-xs">{evento.precio}</p>
                       </div>
                     </div>
                   </div>
                 </div>
               </SwiperSlide>
             ))}
-            {/* {getEventosDelDiaActual() && <SwiperNavigation />} */}
             {eventosDelDiaActual.length > 0 && <SwiperNavigation />}
           </Swiper>
         </>
@@ -187,3 +180,5 @@ export const EventUpComing = () => {
     </>
   );
 };
+
+export default EventUpComing;

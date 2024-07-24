@@ -5,7 +5,7 @@ const EventButton = ({ onFilterChange }) => {
   const buttons = [
     { name: "todos", label: "Todos" },
     { name: "gratuitos", label: "Gratuitos" },
-    { name: "de_pago", label: "De pago" },
+    { name: "de_pago", label: "De Pago" },
     { name: "proximos", label: "Próximos" },
     { name: "finalizado", label: "Finalizados" },
   ];
