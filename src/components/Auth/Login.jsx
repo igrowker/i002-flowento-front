@@ -1,10 +1,10 @@
 import { Link, useNavigate } from "react-router-dom";
-import axios from "axios";
 import { useRef, useState } from "react";
 import { EyeIcon, EyeSlashIcon } from "@heroicons/react/24/outline";
 import PropTypes from "prop-types";
 import DiagonalBackground from "./DiagonalBackground";
 import Header from "./Header";
+import { login } from "../../services/authService";
 
 function Login() {
   const navigate = useNavigate();
@@ -12,11 +12,12 @@ function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const form = useRef(null);
   const [loading, setLoading] = useState(false);
+
   const handleTogglePassword = () => {
     setShowPassword(!showPassword);
   };
 
-  const login = async (e) => {
+  const handleLogin = async (e) => {
     e.preventDefault();
     setLoading(true);
     setData(false);
@@ -24,27 +25,15 @@ function Login() {
     const obj = {};
     formData.forEach((value, key) => (obj[key] = value));
     try {
-      const response = await axios.post(
-        `${process.env.REACT_APP_API_URL}/auth/login`,
-        {
-          email: obj["email"],
-          password: obj["password"],
-        },
-        { withCredentials: true }
-      );
-      const { data } = response;
-      if (data.status === "success") {
+      const response = await login(obj.email, obj.password);
+      if (response.status === "success") {
         alert("Te logueaste con éxito");
-        localStorage.setItem("authToken", data.token);
         navigate("/event-list");
       } else {
         alert("Alguno de los datos es incorrecto");
       }
     } catch (error) {
-      const { response } = error;
-      const errorMessage =
-        response?.data?.payload || "Ocurrió un error al iniciar sesión";
-      alert(errorMessage);
+      alert("Ocurrió un error al iniciar sesión");
     } finally {
       setLoading(false);
       setData(true);
@@ -62,7 +51,7 @@ function Login() {
           </h2>
         </div>
         <div className="mt-4 w-80">
-          <form ref={form} className="space-y-2" onSubmit={login}>
+          <form ref={form} className="space-y-2" onSubmit={handleLogin}>
             <div>
               <label
                 htmlFor="email"
