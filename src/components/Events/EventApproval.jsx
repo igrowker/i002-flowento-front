@@ -8,14 +8,16 @@ import "swiper/swiper-bundle.css";
 import SwiperNavigation from "./SwiperNavigation";
 import { FaRegClock } from "react-icons/fa";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useState, useEffect } from "react";
 import EventFilterButtons from "./EventFilterButtons";
 import FloatingButton from "./FloatingButton";
+import { useEvents } from '../../context/EventContext';
 
 const EventApproval = () => {
-  const [events, setEvents] = useState([]);
+  const { events, setEvents } = useEvents();
   const [activeButton, setActiveButton] = useState("todos");
-
+  const { updateEvents } = useEvents();
+  
   useEffect(() => {
     const fetchEvents = async () => {
       try {
@@ -57,7 +59,7 @@ const EventApproval = () => {
       }
     };
     fetchEvents();
-  }, []);
+  }, [setEvents]);
 
   const getEventosFiltradosYOrdenados = () => {
     let eventosFiltrados = [];
@@ -81,7 +83,6 @@ const EventApproval = () => {
     } else {
       eventosFiltrados = events;
     }
-
     eventosFiltrados.sort((a, b) => {
       const fechaA = new Date(a.fecha.split("/").reverse().join("-"));
       const fechaB = new Date(b.fecha.split("/").reverse().join("-"));
@@ -91,12 +92,12 @@ const EventApproval = () => {
         return a.hora.localeCompare(b.hora);
       }
     });
-
     return eventosFiltrados;
   };
 
   const handleEventCreate = (evento) => {
     setEvents((prevEvents) => [...prevEvents, evento]);
+    updateEvents(evento);
   };
 
   const formatTime = (timeString) => {
@@ -117,7 +118,7 @@ const EventApproval = () => {
               ? "Eventos Rechazados"
               : activeButton === "finalizado"
               ? "Eventos Finalizados"
-              : "Todos los eventos"}
+              : "Todos los Eventos"}
           </h1>
         </div>
         <EventFilterButtons onFilterChange={setActiveButton} />
@@ -165,7 +166,6 @@ const EventApproval = () => {
                   <p>Pendiente de Aprobación</p>
                 </div>
               )}
-
               {evento.estado === "aprobado" && (
                 <div
                   className="absolute font-bold text-white uppercase bg-green-500 rounded-lg top-5 left-5"
@@ -174,7 +174,6 @@ const EventApproval = () => {
                   <p>Aprobado</p>
                 </div>
               )}
-
               {evento.estado === "rechazado" && (
                 <div
                   className="absolute font-bold text-white uppercase bg-red-500 rounded-lg top-5 left-5"
@@ -183,7 +182,6 @@ const EventApproval = () => {
                   <p>Rechazado</p>
                 </div>
               )}
-
               {evento.estado === "finalizado" && (
                 <div
                   className="absolute font-bold text-white uppercase rounded-lg top-5 left-5 bg-gradient-red"
@@ -218,9 +216,7 @@ const EventApproval = () => {
                 </div>
                 <div className="flex gap-1">
                   <BiDollar className="text-orangeprimary" />
-                  <p className="flex text-xs">
-                    {evento.precio === "gratuito" ? "Gratuito" : evento.precio}
-                  </p>
+                  <p className="flex text-xs">{evento.precio}</p>
                 </div>
               </div>
             </div>
