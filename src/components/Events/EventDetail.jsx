@@ -106,7 +106,7 @@ const EventDetail = () => {
         {/* Formulario de Registro */}
         {showForm && (
           <div className="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-50">
-            <RegistrationForm onClose={handleCloseForm} />
+            <RegistrationForm onClose={handleCloseForm} eventId={id}/>
           </div>
         )}
       </div>
