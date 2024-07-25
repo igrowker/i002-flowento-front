@@ -8,10 +8,11 @@ import "swiper/swiper-bundle.css";
 import SwiperNavigation from "./SwiperNavigation";
 import { FaRegClock } from "react-icons/fa";
 import axios from "axios";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
+import { useEvents } from "../../context/EventContext";
 
 const EventUpComing = () => {
-  const [events, setEvents] = useState([]);
+  const { events, setEvents } = useEvents();
 
   useEffect(() => {
     const fetchEvents = async () => {
@@ -20,29 +21,58 @@ const EventUpComing = () => {
         const response = await axios.get(url, { withCredentials: true });
         const { data } = response;
         const { payload } = data;
-        const formattedEvents = payload.map((event) => ({
-          id: event.id_event,
-          titulo: event.name,
-          fecha: new Date(event.start_date).toLocaleDateString(),
-          hora: new Date(event.start_date).toLocaleTimeString(),
-          ubicacion: event.type,
-          imagen: event.image,
-          precio: event.price > 0 ? `$${event.price}` : "Gratuito",
-          entradasDisponibles: event.current_capacity,
-          aprobado: event.state === "approve",
-          estado: event.state,
-          etiquetaEntradas: "",
-          etiquetaHora: "",
-        }));
+        const now = new Date();
+        const formattedEvents = payload
+          .filter((event) => event.state === "approve")
+          .map((event) => {
+            const eventDate = new Date(event.start_date);
+            const endDate = new Date(event.end_date);
+            let estado = "aprobado";
+            let etiquetaHora = "";
+            let etiquetaEntradas = "";
+            if (endDate < now) {
+              estado = "finalizado";
+              etiquetaHora = "FINALIZADO";
+            } else {
+              if (event.current_capacity === 0) {
+                etiquetaEntradas = "PLAZAS AGOTADAS";
+              } else if (
+                event.current_capacity <= 300 &&
+                event.current_capacity >= 1
+              ) {
+                etiquetaEntradas = "ÚLTIMAS PLAZAS";
+              }
+              if (
+                eventDate.toDateString() === now.toDateString() &&
+                new Date(event.start_date).getTime() > now.getTime()
+              ) {
+                etiquetaHora = "ÚLTIMAS HORAS";
+              }
+            }
+            return {
+              id: event.id_event,
+              titulo: event.name,
+              fecha: eventDate.toLocaleDateString(),
+              hora: new Date(event.start_date).toLocaleTimeString(),
+              ubicacion: event.type,
+              imagen: event.image,
+              precio: event.price > 0 ? `$${event.price}` : "Gratuito",
+              entradasDisponibles: event.current_capacity,
+              estado,
+              etiquetaEntradas,
+              etiquetaHora,
+            };
+          });
         setEvents(formattedEvents);
       } catch (error) {
-        const { response } = error;
-        const { data } = response;
-        alert(data.payload);
+        console.error("Error al obtener eventos:", error);
+        alert(
+          "Hubo un problema al cargar los eventos. Inténtalo de nuevo más tarde."
+        );
       }
     };
     fetchEvents();
-  }, []);
+  }, [setEvents]);
 
   const getEventosDelDiaActual = () => {
     const now = new Date();
@@ -53,11 +83,7 @@ const EventUpComing = () => {
       const [eventoHora, eventoMinuto] = evento.hora.split(":").map(Number);
       const eventoTime = eventoHora * 60 + eventoMinuto;
 
-      return (
-        evento.fecha === today &&
-        evento.estado === "proximos" &&
-        eventoTime >= currentTime
-      );
+      return evento.fecha === today && eventoTime > currentTime;
     });
   };
 
@@ -104,70 +130,66 @@ const EventUpComing = () => {
             modules={[Navigation]}
           >
             {eventosDelDiaActual.map((evento) => (
-              <SwiperSlide key={evento.id}>
-                <div className="w-full px-8 pb-4">
-                  <div
-                    className="relative p-3 bg-gray-50 rounded-3xl"
-                    style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
-                  >
-                    {evento.estado === "proximos" && (
-                      <>
-                        {evento.etiquetaHora === "ÚLTIMAS HORAS" && (
-                          <div
-                            className="absolute font-bold text-white uppercase rounded-lg top-5 left-5 bg-orangeprimary"
-                            style={{ padding: "1px 10px", fontSize: "9px" }}
-                          >
-                            <p>Últimas horas</p>
-                          </div>
-                        )}
-                        {(evento.etiquetaEntradas === "ÚLTIMAS PLAZAS" ||
-                          evento.etiquetaEntradas === "PLAZAS AGOTADAS") && (
-                          <div
-                            className="absolute font-bold text-white uppercase rounded-lg top-5 right-5 bg-bghours"
-                            style={{ padding: "1px 10px", fontSize: "9px" }}
-                          >
-                            {evento.etiquetaEntradas === "ÚLTIMAS PLAZAS" && (
-                              <p>Últimas plazas</p>
-                            )}
-                            {evento.etiquetaEntradas === "PLAZAS AGOTADAS" && (
-                              <p>Plazas Agotadas</p>
-                            )}
-                          </div>
-                        )}
-                      </>
-                    )}
-                    <img
-                      className="object-cover object-center w-full mb-3 max-h-72 rounded-2xl"
-                      src={evento.imagen}
-                      alt="content"
-                      loading="lazy"
-                    />
-                    <h2 className="mb-4 text-sm font-bold text-justify md:text-base gradient-red">
-                      <Link to={`/event-detail/${evento.id}`}>
-                        {evento.titulo}
-                      </Link>
-                    </h2>
-                    <div className="flex justify-between pb-3 text-gray-500 font-lato">
-                      <div className="flex gap-1">
-                        <BsCalendarCheck className="text-orangeprimary" />
-                        <p className="flex text-xs">{evento.fecha}</p>
-                      </div>
-                      <div className="flex gap-1">
-                        <FaRegClock className="text-orangeprimary" />
-                        <p className="flex text-xs">
-                          {formatTime(evento.hora)}
-                        </p>
-                      </div>
+              <SwiperSlide key={evento.id} className="w-full px-8 pb-4">
+                <div
+                  className="relative p-3 bg-gray-50 rounded-3xl"
+                  style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
+                >
+                  {evento.estado === "aprobado" && (
+                    <>
+                      {evento.etiquetaHora === "ÚLTIMAS HORAS" && (
+                        <div
+                          className="absolute font-bold text-white uppercase rounded-lg top-5 left-5 bg-orangeprimary"
+                          style={{ padding: "1px 10px", fontSize: "9px" }}
+                        >
+                          <p>Últimas horas</p>
+                        </div>
+                      )}
+                      {(evento.etiquetaEntradas === "ÚLTIMAS PLAZAS" ||
+                        evento.etiquetaEntradas === "PLAZAS AGOTADAS") && (
+                        <div
+                          className="absolute font-bold text-white uppercase rounded-lg top-5 right-5 bg-bghours"
+                          style={{ padding: "1px 10px", fontSize: "9px" }}
+                        >
+                          {evento.etiquetaEntradas === "ÚLTIMAS PLAZAS" && (
+                            <p>Últimas plazas</p>
+                          )}
+                          {evento.etiquetaEntradas === "PLAZAS AGOTADAS" && (
+                            <p>Plazas Agotadas</p>
+                          )}
+                        </div>
+                      )}
+                    </>
+                  )}
+                  <img
+                    className="object-cover object-center w-full mb-3 max-h-72 rounded-2xl"
+                    src={evento.imagen}
+                    alt="content"
+                    loading="lazy"
+                  />
+                  <h2 className="mb-4 text-sm font-bold text-justify md:text-base gradient-red">
+                    <Link to={`/event-detail/${evento.id}`}>
+                      {evento.titulo}
+                    </Link>
+                  </h2>
+                  <div className="flex justify-between pb-3 text-gray-500 font-lato">
+                    <div className="flex gap-1">
+                      <BsCalendarCheck className="text-orangeprimary" />
+                      <p className="flex text-xs">{evento.fecha}</p>
                     </div>
-                    <div className="flex justify-between text-gray-500 font-lato">
-                      <div className="flex gap-1">
-                        <GoLocation className="text-orangeprimary" />
-                        <p className="flex text-xs">{evento.ubicacion}</p>
-                      </div>
-                      <div className="flex gap-1">
-                        <BiDollar className="text-orangeprimary" />
-                        <p className="flex text-xs">{evento.precio}</p>
-                      </div>
+                    <div className="flex gap-1">
+                      <FaRegClock className="text-orangeprimary" />
+                      <p className="flex text-xs">{formatTime(evento.hora)}</p>
+                    </div>
+                  </div>
+                  <div className="flex justify-between text-gray-500 font-lato">
+                    <div className="flex gap-1">
+                      <GoLocation className="text-orangeprimary" />
+                      <p className="flex text-xs">{evento.ubicacion}</p>
+                    </div>
+                    <div className="flex gap-1">
+                      <BiDollar className="text-orangeprimary" />
+                      <p className="flex text-xs">{evento.precio}</p>
                     </div>
                   </div>
                 </div>

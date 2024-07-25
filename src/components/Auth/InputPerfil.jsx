@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import imgAvatar from "../../assets/Avatar.png";
+import imgAvatar from "../../assets/Avatar.webp";
 import { FaPhone, FaUser } from "react-icons/fa";
 import { BsCalendar2Check } from "react-icons/bs";
 import { CgMail } from "react-icons/cg";
