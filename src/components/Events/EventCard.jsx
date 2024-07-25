@@ -24,49 +24,47 @@ const EventCard = () => {
         const { data } = response;
         const { payload } = data;
         const now = new Date();
-        const formattedEvents = payload.map((event) => {
-          const eventDate = new Date(event.start_date);
-          const endDate = new Date(event.end_date);
-          let estado = "aprobado";
-          let etiquetaHora = "";
-          let etiquetaEntradas = "";
-
-          if (eventDate <= now && now <= endDate) {
-            estado = "en curso";
-            etiquetaHora = "EN CURSO";
-          } else if (endDate < now) {
-            estado = "finalizado";
-            etiquetaHora = "FINALIZADO";
-          } else {
-            if (event.current_capacity === 0) {
-              etiquetaEntradas = "PLAZAS AGOTADAS";
-            } else if (
-              event.current_capacity <= 300 &&
-              event.current_capacity >= 1
-            ) {
-              etiquetaEntradas = "ÚLTIMAS PLAZAS";
+        const formattedEvents = payload
+          .filter((event) => event.state === "approve")
+          .map((event) => {
+            const eventDate = new Date(event.start_date);
+            const endDate = new Date(event.end_date);
+            let estado = "aprobado";
+            let etiquetaHora = "";
+            let etiquetaEntradas = "";
+            if (endDate < now) {
+              estado = "finalizado";
+              etiquetaHora = "FINALIZADO";
+            } else {
+              if (event.current_capacity === 0) {
+                etiquetaEntradas = "PLAZAS AGOTADAS";
+              } else if (
+                event.current_capacity <= 300 &&
+                event.current_capacity >= 1
+              ) {
+                etiquetaEntradas = "ÚLTIMAS PLAZAS";
+              }
+              if (
+                eventDate.toDateString() === now.toDateString() &&
+                new Date(event.start_date).getTime() > now.getTime()
+              ) {
+                etiquetaHora = "ÚLTIMAS HORAS";
+              }
             }
-            if (
-              eventDate.toDateString() === now.toDateString() &&
-              new Date(event.start_date).getTime() > now.getTime()
-            ) {
-              etiquetaHora = "ÚLTIMAS HORAS";
-            }
-          }
-          return {
-            id: event.id_event,
-            titulo: event.name,
-            fecha: eventDate.toLocaleDateString(),
-            hora: new Date(event.start_date).toLocaleTimeString(),
-            ubicacion: event.type,
-            imagen: event.image,
-            precio: event.price > 0 ? `$${event.price}` : "Gratuito",
-            entradasDisponibles: event.current_capacity,
-            estado,
-            etiquetaEntradas,
-            etiquetaHora,
-          };
-        });
+            return {
+              id: event.id_event,
+              titulo: event.name,
+              fecha: eventDate.toLocaleDateString(),
+              hora: new Date(event.start_date).toLocaleTimeString(),
+              ubicacion: event.type,
+              imagen: event.image,
+              precio: event.price > 0 ? `$${event.price}` : "Gratuito",
+              entradasDisponibles: event.current_capacity,
+              estado,
+              etiquetaEntradas,
+              etiquetaHora,
+            };
+          });
         setEvents(formattedEvents);
       } catch (error) {
         console.error("Error al obtener eventos:", error);
@@ -123,10 +121,6 @@ const EventCard = () => {
     const [hours, minutes] = timeString.split(":");
     return `${hours}:${minutes}`;
   };
-
-  if (!events) {
-    return <div>Loading...</div>;
-  }
 
   return (
     <>
@@ -189,14 +183,6 @@ const EventCard = () => {
                       style={{ padding: "1px 10px", fontSize: "9px" }}
                     >
                       <p>Últimas horas</p>
-                    </div>
-                  )}
-                  {evento.etiquetaHora === "EN CURSO" && (
-                    <div
-                      className="absolute font-bold text-white uppercase bg-green-500 rounded-lg top-5 left-5"
-                      style={{ padding: "1px 10px", fontSize: "9px" }}
-                    >
-                      <p>En Curso</p>
                     </div>
                   )}
                   {(evento.etiquetaEntradas === "ÚLTIMAS PLAZAS" ||
