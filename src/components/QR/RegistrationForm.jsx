@@ -1,8 +1,33 @@
 import PropTypes from "prop-types";
+import { useRef } from "react";
+import { registerForEvent } from "../../services/eventService";
 
-const RegistrationForm = ({ onClose }) => {
-  const handleSubmit = (e) => {
+const RegistrationForm = ({ onClose, eventId }) => {
+  const form = useRef(null);
+
+  const handleSubmit = async (e) => {
     e.preventDefault();
+
+    const formData = new FormData(form.current);
+    const obj = {};
+    formData.forEach((value, key) => (obj[key] = value));
+
+    console.log(eventId);
+    console.log(obj);
+
+    try {
+      const response = await registerForEvent(obj.nombre, obj.email, eventId);
+      console.log(response);
+      if (response.status === "success") {
+        alert("Te registrarte al evento con éxito");
+      } else {
+        alert("Alguno de los datos es incorrecto");
+      }
+    } catch (error) {
+      alert("Ocurrió un error al incribirse al evento");
+    }
+
+
     onClose();
   };
 
@@ -10,7 +35,7 @@ const RegistrationForm = ({ onClose }) => {
     <>
       <div className="fixed inset-0 z-50 flex items-center justify-center bg-black bg-opacity-20 font-lato">
         <div className="p-8 bg-white shadow-lg rounded-3xl">
-          <form onSubmit={handleSubmit}>
+          <form onSubmit={handleSubmit} ref={form}>
             <div className="relative mb-4">
               <label
                 htmlFor="nombre"

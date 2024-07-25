@@ -56,9 +56,9 @@ export const deleteEvent = async (id) => {
 };
 
 // Registrarse para un Evento
-export const registerForEvent = async (eventId) => {
+export const registerForEvent = async (name, email, eventId) => {
   try {
-    const response = await api.post('events/register', { eventId });
+    const response = await api.post('events/register', {name, email, eventId });
     return response.data;
   } catch (error) {
     console.error('Error al registrarse para el evento:', error);
