@@ -3,10 +3,10 @@ import { InputPassword } from "./InputPassword";
 
 export const InputForm = ({ name, type, required, description }) => {
   return (
-    <div className="my-2.5 flex justify-center items-center flex-col">
+    <div className="flex flex-col items-center justify-center">
       <label
         htmlFor={name.toLowerCase()}
-        className="w-full mb-2.5 leading-3 font-normal text-gray300"
+        className="w-full mt-3 text-sm font-bold text-black md:text-base"
       >
         {name} {required && <span className="text-redprimary">*</span>}
       </label>
@@ -16,10 +16,9 @@ export const InputForm = ({ name, type, required, description }) => {
         <div className="w-full h-9">
           <input
             type={type}
-            className="w-full h-full px-3 border-2 border-solid rounded border-orangeprimary"
+            className="block w-full py-2 pl-4 text-sm border border-gray-300 shadow-sm pr-9 rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary md:text-base"
             id={name.toLowerCase()}
             name={name.toLowerCase()}
-            placeholder={name}
           />
         </div>
       )}

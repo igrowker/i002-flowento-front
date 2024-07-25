@@ -6,21 +6,19 @@ import { Link } from "react-router-dom";
 export const Register = () => {
   return (
     <div className="index-container">
-      <DiagonalBackground/>
+      <DiagonalBackground />
       <Header />
-      <div className="container px-6 mx-auto">
+      <div className="container px-6 w-86">
         <Form />
-        </div>
+      </div>
 
-      <div className="flex justify-between gap-16 mt-2">
-        <span className="text-orangeprimary">
-          ¿Ya tienes una cuenta?
-        </span>
+      <div className="flex justify-between gap-20 mt-3 text-sm">
+        <span className="text-orange-600">¿Ya tienes una cuenta?</span>
 
         <Link to={"/"}>
           <button
             type="button"
-            className="font-semibold text-orangeprimary hover:text-orange-600"
+            className="font-semibold text-orange-600 hover:text-orangeprimary"
           >
             Inicia Sesión
           </button>

@@ -2,7 +2,7 @@ import { useState } from "react";
 import PropTypes from "prop-types";
 import EventMessageModal from "./EventMessageModal";
 import { IoInformation } from "react-icons/io5";
-import { FaRegClock, FaRegImage } from "react-icons/fa";
+import { FaRegClock, FaRegImage, FaUsers } from "react-icons/fa";
 import { BiDollar } from "react-icons/bi";
 import { MdOutlineTitle } from "react-icons/md";
 import { BsCalendarCheck } from "react-icons/bs";
@@ -14,7 +14,7 @@ const EventForm = ({ onClose, onSubmit }) => {
   const [evento, setEvento] = useState({
     titulo: "",
     fecha: new Date(),
-    hora: "",
+    hora: new Date(),
     ubicacion: "",
     estado: "",
     imagen: "",
@@ -34,7 +34,7 @@ const EventForm = ({ onClose, onSubmit }) => {
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
-    if (file) {
+    if (file && file.type.startsWith("image/")) {
       const reader = new FileReader();
       reader.onloadend = () => {
         setEvento((prevEvento) => ({
@@ -43,25 +43,46 @@ const EventForm = ({ onClose, onSubmit }) => {
         }));
       };
       reader.readAsDataURL(file);
+    } else {
+      alert("Por favor, selecciona un archivo de imagen válido.");
     }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
-      await onSubmit(evento);
-      setIsSuccess(true);
-      setMessage("¡Evento creado con éxito!");
-      setShowMessage(true);
+      const eventData = {
+        start_date: evento.fecha.toISOString().split("T")[0],
+        end_date: evento.fecha.toISOString().split("T")[0],
+        max_capacity: 100,
+        current_capacity: 0,
+        nline_link: "",
+        image: evento.imagen,
+        price: evento.precio || 0,
+      };
+
+      const response = await fetch(`${process.env.REACT_APP_API_URL}/events/`, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(eventData),
+      });
+
+      if (response.ok) {
+        setIsSuccess(true);
+        setMessage("¡Evento creado con éxito!");
+        setShowMessage(true);
+        onSubmit();
+      } else {
+        const errorData = await response.json();
+        throw new Error(errorData.message || "Error al crear el evento");
+      }
     } catch (error) {
       setIsSuccess(false);
-      setMessage("Hubo un problema al crear el evento, vuelve a intentarlo.");
+      setMessage(`Hubo un problema al crear el evento: ${error.message}`);
       setShowMessage(true);
     }
-  };
-
-  const handleEdit = () => {
-    setShowMessage(false);
   };
 
   const closeModal = () => {
@@ -93,6 +114,12 @@ const EventForm = ({ onClose, onSubmit }) => {
       label: "Ubicación",
       type: "text",
       icon: <GoLocation className="text-orangeprimary" />,
+    },
+    {
+      id: "capacidad",
+      label: "Capacidad",
+      type: "number",
+      icon: <FaUsers className="text-orangeprimary" />,
     },
     {
       id: "informacion",
@@ -227,11 +254,11 @@ const EventForm = ({ onClose, onSubmit }) => {
       </div>
       {showMessage && (
         <EventMessageModal
-          message={message}
-          onEdit={handleEdit}
-          onClose={closeModal}
-          isSuccess={isSuccess}
-        />
+        show={showMessage}
+        isSuccess={isSuccess}
+        message={message}
+        onClose={closeModal}
+      />
       )}
     </>
   );

@@ -3,11 +3,11 @@ import { useState } from "react";
 
 const EventFilterButtons = ({ onFilterChange }) => {
   const buttons = [
-    { name: "pendientes", label: "Pendientes" },
-    { name: "organizado", label: "Organizado" },
-    { name: "inscrito", label: "Inscrito" },
-    { name: "finalizado", label: "Finalizados" },
     { name: "todos", label: "Todos" },
+    { name: "pendiente", label: "Pendientes" },
+    { name: "aprobado", label: "Aprobados" },
+    { name: "rechazado", label: "Rechazados" },
+    { name: "finalizado", label: "Finalizados" },
   ];
 
   const [activeButton, setActiveButton] = useState("todos");

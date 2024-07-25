@@ -1,40 +1,93 @@
-import "./App.css";
+import { useState, useEffect } from "react";
 import {
   BrowserRouter as Router,
   Route,
   Routes,
   useLocation,
+  useNavigate,
 } from "react-router-dom";
+import { login, register, logout } from "./services/authService";
 import { EventList } from "./components/Events/EventList";
 import Footer from "./components/Footer";
-import EventApproval from "./components/Events/EventApproval";
 import { Register } from "./components/Auth/Register";
 import Navbar from "./components/Navbar/Navbar";
-
 import Error from "./components/Error";
-
 import InputPerfil from "./components/Auth/InputPerfil";
 import PerfilEdit from "./components/Auth/PerfilEdit";
-import Index from "./components/Auth/Index";
+import Login from "./components/Auth/Login";
+import InputLogin from "./components/Auth/InputLogin";
+import PasswordReset from "./components/Auth/PasswordReset";
+import EventAdmin from "./components/Events/EventAdmin";
+import EventDetail from "./components/Events/EventDetail";
 
 function App() {
   const location = useLocation();
-  const hideNavbarAndFooter = ["/", "/register", "/error"].includes(
-    location.pathname.toLowerCase()
-  );
+  const hideNavbarAndFooter = [
+    "/",
+    "/register",
+    "/login",
+    "/error",
+    "/password-reset",
+  ].includes(location.pathname.toLowerCase());
+
+  const [user, setUser] = useState(null);
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const checkAuthStatus = async () => {
+    };
+
+    checkAuthStatus();
+  }, [user]);
+
+  const handleLogin = async (email, password) => {
+    try {
+      const userData = await login(email, password);
+      console.log("User data from login:", userData);
+      setUser(userData);
+      navigate("/event-list");
+    } catch (error) {
+      console.error("Error al iniciar sesión:", error);
+    }
+  };
+
+  const handleRegister = async (userData) => {
+    try {
+      const newUser = await register(userData);
+      setUser(newUser);
+    } catch (error) {
+      console.error("Error al registrar usuario:", error);
+    }
+  };
+
+  const handleLogout = async () => {
+    try {
+      await logout();
+      setUser(null);
+    } catch (error) {
+      console.error("Error al cerrar sesión:", error);
+    }
+  };
+
+  const handleNavigateToReset = () => {};
+  const handleNavigate = () => {};
+  const handleClose = () => {};
+  const handleSubmit = () => {};
 
   return (
     <div id="root">
       <main>
-        {!hideNavbarAndFooter && <Navbar />}
+        {!hideNavbarAndFooter && <Navbar onLogout={handleLogout} />}
         <Routes>
-          <Route path="/" element={<Index />} />
-          <Route path="/register" element={<Register />} />
+          <Route path="/" element={<InputLogin onLogin={handleLogin} />} />
+          <Route path="/login" element={<Login onNavigateToReset={handleNavigateToReset} />} />
+          <Route path="/password-reset" element={<PasswordReset onNavigate={handleNavigate} />} />
+          <Route path="/register" element={<Register onRegister={handleRegister} />} />
           <Route path="/input-perfil" element={<InputPerfil />} />
-          <Route path="/perfil-edit" element={<PerfilEdit />} />
-          <Route path="/error" element={<Error />} />
+          <Route path="/perfil-edit" element={<PerfilEdit onClose={handleClose} onSubmit={handleSubmit} />} />
           <Route path="/event-list" element={<EventList />} />
-          <Route path="/event-approval" element={<EventApproval />} />
+          <Route path="/event-detail/:id" element={<EventDetail />} />
+          <Route path="/event-admin" element={<EventAdmin />} />
           <Route path="*" element={<Error />} />
         </Routes>
       </main>
