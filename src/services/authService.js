@@ -3,7 +3,7 @@ import api from './api';
 // Función de login
 export const login = async (email, password) => {
   try {
-    const response = await api.post('/auth/login', { email, password });
+    const response = await api.post('auth/login', { email, password });
     console.log("Login response:", response.data);
     return response.data;
   } catch (error) {
@@ -15,7 +15,7 @@ export const login = async (email, password) => {
 // Función de registro
 export const register = async (userData) => {
   try {
-    const response = await api.post('/auth/register', userData);
+    const response = await api.post('auth/register', userData);
     return response.data;
   } catch (error) {
     console.error("Error en el registro:", error);
@@ -26,7 +26,7 @@ export const register = async (userData) => {
 // Función de logout
 export const logout = async () => {
   try {
-    await api.get('/auth/logout');
+    await api.get('auth/logout');
     localStorage.removeItem('authToken');
   } catch (error) {
     console.error("Error en el logout:", error);
@@ -37,7 +37,7 @@ export const logout = async () => {
 // Función para recuperar contraseña
 export const recoverPassword = async (email) => {
   try {
-    const response = await api.post('/auth/recoverPassword', { email });
+    const response = await api.post('auth/recoverPassword', { email });
     return response.data;
   } catch (error) {
     console.error("Error en la recuperación de contraseña:", error);
@@ -48,7 +48,7 @@ export const recoverPassword = async (email) => {
 // Función para restablecer contraseña
 export const resetPassword = async (email, password, confirmPassword) => {
   try {
-    const response = await api.post('/auth/resetPassword', { email, password, confirmPassword });
+    const response = await api.post('auth/resetPassword', { email, password, confirmPassword });
     return response.data;
   } catch (error) {
     console.error("Error en el restablecimiento de contraseña:", error);
