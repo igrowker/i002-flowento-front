@@ -19,6 +19,7 @@ import InputLogin from "./components/Auth/InputLogin";
 import PasswordReset from "./components/Auth/PasswordReset";
 import EventAdmin from "./components/Events/EventAdmin";
 import EventDetail from "./components/Events/EventDetail";
+import QRScanner from "./components/QR/QRScanner";
 
 function App() {
   const location = useLocation();
@@ -87,6 +88,7 @@ function App() {
           <Route path="/perfil-edit" element={<PerfilEdit onClose={handleClose} onSubmit={handleSubmit} />} />
           <Route path="/event-list" element={<EventList />} />
           <Route path="/event-detail/:id" element={<EventDetail />} />
+          <Route path="/qrscanner/:id" element={<QRScanner />} />
           <Route path="/event-admin" element={<EventAdmin />} />
           <Route path="*" element={<Error />} />
         </Routes>

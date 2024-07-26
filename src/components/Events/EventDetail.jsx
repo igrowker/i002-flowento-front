@@ -1,8 +1,7 @@
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import RegistrationForm from "../QR/RegistrationForm";
-import RegisterButton from "../QR/RegisterButton";
 import { BsCalendarCheck } from "react-icons/bs";
 import { FaRegClock } from "react-icons/fa";
 import { BiDollar } from "react-icons/bi";
@@ -13,8 +12,10 @@ import ButtonShare from "./ButtonShare";
 const EventDetail = () => {
   const [showForm, setShowForm] = useState(false);
   const [event, setEvent] = useState(null);
+  const [isRegistered, setIsRegistered] = useState(false);
 
   const { id } = useParams();
+  const navigate = useNavigate(); // Hook para navegación programática
 
   useEffect(() => {
     const fetchEventDetails = async () => {
@@ -30,17 +31,35 @@ const EventDetail = () => {
     };
 
     fetchEventDetails();
+
+    // Verifica si el usuario ya está inscrito
+    if (localStorage.getItem(`registered-${id}`)) {
+      setIsRegistered(true);
+    }
   }, [id]);
 
   const handleButtonClick = () => {
-    setShowForm(true);
+    if (isRegistered) {
+      // Si el usuario ya está registrado, redirige a la vista de generación de QR
+      navigate(`/qrscanner/${id}`);
+    } else {
+      // Si el usuario no está registrado, muestra el formulario de registro
+      setShowForm(true);
+    }
   };
 
   const handleCloseForm = () => {
     setShowForm(false);
   };
 
-  if (!event) return;
+  const handleSuccessfulRegistration = () => {
+    setIsRegistered(true);
+    setShowForm(false);
+    localStorage.setItem(`registered-${id}`, 'true'); // Marca como registrado en localStorage
+    navigate(`/qrscanner/${id}`);
+  };
+
+  if (!event) return null;
 
   return (
     <>
@@ -77,7 +96,7 @@ const EventDetail = () => {
             <div className="flex items-center">
               <FaRegClock className="text-lg text-orangeprimary md:text-xl lg:text-2xl" />
               <span className="ml-2 text-gray300 md:text-lg lg:text-xl">
-                {event.start_date}
+                {event.start_time}
               </span>
             </div>
           </div>
@@ -85,7 +104,7 @@ const EventDetail = () => {
             <div className="flex items-center space-x-4">
               <GoLocation className="text-lg text-orangeprimary md:text-xl lg:text-2xl" />
               <span className="text-gray300 md:text-lg lg:text-xl">
-                {event.type}
+                {event.location}
               </span>
             </div>
             <div className="flex items-center">
@@ -96,20 +115,27 @@ const EventDetail = () => {
             </div>
           </div>
           <div className="flex justify-between">
-            <RegisterButton onClick={handleButtonClick} />
+            <button 
+              onClick={handleButtonClick}
+              className="flex w-50 rounded-3xl justify-center bg-orangeprimary px-3 py-1.5 text-sm font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 border-2 border-white"
+              style={{ boxShadow: "0px 4px 10px 0px #00000040"}}
+            >
+              {isRegistered ? "Inscripto" : "Inscribirse"}
+            </button>
             <ButtonBack />
           </div>
         </div>
       </section>
 
-      <div>
-        {/* Formulario de Registro */}
-        {showForm && (
-          <div className="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-50">
-            <RegistrationForm onClose={handleCloseForm} eventId={id}/>
-          </div>
-        )}
-      </div>
+      {showForm && (
+        <div className="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-50">
+          <RegistrationForm
+            onClose={handleCloseForm}
+            eventId={id}
+            onSuccessfulRegistration={handleSuccessfulRegistration}
+          />
+        </div>
+      )}
     </>
   );
 };
