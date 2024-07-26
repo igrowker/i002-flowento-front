@@ -24,9 +24,9 @@ const EventButton = ({ onFilterChange }) => {
           key={button.name}
           className={`py-1 px-4 rounded-3xl transition-colors ${
             activeButton === button.name
-              ? "bg-orangeprimary text-white hover:bg-orange-600"
-              : "bg-bgbutton text-orangeprimary hover:bg-orangeprimary hover:text-white"
-          } transition-all duration-400`}
+              ? "bg-orangeprimary text-white hover:bg-orange-600 transition-transform duration-300 md:hover:scale-105"
+              : "bg-bgbutton text-orangeprimary hover:bg-orangeprimary hover:text-white transition-transform duration-300 md:hover:scale-105"
+          } transition-all duration-500`}
           onClick={() => handleButtonClick(button.name)}
         >
           {button.label}

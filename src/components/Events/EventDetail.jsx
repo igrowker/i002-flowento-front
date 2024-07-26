@@ -8,6 +8,7 @@ import { BiDollar } from "react-icons/bi";
 import { GoLocation } from "react-icons/go";
 import ButtonBack from "./ButtonBack";
 import ButtonShare from "./ButtonShare";
+import Preloader from "../../components/Preloader";
 
 const EventDetail = () => {
   const [showForm, setShowForm] = useState(false);
@@ -59,15 +60,15 @@ const EventDetail = () => {
     navigate(`/qrscanner/${id}`);
   };
 
-  if (!event) return null;
+  if (!event) return <Preloader />;
 
   return (
     <>
       <section className="overflow-hidden text-gray-600 body-font font-lato">
         <div className="container px-2 py-4 mx-auto md:py-12 md:px-5">
-          <div className="flex flex-wrap mx-auto lg:w-4/5">
+          <div className="flex flex-wrap mx-auto lg:w-6/5">
             <img
-              className="object-cover object-center w-full h-full shadow-xl rounded-2xl"
+              className="object-cover object-center w-full h-full border-2 shadow-2xl rounded-2xl border-orangeprimary"
               src={event.image}
               alt={event.name}
             />
@@ -86,7 +87,7 @@ const EventDetail = () => {
             </p>
           </div>
 
-          <div className="flex justify-between pb-3 text-gray-500 font-lato">
+          <div className="flex justify-between pb-3 font-bold text-gray-800 font-lato">
             <div className="flex items-center mb-2">
               <BsCalendarCheck className="text-lg text-orangeprimary md:text-xl lg:text-2xl" />
               <span className="ml-2 text-gray300 md:text-lg lg:text-xl">
@@ -96,14 +97,14 @@ const EventDetail = () => {
             <div className="flex items-center">
               <FaRegClock className="text-lg text-orangeprimary md:text-xl lg:text-2xl" />
               <span className="ml-2 text-gray300 md:text-lg lg:text-xl">
-                {event.start_time}
+                {event.hour}
               </span>
             </div>
           </div>
-          <div className="flex justify-between pb-3 text-gray-500 font-lato">
-            <div className="flex items-center space-x-4">
+          <div className="flex justify-between pb-3 font-bold text-gray-800 font-lato">
+            <div className="flex items-center">
               <GoLocation className="text-lg text-orangeprimary md:text-xl lg:text-2xl" />
-              <span className="text-gray300 md:text-lg lg:text-xl">
+              <span className="ml-2 text-gray300 md:text-lg lg:text-xl">
                 {event.location}
               </span>
             </div>

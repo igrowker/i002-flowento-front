@@ -20,6 +20,9 @@ import PasswordReset from "./components/Auth/PasswordReset";
 import EventAdmin from "./components/Events/EventAdmin";
 import EventDetail from "./components/Events/EventDetail";
 import QRScanner from "./components/QR/QRScanner";
+import Preloader from "./components/Preloader";
+import EventForm from "./components/Events/EventForm";
+// import Dashboard from "./components/Dashboard"
 
 function App() {
   const location = useLocation();
@@ -32,10 +35,14 @@ function App() {
   ].includes(location.pathname.toLowerCase());
 
   const [user, setUser] = useState(null);
+  const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
   useEffect(() => {
     const checkAuthStatus = async () => {
+      setTimeout(() => {
+        setLoading(false);
+      }, 800);
     };
 
     checkAuthStatus();
@@ -75,6 +82,10 @@ function App() {
   const handleClose = () => {};
   const handleSubmit = () => {};
 
+  if (loading) {
+    return <Preloader />;
+  }
+
   return (
     <div id="root">
       <main>
@@ -90,6 +101,8 @@ function App() {
           <Route path="/event-detail/:id" element={<EventDetail />} />
           <Route path="/qrscanner/:id" element={<QRScanner />} />
           <Route path="/event-admin" element={<EventAdmin />} />
+          <Route path="/event-form" element={<EventForm />} />
+          {/* <Route path="/Dashboard" element={<Dashboard />} />  */}
           <Route path="*" element={<Error />} />
         </Routes>
       </main>

@@ -1,5 +1,5 @@
+import { Link } from "react-router-dom";
 import { useState } from "react";
-import PropTypes from "prop-types";
 import EventMessageModal from "./EventMessageModal";
 import { IoInformation } from "react-icons/io5";
 import { FaRegClock, FaRegImage, FaUsers } from "react-icons/fa";
@@ -10,13 +10,14 @@ import { GoLocation } from "react-icons/go";
 import DatePicker from "react-datepicker";
 import "react-datepicker/dist/react-datepicker.css";
 
-const EventForm = ({ onClose, onSubmit }) => {
+const EventForm = () => {
   const [evento, setEvento] = useState({
     titulo: "",
     fecha: new Date(),
-    hora: new Date(),
+    hora: "",
     ubicacion: "",
-    estado: "",
+    capacidad: "",
+    informacion: "",
     imagen: "",
     precio: "",
   });
@@ -26,11 +27,26 @@ const EventForm = ({ onClose, onSubmit }) => {
   const [message, setMessage] = useState("");
 
   const handleChange = (field, value) => {
-    setEvento((prevEvento) => ({
-      ...prevEvento,
-      [field]: value,
-    }));
-  };
+    if (field === "hora" && value) {
+      const newTime = new Date(evento.fecha);
+      newTime.setHours(value.getHours());
+      newTime.setMinutes(value.getMinutes());
+      setEvento((prevEvento) => ({
+        ...prevEvento,
+        hora: newTime,
+      }));
+    } else if (field === "fecha") {
+      setEvento((prevEvento) => ({
+        ...prevEvento,
+        fecha: value,
+      }));
+    } else {
+      setEvento((prevEvento) => ({
+        ...prevEvento,
+        [field]: value,
+      }));
+    }
+  };  
 
   const handleFileChange = (e) => {
     const file = e.target.files[0];
@@ -51,14 +67,27 @@ const EventForm = ({ onClose, onSubmit }) => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     try {
+      const startDate = evento.fecha.toISOString().split("T")[0];
       const eventData = {
-        start_date: evento.fecha.toISOString().split("T")[0],
-        end_date: evento.fecha.toISOString().split("T")[0],
-        max_capacity: 100,
-        current_capacity: 0,
-        nline_link: "",
+        id_event: evento.id_event,
+        userId: evento.userId,
+        name: evento.titulo,
+        description: evento.informacion,
         image: evento.imagen,
+        start_date: startDate,
+        end_date: startDate,
+        max_capacity: evento.capacidad,
+        current_capacity: evento.capacidad,
         price: evento.precio || 0,
+        hour: evento.hora.toLocaleTimeString("es-AR", {
+          hour: "2-digit",
+          minute: "2-digit",
+        }),
+        location: evento.ubicacion,
+        type: evento.tipo || "in_person",
+        online_link: evento.online_link || "",
+        state: "approve",
+        creation_date: new Date().toISOString(),
       };
 
       const response = await fetch(`${process.env.REACT_APP_API_URL}/events/`, {
@@ -73,7 +102,6 @@ const EventForm = ({ onClose, onSubmit }) => {
         setIsSuccess(true);
         setMessage("¡Evento creado con éxito!");
         setShowMessage(true);
-        onSubmit();
       } else {
         const errorData = await response.json();
         throw new Error(errorData.message || "Error al crear el evento");
@@ -85,9 +113,8 @@ const EventForm = ({ onClose, onSubmit }) => {
     }
   };
 
-  const closeModal = () => {
-    setShowMessage(false);
-    onClose();
+  const handleEdit = () => {
+    console.log("Volver a editar...");
   };
 
   const formFields = [
@@ -128,23 +155,23 @@ const EventForm = ({ onClose, onSubmit }) => {
       icon: <IoInformation className="text-orangeprimary" />,
     },
     {
-      id: "imagen",
-      label: "Imagen",
-      type: "file",
-      icon: <FaRegImage className="text-orangeprimary" />,
-    },
-    {
       id: "precio",
       label: "Precio",
       type: "number",
       icon: <BiDollar className="text-orangeprimary" />,
     },
+    {
+      id: "imagen",
+      label: "Imagen",
+      type: "file",
+      icon: <FaRegImage className="text-orangeprimary" />,
+    },
   ];
 
   return (
     <>
-      <div className="fixed inset-0 z-10 flex items-center justify-center bg-black bg-opacity-50">
-        <div className="p-8 bg-white shadow-lg rounded-3xl">
+      <div className="flex content-center justify-center font-lato">
+        <div className="p-8 w-96">
           <h2 className="mb-4 text-2xl font-bold text-center text-redprimary">
             Crear Nuevo Evento
           </h2>
@@ -166,7 +193,7 @@ const EventForm = ({ onClose, onSubmit }) => {
                         name={field.id}
                         value={evento[field.id]}
                         onChange={(e) => handleChange(field.id, e.target.value)}
-                        className="block w-full py-2 pl-4 mt-1 border border-gray-300 shadow-sm pr-9 rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm"
+                        className="block w-full py-2 pl-4 mt-1 border border-gray-300 shadow-sm md:w-full pr-9 rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm"
                         required
                       />
                       <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -193,7 +220,7 @@ const EventForm = ({ onClose, onSubmit }) => {
                         timeInputLabel="Hora:"
                         dateFormat="HH:mm"
                         use24Hour
-                        className="block py-2 pl-4 mt-1 border border-gray-300 shadow-sm w-83 pr-9 rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm md:w-86"
+                        className="block py-2 pl-4 mt-1 border border-gray-300 shadow-sm w-80 pr-9 rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm"
                         required
                       />
                       <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -207,7 +234,7 @@ const EventForm = ({ onClose, onSubmit }) => {
                       selected={evento.fecha}
                       onChange={(date) => handleChange("fecha", date)}
                       dateFormat="yyyy/MM/dd"
-                      className="block py-2 pl-4 mt-1 border border-gray-300 shadow-sm w-83 pr-9 rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm md:w-86"
+                      className="block py-2 pl-4 mt-1 border border-gray-300 shadow-sm w-80 pr-9 rounded-3xl focus:outline-none focus:ring-orangeprimary focus:border-orangeprimary sm:text-sm"
                       required
                     />
                     <span className="absolute inset-y-0 right-0 flex items-center pr-3 pointer-events-none">
@@ -233,17 +260,18 @@ const EventForm = ({ onClose, onSubmit }) => {
               </div>
             ))}
             <div className="flex justify-between">
-              <button
-                type="button"
-                onClick={onClose}
-                className="px-4 py-2 mr-2 text-white transition-colors duration-300 border-2 border-white bg-redprimary rounded-3xl hover:bg-red-800 hover:text-white"
-                style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
-              >
-                Cancelar
-              </button>
+              <Link to="/event-admin">
+                <button
+                  type="button"
+                  className="px-4 py-2 mr-2 text-white duration-300 border-2 border-white bg-redprimary rounded-3xl hover:bg-red-800 hover:text-white md:hover:scale-105"
+                  style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
+                >
+                  Cancelar
+                </button>
+              </Link>
               <button
                 type="submit"
-                className="px-4 py-2 text-white transition-colors duration-300 border-2 border-white bg-orangeprimary rounded-3xl hover:bg-orange-600 hover:text-white"
+                className="px-4 py-2 text-white duration-300 border-2 border-white bg-orangeprimary rounded-3xl hover:bg-orange-600 hover:text-white md:hover:scale-105"
                 style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
               >
                 Crear Evento
@@ -251,22 +279,18 @@ const EventForm = ({ onClose, onSubmit }) => {
             </div>
           </form>
         </div>
+
+        {showMessage && (
+          <EventMessageModal
+            show={showMessage}
+            isSuccess={isSuccess}
+            message={message}
+            onEdit={handleEdit}
+          />
+        )}
       </div>
-      {showMessage && (
-        <EventMessageModal
-        show={showMessage}
-        isSuccess={isSuccess}
-        message={message}
-        onClose={closeModal}
-      />
-      )}
     </>
   );
-};
-
-EventForm.propTypes = {
-  onClose: PropTypes.func.isRequired,
-  onSubmit: PropTypes.func.isRequired,
 };
 
 export default EventForm;

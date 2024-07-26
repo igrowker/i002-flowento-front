@@ -115,7 +115,7 @@ const QRScanner = () => {
           <div className="flex items-center">
             <FaRegClock className="text-lg text-orangeprimary md:text-xl lg:text-2xl" />
             <span className="ml-2 text-gray300 md:text-lg lg:text-xl">
-              {event.start_time}
+              {event.hour}
             </span>
           </div>
         </div>
