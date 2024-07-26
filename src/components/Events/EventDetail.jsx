@@ -50,7 +50,7 @@ const EventDetail = () => {
         <div className="container px-2 py-4 mx-auto md:py-12 md:px-5">
           <div className="flex flex-wrap mx-auto lg:w-6/5">
             <img
-              className="object-cover object-center w-full h-full transition-transform duration-300 shadow-2xl rounded-2xl lg:hover:scale-105"
+              className="object-cover object-center w-full h-full border-2 shadow-2xl rounded-2xl border-orangeprimary"
               src={event.image}
               alt={event.name}
             />
