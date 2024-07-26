@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import imgAvatar from "../../assets/Avatar.webp";
+import imgAvatar from "../../assets/profile.webp";
 import { FaPhone, FaUser } from "react-icons/fa";
 import { BsCalendar2Check } from "react-icons/bs";
 import { CgMail } from "react-icons/cg";
@@ -9,6 +9,7 @@ import { MdOutlineMapsHomeWork } from "react-icons/md";
 import { IoInformation } from "react-icons/io5";
 import PropTypes from "prop-types";
 import { useUser } from "../../context/UserContext";
+import Preloader from "../Preloader";
 
 const InfoRow = ({ icon: Icon, label, value }) => (
   <>
@@ -30,7 +31,7 @@ const InputPerfil = () => {
   const { user } = useUser();
 
   if (!user) {
-    return <div>Cargando...</div>;
+    return <Preloader/>;
   }
 
   const getFullName = () => {
@@ -79,7 +80,7 @@ const InputPerfil = () => {
             <span className="my-4 text-2xl font-bold text-center text-redprimary">
               {getFullName()}
             </span>
-            <img src={user.avatar || imgAvatar} alt="imagen Perfil" />
+            <img src={user.avatar || imgAvatar} alt="imagen Perfil" className="w-24 h-24 transition-transform duration-300 border-2 border-gray-500 rounded-full md:hover:scale-105"/>
           </div>
           <div className="p-6 text-center lg:px-96">
             <div className="grid grid-cols-2 gap-2 md:gap-4 sm:px-6">
@@ -92,14 +93,14 @@ const InputPerfil = () => {
         <div className="flex items-center justify-center gap-6 text-xs md:text-base top-16">
           <button
             type="button"
-            className="flex rounded-3xl justify-center bg-orangeprimary px-3 py-1.5 font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 border-2 border-white"
+            className="flex rounded-3xl justify-center bg-orangeprimary px-3 py-1.5 font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 border-2 border-white transition-transform duration-300 md:hover:scale-105"
             style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
           >
             <Link to="/event-list">Volver a los eventos</Link>
           </button>
           <button
             type="button"
-            className="flex rounded-3xl justify-center bg-orangeprimary px-3 py-1.5 font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 border-2 border-white"
+            className="flex rounded-3xl justify-center bg-orangeprimary px-3 py-1.5 font-semibold leading-6 text-white shadow-sm hover:bg-orange-600 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 border-2 border-white transition-transform duration-300 md:hover:scale-105"
             style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
           >
             <Link to="/perfil-edit">¿Deseas editar tu perfil?</Link>

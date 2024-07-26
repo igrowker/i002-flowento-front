@@ -9,15 +9,15 @@ export const UserProvider = ({ children }) => {
   useEffect(() => {
     setTimeout(() => {
       setUser({
-        first_name: "John",
-        last_name: "Doe",
+        first_name: "Felipe",
+        last_name: "Suarez",
         birthDate: "01/01/1990",
         phone: "123-456-7890",
-        email: "john.doe@example.com",
-        address: "123 Main St",
-        position: "Developer",
-        company: "Tech Company",
-        information: "Some information",
+        email: "felipe.suarez@gmail.com",
+        address: "Valencia - España",
+        position: "Web Developer",
+        company: "Igrowker - Acelerando Juniors IT",
+        information: "Aceleración de Talentos - Reclutamiento Inteligente - Primer Empleo IT - IT Training - Junior IT - IA - Sector Tecnológico - Desarrollo de Productos IT",
         avatar: "",
       });
     }, 1000);

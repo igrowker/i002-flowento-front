@@ -6,9 +6,7 @@ const EventContext = createContext();
 export const EventProvider = ({ children }) => {
   const [events, setEvents] = useState([]);
   
-  // Función para actualizar eventos
   const updateEvents = () => {
-    // Lógica para actualizar eventos
   };
 
   return (
