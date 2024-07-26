@@ -23,16 +23,15 @@ const EventCard = () => {
         const response = await axios.get(url, { withCredentials: true });
         const { data } = response;
         const { payload } = data;
-        const now = new Date();
         const formattedEvents = payload
           .filter((event) => event.state === "approve")
           .map((event) => {
             const eventDate = new Date(event.start_date);
-            const endDate = new Date(event.end_date);
+            const now = new Date();
             let estado = "aprobado";
             let etiquetaHora = "";
             let etiquetaEntradas = "";
-            if (endDate < now) {
+            if (eventDate <= now) {
               estado = "finalizado";
               etiquetaHora = "FINALIZADO";
             } else {
@@ -54,9 +53,9 @@ const EventCard = () => {
             return {
               id: event.id_event,
               titulo: event.name,
-              fecha: eventDate.toLocaleDateString(),
-              hora: new Date(event.start_date).toLocaleTimeString(),
-              ubicacion: event.type,
+              fecha: event.start_date,
+              hora: event.hour,
+              ubicacion: event.location,
               imagen: event.image,
               precio: event.price > 0 ? `$${event.price}` : "Gratuito",
               entradasDisponibles: event.current_capacity,
@@ -68,9 +67,6 @@ const EventCard = () => {
         setEvents(formattedEvents);
       } catch (error) {
         console.error("Error al obtener eventos:", error);
-        alert(
-          "Hubo un problema al cargar los eventos. Inténtalo de nuevo más tarde."
-        );
       }
     };
     fetchEvents();
@@ -100,8 +96,8 @@ const EventCard = () => {
     }
 
     eventosFiltrados.sort((a, b) => {
-      const fechaA = new Date(a.fecha.split("/").reverse().join("-"));
-      const fechaB = new Date(b.fecha.split("/").reverse().join("-"));
+      const fechaA = new Date(a.fecha);
+      const fechaB = new Date(b.fecha);
       if (fechaA.getTime() !== fechaB.getTime()) {
         return fechaA - fechaB;
       } else {
@@ -115,11 +111,6 @@ const EventCard = () => {
 
   const handleFilterChange = (buttonName) => {
     setActiveButton(buttonName);
-  };
-
-  const formatTime = (timeString) => {
-    const [hours, minutes] = timeString.split(":");
-    return `${hours}:${minutes}`;
   };
 
   return (
@@ -170,7 +161,10 @@ const EventCard = () => {
         modules={[Navigation]}
       >
         {eventosFiltradosYOrdenados.map((evento) => (
-          <SwiperSlide key={evento.id} className="w-full px-8 pb-4">
+          <SwiperSlide
+            key={evento.id}
+            className="w-full px-6 pb-4"
+          >
             <div
               className="relative p-3 bg-gray-50 rounded-3xl"
               style={{ boxShadow: "0px 4px 10px 0px #00000040" }}
@@ -209,15 +203,17 @@ const EventCard = () => {
                   <p>Finalizado</p>
                 </div>
               )}
-              <img
-                className="object-cover object-center w-full mb-3 max-h-72 rounded-2xl"
-                src={evento.imagen}
-                alt="content"
-                loading="lazy"
-              />
-              <h2 className="mb-4 text-sm font-bold text-justify md:text-base gradient-red">
-                <Link to={`/event-detail/${evento.id}`}>{evento.titulo}</Link>
-              </h2>
+              <Link to={`/event-detail/${evento.id}`}>
+                <img
+                  className="object-cover object-center w-full mb-3 max-h-72 rounded-2xl"
+                  src={evento.imagen}
+                  alt="content"
+                  loading="lazy"
+                />
+                <h2 className="mb-4 text-sm font-bold text-justify md:text-base gradient-red capitalize-first hover:text-orange-600">
+                  {evento.titulo}
+                </h2>
+              </Link>
               <div className="flex justify-between pb-3 text-gray-500 font-lato">
                 <div className="flex gap-1">
                   <BsCalendarCheck className="text-orangeprimary" />
@@ -225,7 +221,7 @@ const EventCard = () => {
                 </div>
                 <div className="flex gap-1">
                   <FaRegClock className="text-orangeprimary" />
-                  <p className="flex text-xs">{formatTime(evento.hora)}</p>
+                  <p className="flex text-xs">{evento.hora}</p>
                 </div>
               </div>
               <div className="flex justify-between text-gray-500 font-lato">
