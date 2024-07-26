@@ -1,0 +1,34 @@
+/* src/components/Dashboard.css */
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  
+  .chart-row {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+  }
+  
+  .chart-container {
+    width: 30%;
+    margin: 0 10px;
+  }
+  
+  .pie-chart-container {
+    width: 35%;
+    margin-top: 20px;
+  }
+  
+/* Responsividad para pantallas pequeñas */
+@media (max-width: 768px) {
+    .chart-row {
+      flex-direction: column;
+    }
+  
+    .chart-container {
+      margin: 10px 0;
+    }
+  }
+  
