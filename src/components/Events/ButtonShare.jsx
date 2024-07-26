@@ -28,7 +28,7 @@ const ButtonShare = () => {
 
   return (
     <button onClick={handleShare}>
-      <FaShareAlt className="text-xl md:text-3xl text-orangeprimary hover:text-orange-600" />
+      <FaShareAlt className="text-xl transition-transform duration-300 hover:scale-125 md:text-3xl text-orangeprimary hover:text-orange-600" />
     </button>
   );
 };
