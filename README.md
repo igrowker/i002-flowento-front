@@ -103,7 +103,7 @@ Agradecemos a los siguientes contribuidores por su valiosa participación en el 
 
 - [Project Manager - Pamela Pilotti](https://github.com/Pamela198713)
 - [Front End - Eduardo Chacon](https://github.com/eduardoe92)
-- [Back End - Ulises Rodriguez ](https://github.com/Ulises-Rodriguez)
+- [Back End - Ulises Rodriguez ](https://github.com/Ulises-Rodriguez-809)
 - [Front End - Christian Gil](https://github.com/Chgrar)
 - [Front End - Dante Caballero](https://github.com/DanteNico1087)
 - [QA - Fabricio Carpentieri](https://github.com/Carpentieri68)
