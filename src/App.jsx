@@ -21,6 +21,7 @@ import EventAdmin from "./components/Events/EventAdmin";
 import EventDetail from "./components/Events/EventDetail";
 import Preloader from "./components/Preloader";
 import EventForm from "./components/Events/EventForm";
+// import Dashboard from "./components/Dashboard"
 
 function App() {
   const location = useLocation();
@@ -99,6 +100,7 @@ function App() {
           <Route path="/event-detail/:id" element={<EventDetail />} />
           <Route path="/event-admin" element={<EventAdmin />} />
           <Route path="/event-form" element={<EventForm />} />
+          {/* <Route path="/Dashboard" element={<Dashboard />} />  */}
           <Route path="*" element={<Error />} />
         </Routes>
       </main>
