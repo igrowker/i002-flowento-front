@@ -22,16 +22,22 @@ const EventUpComing = () => {
         const { data } = response;
         const { payload } = data;
         const now = new Date();
+        const today = now.toISOString().split("T")[0];
         const formattedEvents = payload
           .filter((event) => event.state === "approve")
           .map((event) => {
-            const eventDate = new Date(event.start_date);
+            const eventDate = new Date(event.start_date).toISOString().split("T")[0];
+            const eventTime = new Date(`${event.start_date}T${event.hour}`).getTime();
             let estado = "aprobado";
             let etiquetaHora = "";
             let etiquetaEntradas = "";
-            if (eventDate < now) {
-              estado = "finalizado";
-              etiquetaHora = "FINALIZADO";
+            if (eventDate === today) {
+              if (eventTime > now.getTime()) {
+                etiquetaHora = "ÚLTIMAS HORAS";
+              } else {
+                estado = "finalizado";
+                etiquetaHora = "FINALIZADO";
+              }
             } else {
               if (event.current_capacity === 0) {
                 etiquetaEntradas = "PLAZAS AGOTADAS";
@@ -41,21 +47,15 @@ const EventUpComing = () => {
               ) {
                 etiquetaEntradas = "ÚLTIMAS PLAZAS";
               }
-              if (
-                eventDate.toDateString() === now.toDateString() &&
-                new Date(event.start_date).getTime() > now.getTime()
-              ) {
-                etiquetaHora = "ÚLTIMAS HORAS";
-              }
             }
             return {
               id: event.id_event,
               titulo: event.name,
-              fecha: eventDate.toLocaleDateString(),
+              fecha: event.start_date,
               hora: event.hour,
               ubicacion: event.location,
               imagen: event.image,
-              precio: event.price > 0 ? `$${event.price}` : "Gratuito",
+              precio: event.price > 0 ? `${event.price}` : "Gratuito",
               entradasDisponibles: event.current_capacity,
               estado,
               etiquetaEntradas,
@@ -64,31 +64,28 @@ const EventUpComing = () => {
           });
         setEvents(formattedEvents);
       } catch (error) {
-        console.error("Error al obtener eventos:", error);
+        const { response } = error;
+        const { data } = response;
+        alert(data.payload);
       }
     };
     fetchEvents();
   }, [setEvents]);
-
+  
   const getEventosDelDiaActual = () => {
     const now = new Date();
-    const today = now.toLocaleDateString();
-    const currentTime = now.getHours() * 60 + now.getMinutes();
-
+    const today = now.toISOString().split("T")[0];
     return events.filter((evento) => {
+      const eventDate = new Date(evento.fecha).toISOString().split("T")[0];
       const [eventoHora, eventoMinuto] = evento.hora.split(":").map(Number);
       const eventoTime = eventoHora * 60 + eventoMinuto;
-
-      return evento.fecha === today && eventoTime > currentTime;
+      const currentTime = now.getHours() * 60 + now.getMinutes();
+      return eventDate === today && eventoTime > currentTime;
     });
   };
 
   const eventosDelDiaActual = getEventosDelDiaActual();
-  const formatTime = (timeString) => {
-    const [hours, minutes] = timeString.split(":");
-    return `${hours}:${minutes}`;
-  };
-
+  
   return (
     <>
       {eventosDelDiaActual.length > 0 && (
@@ -160,6 +157,14 @@ const EventUpComing = () => {
                       )}
                     </>
                   )}
+                  {evento.estado === "finalizado" && (
+                    <div
+                      className="absolute font-bold text-white uppercase rounded-lg top-5 left-5 bg-gradient-red"
+                      style={{ padding: "1px 10px", fontSize: "9px" }}
+                    >
+                      <p>Finalizado</p>
+                    </div>
+                  )}
                   <Link to={`/event-detail/${evento.id}`}>
                     <img
                       className="object-cover object-center w-full mb-3 max-h-72 rounded-2xl"
@@ -178,7 +183,7 @@ const EventUpComing = () => {
                     </div>
                     <div className="flex gap-1">
                       <FaRegClock className="text-orangeprimary" />
-                      <p className="flex text-xs">{formatTime(evento.hora)}</p>
+                      <p className="flex text-xs">{evento.hora}</p>
                     </div>
                   </div>
                   <div className="flex justify-between text-gray-500 font-lato">

@@ -23,32 +23,30 @@ const EventCard = () => {
         const response = await axios.get(url, { withCredentials: true });
         const { data } = response;
         const { payload } = data;
+        const now = new Date();
+        const currentDate = now.toISOString().split('T')[0];
+        const currentTime = now.getTime();
+
         const formattedEvents = payload
           .filter((event) => event.state === "approve")
           .map((event) => {
-            const eventDate = new Date(event.start_date);
-            const now = new Date();
+            const eventDate = new Date(event.start_date).toISOString().split('T')[0];
+            const eventTime = new Date(`${event.start_date}T${event.hour}`).getTime();
             let estado = "aprobado";
             let etiquetaHora = "";
             let etiquetaEntradas = "";
-            if (eventDate <= now) {
+
+            if (eventDate < currentDate || (eventDate === currentDate && eventTime <= currentTime)) {
               estado = "finalizado";
               etiquetaHora = "FINALIZADO";
-            } else {
-              if (event.current_capacity === 0) {
-                etiquetaEntradas = "PLAZAS AGOTADAS";
-              } else if (
-                event.current_capacity <= 300 &&
-                event.current_capacity >= 1
-              ) {
-                etiquetaEntradas = "ÚLTIMAS PLAZAS";
-              }
-              if (
-                eventDate.toDateString() === now.toDateString() &&
-                new Date(event.start_date).getTime() > now.getTime()
-              ) {
-                etiquetaHora = "ÚLTIMAS HORAS";
-              }
+            } else if (eventDate === currentDate && eventTime > currentTime) {
+              etiquetaHora = "ÚLTIMAS HORAS";
+            }
+
+            if (event.current_capacity === 0) {
+              etiquetaEntradas = "PLAZAS AGOTADAS";
+            } else if (event.current_capacity > 0 && event.current_capacity <= 300) {
+              etiquetaEntradas = "ÚLTIMAS PLAZAS";
             }
             return {
               id: event.id_event,
@@ -57,7 +55,7 @@ const EventCard = () => {
               hora: event.hour,
               ubicacion: event.location,
               imagen: event.image,
-              precio: event.price > 0 ? `$${event.price}` : "Gratuito",
+              precio: event.price > 0 ? `${event.price}` : "Gratuito",
               entradasDisponibles: event.current_capacity,
               estado,
               etiquetaEntradas,
@@ -74,7 +72,6 @@ const EventCard = () => {
 
   const getEventosFiltradosYOrdenados = () => {
     let eventosFiltrados = [];
-
     if (activeButton === "proximos") {
       eventosFiltrados = events.filter(
         (evento) => evento.estado === "aprobado"
@@ -108,7 +105,6 @@ const EventCard = () => {
   };
 
   const eventosFiltradosYOrdenados = getEventosFiltradosYOrdenados();
-
   const handleFilterChange = (buttonName) => {
     setActiveButton(buttonName);
   };

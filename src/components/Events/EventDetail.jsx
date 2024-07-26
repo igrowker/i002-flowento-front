@@ -16,7 +16,7 @@ const EventDetail = () => {
   const [isRegistered, setIsRegistered] = useState(false);
 
   const { id } = useParams();
-  const navigate = useNavigate(); // Hook para navegación programática
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchEventDetails = async () => {
@@ -33,7 +33,6 @@ const EventDetail = () => {
 
     fetchEventDetails();
 
-    // Verifica si el usuario ya está inscrito
     if (localStorage.getItem(`registered-${id}`)) {
       setIsRegistered(true);
     }
@@ -41,10 +40,8 @@ const EventDetail = () => {
 
   const handleButtonClick = () => {
     if (isRegistered) {
-      // Si el usuario ya está registrado, redirige a la vista de generación de QR
       navigate(`/qrscanner/${id}`);
     } else {
-      // Si el usuario no está registrado, muestra el formulario de registro
       setShowForm(true);
     }
   };
@@ -56,7 +53,7 @@ const EventDetail = () => {
   const handleSuccessfulRegistration = () => {
     setIsRegistered(true);
     setShowForm(false);
-    localStorage.setItem(`registered-${id}`, 'true'); // Marca como registrado en localStorage
+    localStorage.setItem(`registered-${id}`, 'true');
     navigate(`/qrscanner/${id}`);
   };
 
@@ -111,7 +108,7 @@ const EventDetail = () => {
             <div className="flex items-center">
               <BiDollar className="text-lg text-orangeprimary md:text-xl lg:text-2xl" />
               <span className="ml-2 text-gray300 md:text-lg lg:text-xl">
-                {event.price > 0 ? `$${event.price}` : "Gratuito"}
+                {event.price > 0 ? `${event.price}` : "Gratuito"}
               </span>
             </div>
           </div>
