@@ -1,4 +1,3 @@
-import PropTypes from "prop-types";
 import { FaPlus } from "react-icons/fa";
 import { Link } from "react-router-dom";
 
@@ -16,9 +15,4 @@ const FloatingButton = () => {
   );
 };
 
-FloatingButton.propTypes = {
-  onEventCreate: PropTypes.func.isRequired,
-};
-
 export default FloatingButton;
-
